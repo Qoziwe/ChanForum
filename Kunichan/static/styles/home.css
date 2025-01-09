@@ -1,0 +1,128 @@
+/* @font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-V.ttf");
+} */
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-VariableFont_wght.ttf");
+}
+
+main {
+  display: grid;
+  grid-template-columns: 0.8fr 3fr 1fr;
+  grid-template-rows: 90vh;
+}
+#Navigation {
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  border-right: 0.1vw solid #ff2020;
+  gap: 0.5vw;
+  padding-top: 1vw;
+  box-sizing: border-box;
+  grid-column: 1;
+  grid-row: 1;
+}
+.N-Button {
+  width: 12vw;
+  height: 3vw;
+  background-color: rgb(27, 27, 27, 0);
+  display: flex;
+  align-items: center;
+  gap: 0.7vw;
+  border: 0;
+  border-radius: 0 2vw 2vw 0;
+  font-size: 1.2vw;
+  font-family: "Inter";
+  font-weight: 400;
+  text-align: start;
+  color: #d3d3d3;
+  transition: ease-in-out 100ms;
+}
+.N-Button:hover {
+  color: #ff2020;
+}
+.N-Button svg {
+  transition: ease-in-out 100ms;
+}
+.N-Button:hover svg {
+  stroke: #ff2020;
+}
+.N-H-Svg {
+  width: 2vw;
+  height: 2vw;
+}
+
+#Similar {
+  width: 20vw;
+  height: 60vh;
+  background-color: #111111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vw;
+  border-radius: 3vw;
+  padding-top: 2vw;
+  margin-top: 2vw;
+  box-sizing: border-box;
+  grid-column: 3;
+}
+#S-Article {
+  font-family: "Montserrat";
+  font-size: 1.5vw;
+}
+#Similar hr {
+  width: 80%;
+  border: 0.1vw solid #ff2020;
+}
+.S-Card {
+  position: relative;
+  width: 95%;
+  height: 3.5vw;
+  /* background-color: aqua; */
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
+.S-Card img {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10vw;
+  /* background-size: contain; */
+  object-fit: cover;
+}
+.S-Card h1 {
+  font-family: "Inter";
+  font-size: 1.2vw;
+}
+.S-Card p {
+  font-size: 0.8vw;
+  font-family: "Montserrat";
+}
+.S-Card button {
+  width: 4vw;
+  height: 2vw;
+  background-color: #90000000;
+  position: absolute;
+  border-radius: 2vw;
+  border: 0.1vw solid #ff2020;
+  right: 0;
+  font-family: "Montserrat";
+  font-size: 0.75vw;
+  transition: ease-in-out 100ms;
+}
+.S-Card button:hover {
+  background-color: #ff2020;
+  border-radius: 10vw;
+  -webkit-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  -moz-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  box-shadow: 0px 0px 5vw 0.1vw #ff2020;
+}
+/* displat grid
+grid-template-columns: 17vw 8vw;
+  grid-template-rows: 3vw 7vw;
+  grid-row -  */

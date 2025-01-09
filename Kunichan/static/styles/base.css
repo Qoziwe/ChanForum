@@ -1,0 +1,164 @@
+@font-face {
+  font-family: "Jersey15";
+  src: url("../fonts/Jersey15-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "WorkSans";
+  src: url("../fonts/WorkSans-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  color: aliceblue;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+}
+
+.navbar {
+  width: 100vw;
+  height: 10vh;
+  background-color: #111111;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 0.1vw solid #ff2020;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+}
+.navbar-logo h1 {
+  font-size: 4vw;
+  font-family: "Jersey15", sans-serif;
+}
+.search-container {
+  width: auto;
+  align-items: center;
+  display: flex;
+}
+#search-bar {
+  width: 30vw;
+  height: 2.5vw;
+  padding-left: 1vw;
+  background-color: #4f4f4f9c;
+  font-family: "WorkSans", sans-serif;
+  font-size: 1.2vw;
+  color: #fff;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 10vw 0 0 10vw;
+}
+.search-icon {
+  width: 2.5vw;
+  height: 2.5vw;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4f4f4f9c;
+  border-radius: 0 10vw 10vw 0;
+  font-size: 1vw;
+  pointer-events: none;
+}
+.search-icon i {
+  color: #8282829c;
+}
+.logbutton {
+  width: 7vw;
+  height: 2.3vw;
+  border: none;
+  border-radius: 10vw;
+  font-family: "WorkSans", sans-serif;
+  color: #fff;
+  background-color: #ff202000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1vw solid #ff2020;
+  font-weight: 700;
+  font-size: 0.9vw;
+  transition: ease-in-out 100ms;
+}
+.logbutton:hover {
+  background-color: #ff2020;
+  border-radius: 1.5rem;
+  -webkit-box-shadow: 0px 0px 10vw 1vw rgba(255, 32, 32, 1);
+  -moz-box-shadow: 0px 0px 10vw 1vw rgba(255, 32, 32, 1);
+  box-shadow: 0px 0px 10vw 1vw rgba(255, 32, 32, 1);
+}
+
+/* @media (max-width: 768px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  .search-container {
+    display: none;
+  }
+
+  .navbar-logo h1 {
+    font-size: 11vw;
+  }
+
+  .logbutton {
+    width: 30vw;
+    height: 10vw;
+    font-size: 5vw;
+  }
+} */
+/* Расположение стилей должно идти в строгом порядке
+width
+height
+background
+background-size
+background-repeat
+opacity
+position
+left - right - top - bottom
+box-sizing
+display
+justify-content
+flex-direction
+align-items
+grid-template-columns
+grid-template-rows
+grid-column
+grid-row
+grid-gap
+gap
+margin
+padding
+border
+border-radius
+box-shadow
+-webkit-box-shadow
+-moz-box-shadow
+text-align
+font-size
+font-family
+font-weight
+letter-spacing
+word-spacing
+line-height
+text-decoration
+color
+transition
+transform
+user-select 
+z-index
+*/
