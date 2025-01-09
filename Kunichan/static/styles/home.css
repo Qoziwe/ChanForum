@@ -65,6 +65,7 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 1vw;
+  border: 0.1vw solid #ff2020;
   border-radius: 3vw;
   padding-top: 2vw;
   margin-top: 2vw;
@@ -121,6 +122,114 @@ main {
   -webkit-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
   -moz-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
   box-shadow: 0px 0px 5vw 0.1vw #ff2020;
+}
+
+#Discussions {
+  width: 100%;
+  height: 100%;
+  /* background-color: #ff2020; */
+  padding: 2vw 2vw 0 2vw;
+  grid-column: 2;
+  grid-row: 1;
+  box-sizing: border-box;
+}
+#D-Container {
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  border-radius: 3vw 3vw 0 0;
+  padding: 2vw 1.5vw 0 1.5vw;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: thin; /* Уменьшить ширину полосы прокрутки (для Firefox) */
+  scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0); /* Цвет тумбы и дорожки (для Firefox) */
+}
+.carousel-container {
+  width: 55.5vw;
+  min-height: 20vw;
+  /* background-color: #ff2020; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+  gap: 2vw;
+}
+.card {
+  min-width: 16.5vw;
+  min-height: 18vw;
+  background-color: #1b1b1b;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  border-radius: 1vw;
+  padding-bottom: 2vw;
+  -webkit-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  -moz-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  box-shadow: 0px 0px 1vw 0.1vw #000000;
+  text-align: center;
+}
+.card button {
+  width: 8vw;
+  height: 3vw;
+  border: 0.1vw solid #ff2020;
+  border-radius: 10vw;
+  background-color: #111111;
+  transition: ease-in-out 100ms;
+}
+.card button:hover {
+  background-color: #ff2020;
+  border-radius: 10vw;
+  -webkit-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
+  -moz-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
+  box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
+}
+.controls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.button {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  border-radius: 100vw;
+  width: 3vw;
+  height: 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2vw;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+#D-Container hr {
+  width: 45vw;
+  margin: 1.5vw 0 2vw 0;
+}
+aside {
+  /* height: 100vw; */
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vw;
+}
+.D-C-Card {
+  width: 55.5vw;
+  height: 5vw;
+  background-color: #1a1a1a;
+  border-radius: 100vw;
 }
 /* displat grid
 grid-template-columns: 17vw 8vw;

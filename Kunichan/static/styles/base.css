@@ -60,6 +60,15 @@ body {
   border: none;
   box-sizing: border-box;
   border-radius: 10vw 0 0 10vw;
+  transition: ease-in-out 100ms;
+}
+#search-bar:focus {
+  background-color: #484848;
+  border: 0.1vw solid #ff2020;
+  -webkit-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  -moz-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  box-shadow: 0px 0px 5vw 0.1vw #ff2020;
+  outline: none;
 }
 .search-icon {
   width: 2.5vw;
