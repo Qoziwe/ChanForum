@@ -28,6 +28,35 @@ body {
   background-color: #000000;
 }
 
+.snow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+}
+.snowflake {
+  position: absolute;
+  top: -10px;
+  border-radius: 50%;
+  background-color: white;
+  opacity: 0.5;
+  filter: blur(1px);
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0% {
+    transform: translateY(-10px) translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(var(--sway-distance));
+    opacity: 0;
+  }
+}
 .navbar {
   width: 100vw;
   height: 10vh;

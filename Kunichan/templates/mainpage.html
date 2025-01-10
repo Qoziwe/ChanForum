@@ -110,17 +110,27 @@
   </section>
   <section id="Discussions">
     <div id="D-Container">
-      <div class="carousel-container">
-        <div class="carousel">
-          <div class="card" id="card-D-C-1"><button>Topic 1</button></div>
-          <div class="card" id="card-D-C-2"><button>Topic 2</button></div>
-          <div class="card" id="card-D-C-3"><button>Topic 2</button></div>
-          <div class="card" id="card-D-C-4"><button>Topic 2</button></div>
-          <div class="card" id="card-D-C-5"><button>Topic 2</button></div>
+      <div id="D-CarouselContainer">
+        <div id="D-CC-Carousel">
+          <div class="D-CC-C-Card">
+            <button>Topic 1</button>
+          </div>
+          <div class="D-CC-C-Card">
+            <button>Topic 2</button>
+          </div>
+          <div class="D-CC-C-Card">
+            <button>Topic 3</button>
+          </div>
+          <div class="D-CC-C-Card">
+            <button>Topic 4</button>
+          </div>
+          <div class="D-CC-C-Card">
+            <button>Topic 5</button>
+          </div>
         </div>
-        <div class="controls">
-          <button class="button" id="prev">&#8249;</button>
-          <button class="button" id="next">&#8250;</button>
+        <div class="D-CC-ControlS">
+          <button class="D-CC-CS-Button" id="prev">&#8249;</button>
+          <button class="D-CC-CS-Button" id="next">&#8250;</button>
         </div>
       </div>
       <hr />
@@ -182,4 +192,6 @@
     </div>
   </section>
 </main>
-{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
+{% endblock %} {% endblock %}

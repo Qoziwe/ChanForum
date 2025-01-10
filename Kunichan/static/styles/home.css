@@ -147,7 +147,7 @@ main {
   scrollbar-width: thin; /* Уменьшить ширину полосы прокрутки (для Firefox) */
   scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0); /* Цвет тумбы и дорожки (для Firefox) */
 }
-.carousel-container {
+#D-CarouselContainer {
   width: 55.5vw;
   min-height: 20vw;
   /* background-color: #ff2020; */
@@ -157,12 +157,12 @@ main {
   overflow: hidden;
   position: relative;
 }
-.carousel {
+#D-CC-Carousel {
   display: flex;
   transition: transform 0.5s ease;
   gap: 2vw;
 }
-.card {
+.D-CC-C-Card {
   min-width: 16.5vw;
   min-height: 18vw;
   background-color: #1b1b1b;
@@ -176,22 +176,23 @@ main {
   box-shadow: 0px 0px 1vw 0.1vw #000000;
   text-align: center;
 }
-.card button {
+.D-CC-C-Card button {
   width: 8vw;
   height: 3vw;
   border: 0.1vw solid #ff2020;
   border-radius: 10vw;
   background-color: #111111;
+  font-size: 0.8vw;
   transition: ease-in-out 100ms;
 }
-.card button:hover {
+.D-CC-C-Card button:hover {
   background-color: #ff2020;
   border-radius: 10vw;
   -webkit-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
   -moz-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
   box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
 }
-.controls {
+.D-CC-ControlS {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -199,7 +200,7 @@ main {
   width: 100%;
   justify-content: space-between;
 }
-.button {
+.D-CC-CS-Button {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border: none;
@@ -212,7 +213,7 @@ main {
   font-size: 2vw;
   cursor: pointer;
 }
-.button:hover {
+.D-CC-CS-Button:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 #D-Container hr {

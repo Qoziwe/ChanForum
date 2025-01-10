@@ -18,6 +18,7 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
+    <div class="snow-container"></div>
     <!--Header-->
     <header class="navbar">
       <div class="navbar-logo">
@@ -39,14 +40,12 @@
 
       <button class="logbutton"><a href="./register">Sign up</a></button>
     </header>
-
     <!--Header end-->
 
     <!--Main body-->
-
     {% block body %}{% endblock %}
     <footer></footer>
-
-    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/base.js') }}"></script>
+    {% block scripts %}{% endblock %}
   </body>
 </html>
