@@ -13,7 +13,7 @@ main {
   grid-template-rows: 90vh;
 }
 #Navigation {
-  width: 100%;
+  width: 80%;
   height: 100%;
   background-color: #111111;
   display: flex;
@@ -28,7 +28,7 @@ main {
   grid-row: 1;
 }
 .N-Button {
-  width: 12vw;
+  width: 80%;
   height: 3vw;
   background-color: rgb(27, 27, 27, 0);
   display: flex;
@@ -36,7 +36,7 @@ main {
   gap: 0.7vw;
   border: 0;
   border-radius: 0 2vw 2vw 0;
-  font-size: 1.2vw;
+  font-size: 1vw;
   font-family: "Inter";
   font-weight: 400;
   text-align: start;
@@ -65,12 +65,14 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 1vw;
-  border: 0.1vw solid #ff2020;
   border-radius: 3vw;
   padding-top: 2vw;
   margin-top: 2vw;
   box-sizing: border-box;
   grid-column: 3;
+  -webkit-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  -moz-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  box-shadow: inset 0px 0px 1vw 0.1vw #000000;
 }
 #S-Article {
   font-family: "Montserrat";
@@ -114,7 +116,7 @@ main {
   right: 0;
   font-family: "Montserrat";
   font-size: 0.75vw;
-  transition: ease-in-out 100ms;
+  transition: background-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
 }
 .S-Card button:hover {
   background-color: #ff2020;
@@ -146,6 +148,9 @@ main {
   overflow-y: scroll;
   scrollbar-width: thin; /* Уменьшить ширину полосы прокрутки (для Firefox) */
   scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0); /* Цвет тумбы и дорожки (для Firefox) */
+  -webkit-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  -moz-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  box-shadow: inset 0px 0px 1vw 0.1vw #000000;
 }
 #D-CarouselContainer {
   width: 55.5vw;
@@ -183,7 +188,7 @@ main {
   border-radius: 10vw;
   background-color: #111111;
   font-size: 0.8vw;
-  transition: ease-in-out 100ms;
+  transition: background-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
 }
 .D-CC-C-Card button:hover {
   background-color: #ff2020;
@@ -228,10 +233,109 @@ aside {
 }
 .D-C-Card {
   width: 55.5vw;
-  height: 5vw;
+  padding: 1vw;
   background-color: #1a1a1a;
-  border-radius: 100vw;
+  border-radius: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5vw;
 }
+.D-C-Card-Front {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
+.D-C-Card-F-LeftPart {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  flex: 1;
+}
+.D-C-Card-Front img {
+  width: 8vw;
+  height: 8vw; /* Чтобы изображение было квадратным */
+  border-radius: 2vw;
+  object-fit: cover; /* Корректируем масштаб изображения */
+}
+
+.D-C-Card-Front span {
+  flex: 1; /* Текст занимает всё оставшееся пространство */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw; /* Расстояние между заголовком и параграфом */
+}
+
+.D-C-Card-Front span h1 {
+  font-size: 1.9vw;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  color: white; /* Для контраста на тёмном фоне */
+}
+
+.D-C-Card-Front span p {
+  font-size: 1.1vw;
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  color: #d0d0d0; /* Более светлый цвет текста */
+}
+
+.D-C-Card-Front-Button {
+  width: 3.5vw; /* Используем минимальный размер между шириной и высотой окна */
+  height: 2.5vw; /* Высота равна ширине */
+  background-color: #ff202000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 0.6vw;
+  padding: 0;
+  opacity: 0.8;
+}
+.D-C-Card-Front-Button:hover span {
+  background-color: #ff2020;
+  -webkit-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
+  -moz-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
+  box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
+}
+
+.D-C-Card-Front-Button span {
+  display: block;
+  width: 100%;
+  height: 2vw;
+  background-color: rgb(255, 255, 255);
+  border-radius: 1vw;
+  transition: transform 300ms ease-in-out, background-color 100ms ease-in-out,
+    opacity 300ms ease-in-out;
+}
+
+/* Анимация для крестика */
+.D-C-Card-Front-Button.active span:nth-child(1) {
+  transform: translateY(1.05vw) rotate(45deg);
+}
+
+.D-C-Card-Front-Button.active span:nth-child(2) {
+  opacity: 0; /* Исчезает средняя линия */
+}
+
+.D-C-Card-Front-Button.active span:nth-child(3) {
+  transform: translateY(-1.05vw) rotate(-45deg);
+}
+
+.D-C-Card-Back {
+  display: none;
+}
+.D-C-Card-Back p {
+  font-size: 1.1vw;
+  font-family: "Montserrat";
+  color: #d0d0d0;
+}
+
 /* displat grid
 grid-template-columns: 17vw 8vw;
   grid-template-rows: 3vw 7vw;

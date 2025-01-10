@@ -1,7 +1,11 @@
 const snowContainer = document.querySelector(".snow-container");
-const snowflakeCount = 100; // Количество снежинок
+const snowflakeCount = 80; // Максимальное количество снежинок в DOM
 
 function createSnowflake() {
+  if (snowContainer.children.length >= snowflakeCount) {
+    return 0; // Если снежинок уже больше, чем нужно, не создаем новые
+  }
+
   const snowflake = document.createElement("div");
   snowflake.classList.add("snowflake");
   const size = Math.random() * 10 + 5;
@@ -17,11 +21,14 @@ function createSnowflake() {
   snowflake.style.filter = `blur(${blur}px)`;
   const opacity = Math.random() * 0.5 + 0.5;
   snowflake.style.opacity = `${opacity}`;
+
   snowflake.addEventListener("animationend", () => {
     snowflake.remove();
   });
+
   snowContainer.appendChild(snowflake);
 }
+
 setInterval(() => {
   if (document.hidden) return;
   createSnowflake();
