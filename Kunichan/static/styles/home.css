@@ -9,11 +9,11 @@
 
 main {
   display: grid;
-  grid-template-columns: 0.8fr 3fr 1fr;
+  grid-template-columns: 0.6fr 3fr 1fr;
   grid-template-rows: 90vh;
 }
 #Navigation {
-  width: 80%;
+  width: 100%;
   height: 100%;
   background-color: #111111;
   display: flex;
@@ -86,7 +86,6 @@ main {
   position: relative;
   width: 95%;
   height: 3.5vw;
-  /* background-color: aqua; */
   display: flex;
   align-items: center;
   gap: 0.5vw;
@@ -95,7 +94,6 @@ main {
   height: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 10vw;
-  /* background-size: contain; */
   object-fit: cover;
 }
 .S-Card h1 {
@@ -129,7 +127,6 @@ main {
 #Discussions {
   width: 100%;
   height: 100%;
-  /* background-color: #ff2020; */
   padding: 2vw 2vw 0 2vw;
   grid-column: 2;
   grid-row: 1;
@@ -146,8 +143,8 @@ main {
   align-items: center;
   flex-direction: column;
   overflow-y: scroll;
-  scrollbar-width: thin; /* Уменьшить ширину полосы прокрутки (для Firefox) */
-  scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0); /* Цвет тумбы и дорожки (для Firefox) */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0);
   -webkit-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
   -moz-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
   box-shadow: inset 0px 0px 1vw 0.1vw #000000;
@@ -155,7 +152,6 @@ main {
 #D-CarouselContainer {
   width: 55.5vw;
   min-height: 20vw;
-  /* background-color: #ff2020; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -226,7 +222,6 @@ main {
   margin: 1.5vw 0 2vw 0;
 }
 aside {
-  /* height: 100vw; */
   display: flex;
   flex-direction: column;
   gap: 0.8vw;
@@ -256,35 +251,31 @@ aside {
 }
 .D-C-Card-Front img {
   width: 8vw;
-  height: 8vw; /* Чтобы изображение было квадратным */
+  height: 8vw;
   border-radius: 2vw;
-  object-fit: cover; /* Корректируем масштаб изображения */
+  object-fit: cover;
 }
-
 .D-C-Card-Front span {
-  flex: 1; /* Текст занимает всё оставшееся пространство */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5vw; /* Расстояние между заголовком и параграфом */
+  gap: 0.5vw;
 }
-
 .D-C-Card-Front span h1 {
   font-size: 1.9vw;
   font-family: "Inter", sans-serif;
   margin: 0;
-  color: white; /* Для контраста на тёмном фоне */
+  color: white;
 }
-
 .D-C-Card-Front span p {
   font-size: 1.1vw;
   font-family: "Montserrat", sans-serif;
   margin: 0;
-  color: #d0d0d0; /* Более светлый цвет текста */
+  color: #d0d0d0;
 }
-
 .D-C-Card-Front-Button {
-  width: 3.5vw; /* Используем минимальный размер между шириной и высотой окна */
-  height: 2.5vw; /* Высота равна ширине */
+  width: 3.5vw;
+  height: 2.5vw;
   background-color: #ff202000;
   display: flex;
   flex-direction: column;
@@ -303,7 +294,6 @@ aside {
   -moz-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
   box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
 }
-
 .D-C-Card-Front-Button span {
   display: block;
   width: 100%;
@@ -313,20 +303,15 @@ aside {
   transition: transform 300ms ease-in-out, background-color 100ms ease-in-out,
     opacity 300ms ease-in-out;
 }
-
-/* Анимация для крестика */
 .D-C-Card-Front-Button.active span:nth-child(1) {
   transform: translateY(1.05vw) rotate(45deg);
 }
-
 .D-C-Card-Front-Button.active span:nth-child(2) {
-  opacity: 0; /* Исчезает средняя линия */
+  opacity: 0;
 }
-
 .D-C-Card-Front-Button.active span:nth-child(3) {
   transform: translateY(-1.05vw) rotate(-45deg);
 }
-
 .D-C-Card-Back {
   display: none;
 }
@@ -335,8 +320,3 @@ aside {
   font-family: "Montserrat";
   color: #d0d0d0;
 }
-
-/* displat grid
-grid-template-columns: 17vw 8vw;
-  grid-template-rows: 3vw 7vw;
-  grid-row -  */
