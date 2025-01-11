@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+
+  <style>
+    /*English fonts*/
+        @font-face {
+          font-family: "Jersey15"; /* Name for your font */
+          src: url("../fonts/Jersey15-Regular.ttf") format("truetype"); /* Path to the font */
+          font-weight: normal;
+          font-style: normal;
+          }
+        @font-face {
+          font-family: "WorkSans"; /* Name for your font */
+          src: url("../fonts/WorkSans-VariableFont_wght.ttf") format("truetype"); /* Path to the font */
+          font-weight: normal;
+          font-style: normal;
+        }
+        /*Russian fonts*/
+
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          text-decoration: none;
+          list-style: none;
+          color: aliceblue;
+          /* background-color: rgb(39, 39, 39); */
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+        body {
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+         
+          background-image: url('static/images/загрузка.jpg');
+          
+        }
+
+        body::before {
+          position: absolute;
+          content: "";
+          width: 100%;
+          height: 100%;
+          background-color: #121517; /* Adjust the opacity here */
+          opacity: 50%;
+          z-index: -1;
+        }
+
+
+        .register-container{
+          display: flex;
+          width: 50%;
+          height: 100vh;
+          background-color: #121517;
+          margin-left: auto;
+          align-items: center;
+
+        }
+
+        .register-block{
+          width: 35vw;
+          font-family: 'Jersey15', sans-serif;
+          display: flex;
+          flex-direction: column;
+          
+          margin: auto;
+          color: white;
+         
+          background: rgba(6, 5, 5, 0.35);
+          box-shadow: 0 8px 32px 0 rgba(135, 31, 31, 0.5);
+          backdrop-filter: blur( 7px );
+          -webkit-backdrop-filter: blur( 7px );
+          border-radius: 10px;
+          border: 1px solid rgba( 255, 255, 255, 0.18 );
+          padding: 2vw;
+        }
+
+        .register-block h1{
+          margin-bottom: 2vw;
+        }
+
+        .register-buttons{
+          display: flex;
+          flex-direction: column;
+          gap: 1vw;
+          width: 100%;
+          
+        }
+
+        .register-buttons input {
+          width: 100%;
+          padding: 0.5vw;
+          font-size: 1vw;
+          background-color: rgb(26, 26, 26, 0.35);
+          border: none;
+          border-radius: .3vw;
+          transition: box-shadow 0.4s ease;
+        }
+
+        .register-buttons input:focus {
+          box-shadow: 0 0 10px #ff747489;
+          outline: none;
+        }
+
+
+        .register-buttons button{
+          width: 40%;
+          padding: .5vw;
+          font-family: 'WorkSans', sans-serif;
+          background-color: red;
+          border-radius: .3vw;
+          border: none;
+          cursor: pointer;
+          transition: transform .4s ease;
+        }
+        .register-buttons button:hover{
+          color: #ffc1c189;
+          transform: translateY(-4px);
+        }
+        
+        .login-btn{
+          width: 50%;
+          display: flex;
+          margin: auto;
+          align-items: center;
+          margin-left: 14.5vw;
+          margin-top: -1.5vw;
+        }
+
+        .login-btn a:hover{
+          color: #ff747489;
+        }
+
+        
+
+
+
+        
+  </style>
+</head>
+<body>
+  
+
+  <div class="register-container">
+    <div class="register-block">
+
+      <h1>Welcome!</h1>
+        <form action="/register" method="POST"> <!-- Указываем метод POST -->
+          <div class="register-buttons">
+              <input type="text" name="username" placeholder="Username" required /> <!-- Username -->
+              <input type="email" name="email" placeholder="Email" required /> <!-- Email -->
+              <input type="password" name="password" placeholder="Password" required /> <!-- Password -->
+              <button type="submit">Sign up</button> <!-- Кнопка отправки -->
+              
+          </div>
+        </form>
+        
+      <div class="login-btn">
+        <p>Have already an account?  &nbsp; </p> 
+        <a href="./login">Login</a>
+      </div>
+      
+      
+
+      <!-- Контейнер для сообщения об ошибке -->
+      <div id="error-message"></div>
+   
+
+    
+    </div>
+  </div>
+  
+  
+
+  <script>
+    // Получаем сообщение об ошибке из Flask через контекст шаблона
+    const errorMessage = "{{ error | safe }}";
+
+    // Если сообщение существует, выводим его в контейнер
+    if (errorMessage) {
+        alert("Ошибка: пользователь с таким email уже существует! Пожалуйста, войдите в систему.")
+    }
+    
+    
+  </script>
+</body>
+</html>
