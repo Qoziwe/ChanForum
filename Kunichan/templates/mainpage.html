@@ -1,16 +1,21 @@
 {% extends 'base.html' %}
-<!-- Добавление шаблона base -->
+
+<!--  -->
+
 {% block links %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/home.css') }}"
 />
 {% endblock %}
-<!-- Добавление специальных стилей -->
+
+<!--  -->
+
 {% block title %} ####Chan {% endblock %}
-<!-- Создание тайтла -->
+
+<!--  -->
+
 {% block body %}
-<!-- Создание наполнения страницы -->
 <main>
   <section id="Navigation">
     <button id="N-Home" class="N-Button">
@@ -312,6 +317,10 @@
     </div>
   </section>
 </main>
+{% endblock %}
+
+<!--  -->
+
 {% block scripts %}
 <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
-{% endblock %} {% endblock %}
+{% endblock %}

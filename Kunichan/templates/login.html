@@ -2,7 +2,7 @@
 
 <!--  -->
 
-{% block title %} Register {% endblock %}
+{% block title %} Login {% endblock %}
 
 <!--  -->
 
@@ -18,15 +18,14 @@
 {% block body %}
 <section id="Register">
   <div id="R-Container">
-    <h1>Register here</h1>
-    <form action="/register" method="POST">
-      <input type="text" name="username" placeholder="Username" required />
-      <input type="email" name="email" placeholder="Email" required />
+    <h1>Welcome</h1>
+    <form action="/login" method="POST">
+      <input type="text" name="email" placeholder="Email" required />
       <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Sign up</button>
+      <button type="submit">Login</button>
     </form>
     <div id="R-C-LoginButton">
-      <p>Have already an account? &nbsp <a id="R-C-LB-A">Login</a></p>
+      <p>Haven't already an account? &nbsp <a id="R-C-LB-A">Sign up</a></p>
     </div>
   </div>
 </section>
@@ -35,5 +34,5 @@
 <!--  -->
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='scripts/register.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
 {% endblock %}

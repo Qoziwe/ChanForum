@@ -1,0 +1,96 @@
+@font-face {
+  font-family: "Jersey15"; /* Name for your font */
+  src: url("../fonts/Jersey15-Regular.ttf") format("truetype"); /* Path to the font */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "WorkSans"; /* Name for your font */
+  src: url("../fonts/WorkSans-VariableFont_wght.ttf") format("truetype"); /* Path to the font */
+  font-weight: normal;
+  font-style: normal;
+}
+
+#Register {
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../images/ФонРегистрации.png");
+  background-size: cover;
+}
+#R-Container {
+  width: 40vw;
+  height: 30vw;
+  background-color: #111111c6;
+  backdrop-filter: blur(0.2vw);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5vw;
+  border-radius: 3vw;
+  transform: rotateY(90deg);
+}
+@keyframes rotateOnDisload {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(-90deg);
+  }
+}
+#R-Container h1 {
+  font-size: 3vw;
+  font-family: "Jersey15";
+  font-weight: 100;
+}
+#R-Container form {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5vw;
+}
+#R-Container form input {
+  width: 80%;
+  height: 3vw;
+  padding: 0.5vw;
+  font-size: 1vw;
+  background-color: rgb(26, 26, 26);
+  border: none;
+  border-radius: 1vw;
+  transition: box-shadow 0.4s ease;
+}
+#R-Container form button {
+  width: 8vw;
+  height: 3vw;
+  background-color: rgba(255, 0, 0, 0);
+  color: aliceblue;
+  border: 0.1vw solid #ff2020;
+  font-size: 1vw;
+  font-family: "Montserrat";
+  border-radius: 1vw;
+  transition: all ease-in-out 150ms;
+}
+#R-Container form button:hover {
+  background-color: #ff2020;
+  border-radius: 10vw;
+  -webkit-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  -moz-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  box-shadow: 0px 0px 5vw 0.1vw #ff2020;
+}
+#R-C-LoginButton p {
+  font-size: 1.1vw;
+  font-family: "Montserrat";
+}
+#R-C-LoginButton a {
+  text-decoration: underline;
+  transition: all ease-in-out 150ms;
+  user-select: none;
+}
+#R-C-LoginButton a:hover {
+  color: #ff2020;
+}
