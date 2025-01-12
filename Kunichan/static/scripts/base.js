@@ -33,3 +33,7 @@ setInterval(() => {
   if (document.hidden) return;
   createSnowflake();
 }, 200);
+
+function urlFor(data) {
+  window.location.href = `/${data}`;
+}

@@ -26,7 +26,7 @@ html {
 body {
   width: 100%;
   min-height: 100vh;
-  background-color: #000000;
+  background-color: #080808;
 }
 
 .snow-container {
@@ -58,6 +58,62 @@ body {
     opacity: 0;
   }
 }
+
+main {
+  display: grid;
+  grid-template-columns: 0.6fr 3fr 1fr;
+  grid-template-rows: 90vh;
+}
+
+#Navigation {
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  border-right: 0.1vw solid #ff2020;
+  gap: 0.5vw;
+  padding-top: 1vw;
+  box-sizing: border-box;
+  grid-column: 1;
+  grid-row: 1;
+}
+#Navigation hr {
+  width: 80%;
+  border: 0.1vw solid #d3d3d3;
+}
+.N-Button {
+  width: 80%;
+  height: 3vw;
+  background-color: rgb(27, 27, 27, 0);
+  display: flex;
+  align-items: center;
+  gap: 0.7vw;
+  border: 0;
+  border-radius: 0 2vw 2vw 0;
+  font-size: 1vw;
+  font-family: "Inter";
+  font-weight: 400;
+  text-align: start;
+  color: #d3d3d3;
+  transition: ease-in-out 100ms;
+}
+.N-Button:hover {
+  color: #ff2020;
+}
+.N-Button svg {
+  transition: ease-in-out 100ms;
+}
+.N-Button:hover svg {
+  stroke: #ff2020;
+}
+.N-H-Svg {
+  width: 2vw;
+  height: 2vw;
+}
+
 .navbar {
   width: 100vw;
   height: 10vh;

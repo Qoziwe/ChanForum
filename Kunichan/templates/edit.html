@@ -1,34 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
-  </head>
-  <body>
-    <h1>Your nickname: {{ username }}</h1>
-    <h2>Your email: {{ email }}</h2>
-    <form action="/update_profile" method="post" enctype="multipart/form-data">
-      <label for="username">New Nickname:</label>
-      <input type="text" id="username" name="username" /><br /><br />
+{% extends 'base.html' %}
 
-      <label for="email">New Email:</label>
-      <input type="email" id="email" name="email" /><br /><br />
+{% block body %}
+<h1>{% block title %} Edit "{{ post['title'] }}" {% endblock %}</h1>
 
-      <label for="password">New Password:</label>
-      <input type="password" id="password" name="password" /><br /><br />
+<form method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" name="title" placeholder="Post title"
+               class="form-control"
+               value="{{ request.form['title'] or post['title'] }}">
+        </input>
+    </div>
 
-      <label for="profile_picture">Profile Picture:</label>
-      <input
-        type="file"
-        id="profile_picture"
-        name="profile_picture"
-      /><br /><br />
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea name="content" placeholder="Post content"
+                  class="form-control">{{ request.form['content'] or post['content'] }}</textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+<hr>
+<hr>
 
-      <input type="submit" value="Update Profile" />
-    </form>
-    <h2><a href="/edit">Edit</a></h2>
-    <h2><a href="/logout">logout</a></h2>
-    <h2><a href="/">Home</a></h2>
-  </body>
-</html>
+<form action="{{ url_for('delete', id=post['id']) }}" method="POST">
+    <input type="submit" value="Delete Post"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Are you sure you want to delete this post?')">
+</form>
+{% endblock %}

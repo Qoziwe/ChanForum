@@ -19,8 +19,14 @@
 
     <header class="navbar">
       <div class="navbar-logo">
-        <h1><a href="./">####Chan</a></h1>
+        <h1><a href="/">####Chan</a></h1>
       </div>
+      <!--Temporary thing-->
+
+      <!-- {% for message in get_flashed_messages() %}
+      <div class="alert alert-danger">{{ message }}</div>
+      {% endfor %} -->
+      <!--Temporary thing ends-->
 
       <div class="search-container">
         <input
@@ -41,7 +47,132 @@
       <a href="./register"><button class="logbutton">Sign up</button></a>
       {% endif %}
     </header>
-    {% block body %}{% endblock %}
+    <main>
+      {% block navigation %}
+      <section id="Navigation">
+        <button class="N-Button" onclick="urlFor('create')">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#d3d3d3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="N-H-Svg"
+          >
+            <path d="M12 22h6a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v10"></path>
+            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+            <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z"></path>
+          </svg>
+          New Post
+        </button>
+        <hr />
+        <button id="N-Home" class="N-Button" onclick="urlFor('')">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#d3d3d3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="N-H-Svg"
+          >
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          Home
+        </button>
+        <button id="N-Discussions" class="N-Button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#d3d3d3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="N-H-Svg"
+          >
+            <path
+              d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            ></path>
+          </svg>
+          Duscussions
+        </button>
+        <button id="N-Friends" class="N-Button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#d3d3d3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="N-H-Svg"
+          >
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Friends
+        </button>
+        <button id="N-Bookmarks" class="N-Button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#d3d3d3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="N-H-Svg"
+          >
+            <path
+              d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"
+            ></path>
+          </svg>
+          Bookmarks
+        </button>
+        <button id="N-Settings" class="N-Button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#d3d3d3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="N-H-Svg"
+          >
+            <path
+              d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
+            ></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          Settings
+        </button>
+      </section>
+      {% endblock %} {% block body %} {% endblock %}
+    </main>
+    <!--Also temporary thing-->
+    <div class="container">{% block content %} {% endblock %}</div>
+    <!--Also temporary thing ends-->
+
     <footer></footer>
     <script src="{{ url_for('static', filename='scripts/base.js') }}"></script>
     {% block scripts %}{% endblock %}

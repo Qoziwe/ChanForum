@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+<!--  -->
+{% block links %}<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/create.css') }}"
+/>
+{% endblock %}
+<!--  -->
+{% block title %}####Chan{% endblock %}
+<!--  -->
+{% if username %}
+<!--  -->
+{% block body%}
+<section id="MainContainer">
+  <div id="MC-Inner">
+    <h1>Create a New Post</h1>
+    <form method="post">
+      <div>
+        <label for="title"><em>Title</em></label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Post title"
+          value="{{ request.form['title'] if request.form['title'] else '' }}"
+        />
+      </div>
+      <div>
+        <label for="content"><em>Content</em></label>
+        <textarea
+          name="content"
+          placeholder="Post content"
+          id="MC-I-Textarea"
+        ></textarea>
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}
+<!--  -->
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/create.js') }}"></script>
+{% endblock %}
+
+<!--  -->
+{% else %}
+<p>You need to <a href="{{ url_for('login') }}">log in</a> to create a post.</p>
+{% endif %}
+<!--  -->
