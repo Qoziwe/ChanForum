@@ -16,7 +16,7 @@
 ## Схема установки репозитория:
 Делится на несколько этапов
 #### 1) Для установки виртуального окружения, вам необходимо в терминал прописать
-        python3 -m venv venv 
+        python -m venv venv 
 <p>либо по данной ссылке: <a href="https://docs.python.org/3/tutorial/venv.html">venv</a></p>
 
 ### 2) Установка пакетов из requirments.txt
