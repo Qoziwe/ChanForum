@@ -21,3 +21,6 @@
 
 ### 2) Установка пакетов из requirments.txt
         pip install -r requirements.txt
+
+### 3) Установка модуля flask
+        pip install flask
