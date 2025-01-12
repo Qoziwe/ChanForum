@@ -157,14 +157,22 @@ def create():
     username = None
     if 'user_id' in session:
         # Получаем имя пользователя из базы данных
+<<<<<<< HEAD
         conn = sqlite3.connect(db_pathusers)
+=======
+        conn = sqlite3.connect(db_pathpost)
+>>>>>>> 06cd0c66a1a48cdc0c7e632b6c122eb3d969cc75
         cursor = conn.cursor()
         cursor.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],))
         user = cursor.fetchone()
         conn.close()
         if user:
             username = user[0]
+<<<<<<< HEAD
         username = user[0]
+=======
+
+>>>>>>> 06cd0c66a1a48cdc0c7e632b6c122eb3d969cc75
     if request.method == 'POST':
         # Получаем данные из формы
         title = request.form['title']
@@ -190,6 +198,14 @@ def create():
 
     return render_template('create.html', username=username)
 
+<<<<<<< HEAD
+=======
+
+        
+
+
+
+>>>>>>> 06cd0c66a1a48cdc0c7e632b6c122eb3d969cc75
 @app.route('/<int:id>/edit', methods=('GET', 'POST'))
 def edit(id):
     if 'user_id' not in session:
