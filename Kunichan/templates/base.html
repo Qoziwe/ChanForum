@@ -15,12 +15,22 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
+    
     <div class="snow-container"></div>
 
     <header class="navbar">
       <div class="navbar-logo">
         <h1><a href="./">####Chan</a></h1>
       </div>
+      <!--Temporary thing-->
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('create')}}">New Post</a>
+      </li>
+      
+      {% for message in get_flashed_messages() %}
+          <div class="alert alert-danger">{{ message }}</div>
+      {% endfor %}
+      <!--Temporary thing ends-->
 
       <div class="search-container">
         <input
@@ -36,12 +46,20 @@
       </div>
 
       {% if username %}
-      <a href="./profile"><button class="logbutton">{{ username }}</button></a>
+        <a href="./profile"><button class="logbutton">{{ username }}</button></a>
       {% else %}
-      <a href="./register"><button class="logbutton">Sign up</button></a>
+        <a href="./register"><button class="logbutton">Sign up</button></a>
       {% endif %}
     </header>
-    {% block body %}{% endblock %}
+    
+    {% block body %} {% endblock %}
+    <!--Also temporary thing-->
+    <div class="container">
+        {% block content %} {% endblock %}
+    </div>
+    <!--Also temporary thing ends-->
+
+
     <footer></footer>
     <script src="{{ url_for('static', filename='scripts/base.js') }}"></script>
     {% block scripts %}{% endblock %}

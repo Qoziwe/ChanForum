@@ -114,11 +114,10 @@
     </button>
   </section>
   <section id="ProfileBanner">
-    <h1>Your nickname: {{ username }}</h1>
-    <h2>Your email: {{ email }}</h2>
-    <h2><a href="/edit">Edit</a></h2>
+    <div class="nicknameh1"><h1> {{ username }} </h1> </div>
+    <div class="nicknameh3"><p>#{{username}} </h3></p>
+    <div class="editsection"><h2><a href="/edit">edit</a></h2></div>
     <h2><a href="/logout">logout</a></h2>
-    <h2><a href="/">Home</a></h2>
   </section>
   <section id="ProfileAvatar"></section>
   <section id="ProfileLikes"></section>

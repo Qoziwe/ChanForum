@@ -7,6 +7,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/home.css') }}"
 />
+<link rel="stylesheet" href="{{ url_for('static', filename= 'stylesforpostblog/style.css') }}"> <!--Do not touch and not usable-->
 {% endblock %}
 
 <!--  -->
@@ -140,6 +141,18 @@
       </div>
       <hr />
       <aside>
+        <!--POST section-->
+        {% for post in posts %}
+            <a href="{{ url_for('post', post_id=post['id']) }}">
+                <h2>{{ post['title'] }}</h2>
+            </a>
+            <span class="badge badge-primary">{{ post['created'] }}</span>
+            <a href="{{ url_for('edit', id=post['id']) }}">
+                <span class="badge badge-warning">Edit</span>
+            </a>
+            <hr>
+        {% endfor %}
+        <!--POST section ends-->
         <div class="D-C-Card">
           <div class="D-C-Card-Front">
             <div class="D-C-Card-F-LeftPart">
@@ -316,7 +329,21 @@
       <button>View</button>
     </div>
   </section>
+
+  {% block content %}
+   {% for post in posts %}
+    <a href="{{ url_for('post', post_id=post['id']) }}">
+      <h2>{{ post['title'] }}</h2>
+    </a>
+       <span class="badge badge-primary">{{ post['created'] }}</span>
+       <hr>
+   {% endfor %}
+  {% endblock %}
+    
+    
+ 
 </main>
+   
 {% endblock %}
 
 <!--  -->
