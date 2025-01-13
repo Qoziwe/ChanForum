@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% extends 'base.html' %}
 <!--  -->
 {% block links %}<link
@@ -50,29 +49,3 @@
 <p>You need to <a href="{{ url_for('login') }}">log in</a> to create a post.</p>
 {% endif %}
 <!--  -->
-=======
-{% extends 'base.html' %}
-{% block content %}
-    {% if username %}
-        <h1>Create a New Post</h1>
-        <form method="post">
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" name="title" placeholder="Post title" class="form-control"
-                       value="{{ request.form['title'] if request.form['title'] else '' }}">
-            </div>
-            <div class="form-group">
-                <label for="content">Content</label>
-                <textarea name="content" placeholder="Post content" class="form-control">
-                    {{ request.form['content'] if request.form['content'] else '' }}
-                </textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-    {% else %}
-        <p>You need to <a href="{{ url_for('login') }}">log in</a> to create a post.</p>
-    {% endif %}
-{% endblock %}
->>>>>>> 06cd0c66a1a48cdc0c7e632b6c122eb3d969cc75
