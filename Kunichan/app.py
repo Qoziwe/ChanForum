@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from werkzeug.exceptions import abort
 import sqlite3
 import os
+import hashlib
 
 app = Flask(__name__)
 app.secret_key = 'yourmom'  # your mom
@@ -10,12 +11,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_pathpost = os.path.join(BASE_DIR, 'db', 'databasepost.db')
 db_pathusers = os.path.join(BASE_DIR, 'db', 'databaseusers.db')
 Error = None
+
+
 @app.route("/")
 def mainpage():
-    posts = []
+    posts=[]
     with sqlite3.connect(db_pathusers) as db:
         conn = sqlite3.connect(db_pathpost)
-        conn.row_factory = sqlite3.Row  # Устанавливаем row_factory для удобной работы с колонками
+        conn.row_factory = sqlite3.Row
         posts = conn.execute('SELECT * FROM posts ORDER BY id DESC').fetchall()  # Сортируем посты по id в порядке убывания
         if 'user_id' in session:
             cursor = db.cursor()
@@ -24,7 +27,10 @@ def mainpage():
             if user:
                 username = user[0]
                 return render_template("mainpage.html", username=username, posts=posts)
+            
     return render_template("mainpage.html", username=None, posts=posts)
+
+
 
 @app.route('/profile')
 def profile():
@@ -37,6 +43,7 @@ def profile():
                 username = user[0]
                 return render_template("profile.html", username=username)
     return render_template("mainpage.html", username=None)
+
 
 @app.route("/edit")
 def edit_profile():
@@ -74,12 +81,20 @@ def update_profile():
     except Exception as e:
         return f"Произошла ошибка: {e}"
 
+
+def encrypt_username(username):
+    return hashlib.sha256(username.encode()).hexdigest()
+
+
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        global uniq_id
+        uniq_id = encrypt_username(username)
         try:
             with sqlite3.connect(db_pathusers) as db:
                 cursor = db.cursor()
@@ -88,8 +103,8 @@ def register():
                 if existing_user:
                     return render_template('register.html', error=Error)
                 cursor = db.cursor()
-                query = """ INSERT INTO users (username, email, password) VALUES (?, ?, ?) """
-                cursor.execute(query, (username, email, password))
+                query = """ INSERT INTO users (username, email, password, uniq_id) VALUES (?, ?, ?, ?) """
+                cursor.execute(query, (username, email, password, uniq_id))
                 db.commit()
                 session['user_id'] = cursor.lastrowid
 
@@ -100,11 +115,14 @@ def register():
 
     return render_template("register.html")
 
+
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        
         try:
             with sqlite3.connect(db_pathusers) as db:
                 cursor = db.cursor()
@@ -126,6 +144,7 @@ def login():
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('mainpage'))
+
 
 def get_post(post_id):
     try:
@@ -155,16 +174,19 @@ def create():
         return redirect(url_for('login'))
 
     username = None
+    uniq_id = None
     if 'user_id' in session:
-        # Получаем имя пользователя из базы данных
+        # Получаем имя пользователя и uniq_id из базы данных
         conn = sqlite3.connect(db_pathusers)
         cursor = conn.cursor()
-        cursor.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],))
+        cursor.execute("SELECT username, uniq_id FROM users WHERE id = ?", (session['user_id'],))
         user = cursor.fetchone()
         conn.close()
         if user:
             username = user[0]
-        username = user[0]
+            uniq_id = user[1]
+    
+    user_uniq_id = uniq_id
     if request.method == 'POST':
         # Получаем данные из формы
         title = request.form['title']
@@ -179,8 +201,8 @@ def create():
             # Сохраняем пост в базу данных
             conn = sqlite3.connect(db_pathpost)
             conn.execute(
-                'INSERT INTO posts (title, content) VALUES (?, ?)',
-                (title, content)
+                'INSERT INTO posts (title, content, user_uniq_id) VALUES (?, ?, ?)',
+                (title, content, user_uniq_id)
             )
             conn.commit()
             conn.close()
@@ -196,6 +218,17 @@ def edit(id):
         return redirect(url_for('login'))
     
     post = get_post(id)
+    uniq_id = None
+    # Получаем имя пользователя и uniq_id из базы данных
+    conn = sqlite3.connect(db_pathusers)
+    cursor = conn.cursor()
+    cursor.execute("SELECT uniq_id FROM users WHERE uniq_id = ?", (uniq_id))
+    user = cursor.fetchone()
+    conn.close()
+    if user:
+        uniq_id = user[0]
+    
+    user_uniq_id = uniq_id
 
     if request.method == 'POST':
         title = request.form['title']
@@ -203,14 +236,15 @@ def edit(id):
 
         if not title:
             flash('Title is required!')
-        else:
+        elif user_uniq_id == uniq_id:
             conn = sqlite3.connect(db_pathpost)
             conn.execute('UPDATE posts SET title = ?, content = ? WHERE id = ?', (title, content, id))
             conn.commit()
             conn.close()
             flash('"{}" was successfully edited!'.format(post['title']))
             return redirect(url_for('mainpage'))
-
+        else:
+            return redirect(url_for('login'))
     return render_template('edit.html', post=post)
 
 @app.route('/<int:id>/delete', methods=('POST',))
