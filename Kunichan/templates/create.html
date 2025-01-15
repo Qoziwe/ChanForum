@@ -14,34 +14,24 @@
 <section id="MainContainer">
   <div id="MC-Inner">
     <h1>Create a New Post</h1>
-    <form method="post">
-      <div>
-        <label for="title"><em>Title</em></label>
-        <input
-          type="text"
-          name="title"
-          placeholder="Post title"
-          value="{{ request.form['title'] if request.form['title'] else '' }}"
-        />
-      </div>
-      <div>
-        <label for="content"><em>Content</em></label>
-        <textarea
-          name="content"
-          placeholder="Post content"
-          id="MC-I-Textarea"
-        ></textarea>
-      </div>
-      <div>
-        <button type="submit">Submit</button>
-      </div>
+    <form method="POST" enctype="multipart/form-data">
+      <label for="title">Title:</label>
+      <input type="text" name="title" id="title" required />
+
+      <label for="content">Content:</label>
+      <textarea name="content" id="MC-I-Textarea" required></textarea>
+
+      <label for="post_image">Upload Image:</label>
+      <input type="file" name="image" accept="image/*" required />
+
+      <button type="submit">Create Post</button>
     </form>
   </div>
 </section>
 {% endblock %}
 <!--  -->
 {% block scripts %}
-<script src="{{ url_for('static', filename='scripts/create.js') }}"></script>
+<!-- <script src="{{ url_for('static', filename='scripts/create.js') }}"></script> -->
 {% endblock %}
 
 <!--  -->

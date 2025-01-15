@@ -37,3 +37,37 @@ setInterval(() => {
 function urlFor(data) {
   window.location.href = `/${data}`;
 }
+
+function toggleNavigation() {
+  const navigation = document.getElementById("Navigation");
+  navigation.classList.toggle("collapsed");
+  if (navigation.classList.contains("collapsed")) {
+    localStorage.setItem("NavigationBarStatus", "collapsed");
+  } else {
+    localStorage.setItem("NavigationBarStatus", "decollapsed");
+  }
+}
+
+window.onload = function () {
+  const navigation = document.getElementById("Navigation");
+  navigation.classList.toggle(
+    String(localStorage.getItem("NavigationBarStatus"))
+  );
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  // Получаем текущий путь из URL без начального "/"
+  const path = window.location.pathname.replace("/", "") || "0"; // Подставляем "0", если путь пустой
+
+  // Ищем элемент с ID, совпадающим с path
+  const targetElement = document.getElementById(path);
+
+  // Проверяем, найден ли элемент
+  if (targetElement) {
+    // Если найден, добавляем класс
+    targetElement.classList.add("NavigationSelectedMenu");
+  } else {
+    // Выводим сообщение, если элемент не найден
+    console.warn(`Элемент с id="${path}" не найден.`);
+  }
+});

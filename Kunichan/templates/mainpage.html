@@ -7,7 +7,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/mainpage.css') }}"
 />
-<link rel="stylesheet" href="{{ url_for('static', filename= 'stylesforpostblog/style.css') }}"> <!--Do not touch and not usable-->
+<!--Do not touch and not usable-->
 {% endblock %}
 
 <!--  -->
@@ -17,140 +17,39 @@
 <!--  -->
 
 {% block body %}
-<!-- <section id="Navigation">
-    <button id="N-Home" class="N-Button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#d3d3d3"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="N-H-Svg"
-      >
-        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-      </svg>
-      Home
-    </button>
-    <button id="N-Discussions" class="N-Button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#d3d3d3"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="N-H-Svg"
-      >
-        <path
-          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-        ></path>
-      </svg>
-      Duscussions
-    </button>
-    <button id="N-Friends" class="N-Button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#d3d3d3"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="N-H-Svg"
-      >
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-        <circle cx="9" cy="7" r="4"></circle>
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-      </svg>
-      Friends
-    </button>
-    <button id="N-Bookmarks" class="N-Button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#d3d3d3"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="N-H-Svg"
-      >
-        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
-      </svg>
-      Bookmarks
-    </button>
-    <button id="N-Settings" class="N-Button">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#d3d3d3"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="N-H-Svg"
-      >
-        <path
-          d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"
-        ></path>
-        <circle cx="12" cy="12" r="3"></circle>
-      </svg>
-      Settings
-    </button>
-  </section> -->
 <section id="Discussions">
   <div id="D-Container">
-    <div id="D-CarouselContainer">
-      <div id="D-CC-Carousel">
-        <div class="D-CC-C-Card">
-          <button>Topic 1</button>
-        </div>
-        <div class="D-CC-C-Card">
-          <button>Topic 2</button>
-        </div>
-        <div class="D-CC-C-Card">
-          <button>Topic 3</button>
-        </div>
-        <div class="D-CC-C-Card">
-          <button>Topic 4</button>
-        </div>
-        <div class="D-CC-C-Card">
-          <button>Topic 5</button>
-        </div>
+    <div id="D-C-Carousel">
+      <button class="D-C-C-Button left">&#8592;</button>
+      <div id="D-C-C-Track">
+        <div class="D-C-C-T-Card"></div>
+        <div class="D-C-C-T-Card"></div>
+        <div class="D-C-C-T-Card"></div>
+        <div class="D-C-C-T-Card"></div>
+        <div class="D-C-C-T-Card"></div>
       </div>
-      <div class="D-CC-ControlS">
-        <button class="D-CC-CS-Button" id="prev">&#8249;</button>
-        <button class="D-CC-CS-Button" id="next">&#8250;</button>
-      </div>
+      <button class="D-C-C-Button right">&#8594;</button>
     </div>
     <hr />
     <aside>
       <!--POST section-->
-      {% for post in posts %}
+      {% for post in posts %} {% if post['post_image'] %}
+      <img
+        src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+        alt="{{ post['title'] }}"
+        style="width: 20rem"
+      />
+      {% endif %}
       <a href="{{ url_for('post', post_id=post['id']) }}">
         <h2>{{ post['title'] }}</h2>
       </a>
-      <span class="badge badge-primary">{{ post['created'] }}</span>
+      <span class="badge badge-primary">{{ post['created_at'] }}</span>
       <a href="{{ url_for('edit', id=post['id']) }}">
         <span class="badge badge-warning">Edit</span>
       </a>
       <hr />
       {% endfor %}
+
       <!--POST section ends-->
       <div class="D-C-Card">
         <div class="D-C-Card-Front">
@@ -207,7 +106,6 @@
       </div>
       <div class="D-C-Card">
         <div class="D-C-Card-Front">
-          <!-- <img src="" alt="" /> -->
           <span>
             <h1></h1>
             <p></p>
@@ -222,7 +120,6 @@
       </div>
       <div class="D-C-Card">
         <div class="D-C-Card-Front">
-          <!-- <img src="" alt="" /> -->
           <span>
             <h1></h1>
             <p></p>
@@ -237,7 +134,6 @@
       </div>
       <div class="D-C-Card">
         <div class="D-C-Card-Front">
-          <!-- <img src="" alt="" /> -->
           <span>
             <h1></h1>
             <p></p>
@@ -252,7 +148,6 @@
       </div>
       <div class="D-C-Card">
         <div class="D-C-Card-Front">
-          <!-- <img src="" alt="" /> -->
           <span>
             <h1></h1>
             <p></p>
@@ -267,7 +162,6 @@
       </div>
       <div class="D-C-Card">
         <div class="D-C-Card-Front">
-          <!-- <img src="" alt="" /> -->
           <span>
             <h1></h1>
             <p></p>
@@ -334,5 +228,5 @@
 <!--  -->
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/mainpage.js') }}"></script>
 {% endblock %}

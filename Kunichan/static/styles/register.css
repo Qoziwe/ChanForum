@@ -59,38 +59,48 @@
   height: 3vw;
   padding: 0.5vw;
   font-size: 1vw;
-  background-color: rgb(26, 26, 26);
+  background-color: #2c2c2c;
   border: none;
   border-radius: 1vw;
-  transition: box-shadow 0.4s ease;
+  transition: background-color ease-in-out 150ms, box-shadow ease-in-out 150ms;
+}
+#R-Container form input:focus {
+  background-color: #2c2c2c;
+  border: 0.1vw solid #2c2c2c;
+  -webkit-box-shadow: 0px 0px 1vw 0.2vw #414141;
+  -moz-box-shadow: 0px 0px 1vw 0.2vw #414141;
+  box-shadow: 0px 0px 1vw 0.2vw #414141;
+  outline: none;
 }
 #R-Container form button {
   width: 8vw;
   height: 3vw;
   background-color: rgba(255, 0, 0, 0);
   color: aliceblue;
-  border: 0.1vw solid #ff2020;
+  border: 0.1vw solid #4f4f4f;
   font-size: 1vw;
   font-family: "Montserrat";
   border-radius: 1vw;
   transition: all ease-in-out 150ms;
 }
 #R-Container form button:hover {
-  background-color: #ff2020;
+  background-color: #4f4f4f;
   border-radius: 10vw;
-  -webkit-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  -moz-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  box-shadow: 0px 0px 5vw 0.1vw #ff2020;
+  -webkit-box-shadow: 0px 0px 10vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 10vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 5vw 0.1vw #4f4f4f;
 }
 #R-C-LoginButton p {
   font-size: 1.1vw;
   font-family: "Montserrat";
+  color: #848484;
 }
 #R-C-LoginButton a {
   text-decoration: underline;
   transition: all ease-in-out 150ms;
   user-select: none;
+  color: #848484;
 }
 #R-C-LoginButton a:hover {
-  color: #ff2020;
+  color: #ffffff;
 }

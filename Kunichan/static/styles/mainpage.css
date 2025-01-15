@@ -7,6 +7,10 @@
   src: url("../fonts/Montserrat-VariableFont_wght.ttf");
 }
 
+#mainInner {
+  justify-content: space-evenly;
+}
+
 #Similar {
   width: 20vw;
   height: 60vh;
@@ -16,12 +20,11 @@
   align-items: center;
   gap: 1vw;
   border-radius: 3vw;
-  padding-top: 2vw;
+  padding: 2vw 1vw 0 1vw;
   margin-top: 2vw;
   box-sizing: border-box;
-  grid-column: 3;
-  -webkit-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  -moz-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  -webkit-box-shadow: inset 0px 0px 1vw 0.1vw #000000;
+  -moz-box-shadow: inset 0px 0px 1vw 0.1vw #000000;
   box-shadow: inset 0px 0px 1vw 0.1vw #000000;
 }
 #S-Article {
@@ -30,7 +33,7 @@
 }
 #Similar hr {
   width: 80%;
-  border: 0.1vw solid #ff2020;
+  border: 0.1vw solid #4f4f4f;
 }
 .S-Card {
   position: relative;
@@ -60,26 +63,24 @@
   background-color: #90000000;
   position: absolute;
   border-radius: 2vw;
-  border: 0.1vw solid #ff2020;
+  border: 0.1vw solid #4f4f4f;
   right: 0;
   font-family: "Montserrat";
   font-size: 0.75vw;
   transition: all 150ms ease-in-out;
 }
 .S-Card button:hover {
-  background-color: #ff2020;
+  background-color: #4f4f4f;
   border-radius: 10vw;
-  -webkit-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  -moz-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  box-shadow: 0px 0px 5vw 0.1vw #ff2020;
+  -webkit-box-shadow: 0px 0px 10vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 10vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
 }
 
 #Discussions {
-  width: 100%;
-  height: 100%;
-  padding: 2vw 2vw 0 2vw;
-  grid-column: 2;
-  grid-row: 1;
+  width: 70%;
+  height: 90vh;
+  padding: 2vw 0 0 0;
   box-sizing: border-box;
 }
 #D-Container {
@@ -95,77 +96,69 @@
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0);
-  -webkit-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  /* -webkit-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
   -moz-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  box-shadow: inset 0px 0px 1vw 0.1vw #000000;
+  box-shadow: inset 0px 0px 1vw 0.1vw #000000; */
 }
-#D-CarouselContainer {
-  width: 55.5vw;
-  min-height: 20vw;
+#D-C-Carousel {
+  position: relative;
+  width: 56vw;
+  overflow: hidden;
+  min-height: 18vw;
+  background: #111111;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
   display: flex;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
+  border-radius: 2vw;
+  box-sizing: border-box;
 }
-#D-CC-Carousel {
+#D-C-C-Track {
   display: flex;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease-in-out;
   gap: 2vw;
+  /* border-radius: 3vw; */
 }
-.D-CC-C-Card {
-  min-width: 16.5vw;
-  min-height: 18vw;
-  background-color: #1b1b1b;
+.D-C-C-T-Card {
+  background: #272727;
+  border-radius: 0.7vw;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   display: flex;
   justify-content: center;
-  align-items: end;
-  border-radius: 1vw;
-  padding-bottom: 2vw;
-  -webkit-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  -moz-box-shadow: 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  box-shadow: 0px 0px 1vw 0.1vw #000000;
+  align-items: center;
+  font-size: 1vw;
+  width: 15vw;
+  height: 18vw;
   text-align: center;
 }
-.D-CC-C-Card button {
-  width: 8vw;
-  height: 3vw;
-  border: 0.1vw solid #ff2020;
-  border-radius: 1vw;
-  background-color: #111111;
-  font-size: 0.8vw;
-  transition: all 150ms ease-in-out;
-}
-.D-CC-C-Card button:hover {
-  background-color: #ff2020;
-  border-radius: 10vw;
-  -webkit-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
-  -moz-box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
-  box-shadow: 0px 0px 3vw 0.05vw #ff2020bc;
-}
-.D-CC-ControlS {
+.D-C-C-Button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-.D-CC-CS-Button {
-  background-color: rgba(0, 0, 0, 0.5);
+  background: #17171700;
+  border: 0.1vw solid #4f4f4f;
   color: #fff;
-  border: none;
-  border-radius: 100vw;
+  border-radius: 50%;
   width: 3vw;
   height: 3vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2vw;
   cursor: pointer;
+  font-size: 1vw;
+  z-index: 10;
+  transition: all ease-in-out 150ms;
 }
-.D-CC-CS-Button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+.D-C-C-Button.left {
+  left: 1vw;
+}
+.D-C-C-Button.right {
+  right: 1vw;
+}
+.D-C-C-Button:hover {
+  background: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 10vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 10vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
 }
 #D-Container hr {
   width: 45vw;
@@ -177,7 +170,7 @@ aside {
   gap: 0.8vw;
 }
 .D-C-Card {
-  width: 55.5vw;
+  width: 100%;
   padding: 1vw;
   background-color: #1a1a1a;
   border-radius: 3vw;

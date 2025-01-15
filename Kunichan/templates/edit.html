@@ -1,8 +1,51 @@
 {% extends 'base.html' %}
-
+<!--  -->
+{% block links %}<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/create.css') }}"
+/>
+{% endblock %}
+<!--  -->
 {% block body %}
-<h1>{% block title %} Edit "{{ post['title'] }}" {% endblock %}</h1>
+<section id="MainContainer">
+  <div id="MC-Inner">
+    <h1>{% block title %} Edit "{{ post['title'] }}" post {% endblock %}</h1>
+    <form method="post">
+      <div>
+        <label for="title">Title</label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Post title"
+          value="{{ request.form['title'] or post['title'] }}"
+        />
+      </div>
 
+      <div>
+        <label for="content">Content</label>
+        <textarea name="content" placeholder="Post content" id="MC-I-Textarea">
+{{ request.form['content'] or post['content'] }}</textarea
+        >
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+    <form action="{{ url_for('delete', id=post['id']) }}" method="POST">
+      <input
+        id="MC-I-Deleter"
+        type="submit"
+        value="Delete Post"
+        onclick="return confirm('Are you sure you want to delete this post?')"
+      />
+    </form>
+  </div>
+</section>
+{% endblock %}
+
+<!--  -->
+
+<!-- 
 <form method="post">
     <div class="form-group">
         <label for="title">Title</label>
@@ -29,4 +72,4 @@
             class="btn btn-danger btn-sm"
             onclick="return confirm('Are you sure you want to delete this post?')">
 </form>
-{% endblock %}
+-->

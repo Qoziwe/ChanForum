@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 <!--  -->
-{% block title %} {{ post['title'] }} {% endblock %}
-<!--  -->
 {% block body %}
-<h2></h2>
-<span class="badge badge-primary">{{ post['created'] }}</span>
+<h1>{{ post['title'] }}</h1>
 <p>{{ post['content'] }}</p>
+{% if post['post_image'] %}
+<img
+  src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+  alt="{{ post['title'] }}"
+  style="width: 40rem"
+/>
+{% endif %}
+<!--  -->
 {% endblock %}

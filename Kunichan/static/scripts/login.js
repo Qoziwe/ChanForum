@@ -9,7 +9,7 @@ window.onload = function () {
   var counter = 90;
   var readmeclearer = setInterval(() => {
     counter -= 0.5;
-    console.log(counter);
+    // console.log(counter);
     document.getElementById(
       "R-Container"
     ).style.transform = `rotateY(${counter.toString()}deg`;
@@ -24,7 +24,7 @@ LoginButton.onclick = function () {
   var counter = 0;
   var readmeclearer = setInterval(() => {
     counter += 0.5;
-    console.log(counter);
+    // console.log(counter);
     document.getElementById(
       "R-Container"
     ).style.transform = `rotateY(${counter.toString()}deg`;
