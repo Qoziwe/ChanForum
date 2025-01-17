@@ -44,9 +44,9 @@
         <h2>{{ post['title'] }}</h2>
       </a>
       <span class="badge badge-primary">{{ post['created_at'] }}</span>
-      <a href="{{ url_for('edit', id=post['id']) }}">
+      <!--<a href="{{ url_for('edit', id=post['id']) }}">
         <span class="badge badge-warning">Edit</span>
-      </a>
+      </a>-->
       <hr />
       {% endfor %}
 

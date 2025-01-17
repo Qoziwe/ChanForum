@@ -48,10 +48,23 @@
       </div>
 
       {% if username %}
-      <a href="/profile"><button class="logbutton">{{ username }}</button></a>
+        <a href="/profile">
+            <button class="logbutton">
+                {% if profile_image %}
+                    <img src="data:image/png;base64,{{ profile_image|b64encode }}" alt="Avatar" class="avatar"
+                    style="width: 2.5vw; /* Размер изображения */
+                    height: 2.5vw;
+                    border-radius: 50%; /* Круглая форма */
+                    margin-right: 10px; /* Отступ от имени */
+                    object-fit: cover; /* Сохранение пропорций */">
+                {% endif %}
+                {{ username }}
+            </button>
+        </a>
       {% else %}
-      <a href="/register"><button class="logbutton">Sign up</button></a>
+          <a href="/register"><button class="logbutton">Sign up</button></a>
       {% endif %}
+
     </header>
 
     <main>
@@ -112,6 +125,24 @@
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
           <p>Home</p>
+        </button>
+        <button id="0" class="N-Button" onclick="window.location.href='/editposts' ">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#d3d3d3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="N-H-Svg"
+          >
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <p>My posts</p>
         </button>
         <button id="N-Discussions" class="N-Button">
           <svg
@@ -174,24 +205,38 @@
         <hr />
         <h1>Other</h1>
         <button id="profile" class="N-Button" onclick="urlFor('profile')">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#d3d3d3"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="N-H-Svg"
-          >
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
+          
           <p>Profile</p>
         </button>
         <button id="N-Settings" class="N-Button">
+          {% if username %}
+            <a href="/profile">
+                <button class="logbutton">
+                    {% if profile_image %}
+                        <img src="data:image/png;base64,{{ profile_image|b64encode }}" alt="Avatar" class="avatar"
+                        style="width: 2.5vw; /* Размер изображения */
+                        height: 2.5vw;
+                        border-radius: 50%; ">
+                    {% endif %}
+                </button>
+            </a>
+          {% else %}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#d3d3d3"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="N-H-Svg"
+                >
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+          {% endif %}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

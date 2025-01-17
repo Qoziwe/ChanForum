@@ -1,33 +1,24 @@
 {% extends 'base.html' %}
 
-<!--  -->
-
-{% block title %} Login {% endblock %}
-
-<!--  -->
-
-{% block links %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='styles/profile.css') }}"
-/>
-{% endblock %}
-
-<!--  -->
+{% block title %} Profile {% endblock %}
 
 {% block body %}
   <section id="ProfileBanner">
-    <div><h1> {{ username }} </h1> </div>
-    <div><p>#{{username}} </h3></p>
-    <div><h2><a href="/edit">edit</a></h2></div>
-    <h2><a href="/logout">logout</a></h2>
+    {% if profile_image %}
+      <img
+        src="data:image/jpeg;base64,{{ profile_image | b64encode }}"
+        alt="Profile Image"
+        style="width: 150px; height: 150px; border-radius: 50%;"
+      />
+    {% else %}
+      <img
+        src="{{ url_for('static', filename='images/default-profile.png') }}"
+        alt="Default Profile Image"
+        style="width: 150px; height: 150px; border-radius: 50%;"
+      />
+    {% endif %}
+    <div class="nicknameh1"><h1>{{ username }}</h1></div>
+    <h2><a href="/update_profile">Edit Profile</a></h2>
+    <h2><a href="/logout">Logout</a></h2>
   </section>
-  <section id="ProfileAvatar"></section>
-  <section id="ProfileLikes"></section>
-  <section id="ProfileActivity"></section>
-  <section id="ProfilePosts"></section>
 {% endblock %}
-
-<!--  -->
-
-{% block scripts %} {% endblock %}

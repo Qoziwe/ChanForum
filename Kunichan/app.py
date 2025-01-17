@@ -18,6 +18,8 @@ Error = None
 def b64encode_filter(data):
     return base64.b64encode(data).decode('utf-8')
 
+
+#BUFER for situation, if something goes wrong
 # @app.route("/")
 # def mainpage():
 #     posts=[]
@@ -36,6 +38,9 @@ def b64encode_filter(data):
             
 #     return render_template("mainpage.html", username=None, posts=posts)
 
+
+
+
 @app.route("/")
 def mainpage():
     posts = []
@@ -45,57 +50,129 @@ def mainpage():
     conn.close()
 
     username = None
+    profile_image = None
     if 'user_id' in session:
         conn = sqlite3.connect(db_pathusers)
         cursor = conn.cursor()
-        cursor.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],))
+        cursor.execute("SELECT username, profile_image FROM users WHERE id = ?", (session['user_id'],))
         user = cursor.fetchone()
         conn.close()
         if user:
             username = user[0]
+            profile_image = user[1]  # Получаем аватар пользователя
 
-    return render_template("mainpage.html", username=username, posts=posts)
+    return render_template("mainpage.html", username=username, profile_image=profile_image, posts=posts)
 
+# Маршрут для editposts
+@app.route('/editposts')
+def editposts():
+    posts = []
+    profile_image = None
+    username = None
+    uniq_id = None
+
+    if 'user_id' in session:
+        conn = sqlite3.connect(db_pathusers)
+        cursor = conn.cursor()
+        cursor.execute("SELECT username, profile_image, uniq_id FROM users WHERE id = ?", (session['user_id'],))
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            username = user[0]
+            profile_image = user[1]  # Получаем аватар пользователя
+            uniq_id = user[2]       # Получаем uniq_id пользователя
+
+    if uniq_id:
+        conn = sqlite3.connect(db_pathpost)
+        conn.row_factory = sqlite3.Row
+        posts = conn.execute(
+            'SELECT * FROM posts WHERE user_uniq_id = ? ORDER BY id DESC', 
+            (uniq_id,)
+        ).fetchall()  # Выбираем только посты текущего пользователя
+        conn.close()
+
+    return render_template('editposts.html', posts=posts, username=username, profile_image=profile_image, uniq_id=uniq_id)
+
+
+# @app.route('/profile')
+# def profile():
+#     if 'user_id' in session:
+#         with sqlite3.connect(db_pathusers) as db:
+#             cursor = db.cursor()
+#             cursor.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],))
+#             user = cursor.fetchone()
+#             if user:
+#                 username = user[0]
+#                 return render_template("profile.html", username=username)
+#     return render_template("mainpage.html", username=None)
 
 @app.route('/profile')
 def profile():
     if 'user_id' in session:
         with sqlite3.connect(db_pathusers) as db:
             cursor = db.cursor()
-            cursor.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],))
+            cursor.execute("SELECT username, profile_image FROM users WHERE id = ?", (session['user_id'],))
             user = cursor.fetchone()
             if user:
                 username = user[0]
-                return render_template("profile.html", username=username)
-    return render_template("mainpage.html", username=None)
+                profile_image = user[1] if user[1] else None  # Изображение профиля
+                return render_template("profile.html", username=username, profile_image=profile_image)
+    flash('User not logged in. Please login.')
+    return redirect(url_for('login'))
 
 
 
-#not working yet
-@app.route("/update_profile", methods=["POST"])
+#profile_update
+@app.route('/update_profile', methods=['GET', 'POST'])
 def update_profile():
-    username = request.form.get('username')
-    email = request.form.get('email')
-    password = request.form.get('password')
-    profile_picture = request.files.get('profile_picture')
-    try:
-        with sqlite3.connect(db_pathusers) as db:
-            cursor = db.cursor()
-            cursor.execute("UPDATE users SET username = ? WHERE id = ?", (username, session['user_id']))
-            db.commit()
-            if email and email.strip():
-                cursor.execute("UPDATE users SET email = ? WHERE id = ?", (email.strip(), session['user_id']))
-            if password and password.strip():
-                cursor.execute("UPDATE users SET password = ? WHERE id = ?", (password.strip(), session['user_id']))
-            if profile_picture:
-                filename = f"user_{session['user_id']}_{profile_picture.filename}"
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                profile_picture.save(filepath)
-                cursor.execute("UPDATE users SET profile_picture = ? WHERE id = ?", (filename, session['user_id']))
-            db.commit()
-        return redirect(url_for('edit'))
-    except Exception as e:
-        return f"Произошла ошибка: {e}"
+    if 'user_id' not in session:
+        flash('User not logged in. Please login.')
+        return redirect(url_for('login'))
+    
+    conn = sqlite3.connect(db_pathusers)
+    cursor = conn.cursor()
+    cursor.execute("SELECT username, email FROM users WHERE id = ?", (session['user_id'],))
+    user = cursor.fetchone()
+    conn.close()
+
+    if not user:
+        flash('User not found.')
+        return redirect(url_for('profile'))
+
+    username, email = user
+
+    if request.method == 'POST':
+        new_username = request.form.get('username', username)
+        new_email = request.form.get('email', email)
+        new_password = request.form.get('password')
+        profile_image = request.files.get('profile_image')
+
+        update_query = "UPDATE users SET username = ?, email = ?"
+        params = [new_username, new_email]
+
+        if new_password:
+            update_query += ", password = ?"
+            params.append(new_password)
+
+        if profile_image:
+            profile_image_data = profile_image.read()
+            update_query += ", profile_image = ?"
+            params.append(profile_image_data)
+
+        update_query += " WHERE id = ?"
+        params.append(session['user_id'])
+
+        conn = sqlite3.connect(db_pathusers)
+        conn.execute(update_query, params)
+        conn.commit()
+        conn.close()
+
+        flash('Profile updated successfully!')
+        return redirect(url_for('profile'))
+
+    return render_template("update_profile.html", username=username, email=email)
+
 
 
 def encrypt_username(username):
@@ -163,6 +240,9 @@ def logout():
 #getting post
 def get_post(post_id):
     try:
+        
+        
+
         conn = sqlite3.connect(db_pathpost)
         conn.row_factory = sqlite3.Row
         post = conn.execute('SELECT * FROM posts WHERE id = ?', (post_id,)).fetchone()
@@ -178,19 +258,20 @@ def get_post(post_id):
 
 @app.route('/<int:post_id>')
 def post(post_id):
-    username = None
-    conn = sqlite3.connect(db_pathusers)
-    cursor = conn.cursor()
-    cursor.execute("SELECT username, uniq_id FROM users WHERE id = ?", (session['user_id'],))
-    user = cursor.fetchone()
-    conn.close()
-    if user:
-        username = user[0]
-
-
     post = get_post(post_id)  # Получаем пост по ID
+    username = None
+    profile_image = None
+    if 'user_id' in session:
+        conn = sqlite3.connect(db_pathusers)
+        cursor = conn.cursor()
+        cursor.execute("SELECT username, profile_image FROM users WHERE id = ?", (session['user_id'],))
+        user = cursor.fetchone()
+        conn.close()
+        if user:
+            username = user[0]
+            profile_image = user[1]  # Получаем аватар пользователя
     
-    return render_template('post.html', post=post, username = username)
+    return render_template('post.html', post=post, username=username, profile_image=profile_image)
     
 
 
@@ -226,15 +307,16 @@ def create():
             flash('Title is required!')
         elif not content:
             flash('Content is required!')
-        elif not post_image:
-            flash('Image is required!')
         else:
             # Преобразуем изображение в бинарные данные
             image_blob = post_image.read()
 
             # Сохраняем пост в базу данных
             conn = sqlite3.connect(db_pathpost)
-            conn.execute('INSERT INTO posts (title, content, user_uniq_id, post_image) VALUES (?, ?, ?, ?)', (title, content, user_uniq_id, image_blob))
+            conn.execute(
+                'INSERT INTO posts (title, content, user_uniq_id, post_image) VALUES (?, ?, ?, ?)',
+                (title, content, user_uniq_id, image_blob)
+            )
             conn.commit()
             conn.close()
 
