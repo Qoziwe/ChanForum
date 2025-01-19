@@ -48,7 +48,24 @@
       </div>
 
       {% if username %}
-      <a href="/profile"><button class="logbutton">{{ username }}</button></a>
+      <a href="/profile">
+        <button class="logbutton">
+          {% if profile_image %}
+          <img
+            src="data:image/png;base64,{{ profile_image|b64encode }}"
+            alt="Avatar"
+            class="avatar"
+            style="
+              width: 2.5vw; /* Размер изображения */
+              height: 2.5vw;
+              border-radius: 50%; /* Круглая форма */
+              margin-right: 10px; /* Отступ от имени */
+              object-fit: cover; /* Сохранение пропорций */
+            "
+          />
+          {% endif %} {{ username }}
+        </button>
+      </a>
       {% else %}
       <a href="/register"><button class="logbutton">Sign up</button></a>
       {% endif %}
@@ -92,6 +109,33 @@
             <path d="M10.4 12.6a2 2 0 1 1 3 3L8 21l-4 1 1-4Z"></path>
           </svg>
           <p>New Post</p>
+        </button>
+        <button
+          id="editposts"
+          class="N-Button"
+          onclick="window.location.href='/editposts' "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#d3d3d3"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="N-H-Svg"
+          >
+            <path
+              d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"
+            ></path>
+            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+            <path d="M10 9H8"></path>
+            <path d="M16 13H8"></path>
+            <path d="M16 17H8"></path>
+          </svg>
+          <p>My posts</p>
         </button>
         <hr />
         <h1>Menu</h1>
@@ -174,6 +218,18 @@
         <hr />
         <h1>Other</h1>
         <button id="profile" class="N-Button" onclick="urlFor('profile')">
+          {% if username %} {% if profile_image %}
+          <img
+            src="data:image/png;base64,{{ profile_image|b64encode }}"
+            alt="Avatar"
+            class="avatar"
+            style="
+              width: 2vw; /* Размер изображения */
+              height: 2vw;
+              border-radius: 50%;
+            "
+          />
+          {% endif %} {% else %}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -189,6 +245,7 @@
             <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
+          {% endif %}
           <p>Profile</p>
         </button>
         <button id="N-Settings" class="N-Button">

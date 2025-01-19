@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS posts (
     content TEXT NOT NULL,
     post_image BLOB DEFAULT NULL,
     user_uniq_id INTEGER
-
 );
 
 ALTER TABLE posts ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
@@ -14,8 +13,8 @@ CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
-    user_id INTEGER NOT NULL,
-    user_uniq_id INTEGER NOT NULL
+    post_image BLOB DEFAULT NULL,
+    user_uniq_id INTEGER
 );
 
 ALTER TABLE posts ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
@@ -28,4 +27,15 @@ CREATE TABLE IF NOT EXISTS users (
     password INTEGER NOT NULL,
     uniq_id INT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    email TEXT NOT NULL,
+    password INTEGER NOT NULL,
+    profile_image BLOB DEFAULT NULL,
+    uniq_id INT NOT NULL
+);
+
+
 */

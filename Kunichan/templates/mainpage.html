@@ -30,27 +30,56 @@
       </div>
       <button class="D-C-C-Button right">&#8594;</button>
     </div>
+
     <hr />
+
     <aside>
       <!--POST section-->
-      {% for post in posts %} {% if post['post_image'] %}
-      <img
-        src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
-        alt="{{ post['title'] }}"
-        style="width: 20rem"
-      />
-      {% endif %}
-      <a href="{{ url_for('post', post_id=post['id']) }}">
-        <h2>{{ post['title'] }}</h2>
-      </a>
-      <span class="badge badge-primary">{{ post['created_at'] }}</span>
-      <a href="{{ url_for('edit', id=post['id']) }}">
-        <span class="badge badge-warning">Edit</span>
-      </a>
-      <hr />
+      {% for post in posts %}
+      <!--  -->
+      <div class="D-C-Card">
+        <div class="D-C-Card-Front">
+          <div class="D-C-Card-F-LeftPart">
+            {% if post['post_image'] %}
+            <img
+              src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+              alt="{{ post['title'] }}"
+              style="width: 20rem"
+            />
+            {% endif %}
+            <span>
+              <h1>
+                <a href="{{ url_for('post', post_id=post['id']) }}">
+                  {{ post['title'] }}
+                </a>
+              </h1>
+              <span class="badge badge-primary">
+                {{ post['created_at'] }}
+              </span>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Perspiciatis, accusamus fuga reiciendis, nam nulla eaque dolor
+                debitis nobis fugiat vitae quibusdam animi possimus ab quidem
+                minus, id blanditiis cum sunt.
+              </p>
+            </span>
+          </div>
+          <button class="D-C-Card-Front-Button">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+        <div class="D-C-Card-Back">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
+            ipsa voluptatibus quidem consequatur eveniet, dolor inventore
+            adipisci dolorem quibusdam veniam architecto provident doloribus
+            aut? Harum praesentium officia molestias natus corporis.
+          </p>
+        </div>
+      </div>
       {% endfor %}
-
-      <!--POST section ends-->
       <div class="D-C-Card">
         <div class="D-C-Card-Front">
           <div class="D-C-Card-F-LeftPart">
@@ -79,100 +108,6 @@
             aut? Harum praesentium officia molestias natus corporis.
           </p>
         </div>
-      </div>
-      <div class="D-C-Card">
-        <div class="D-C-Card-Front">
-          <div class="D-C-Card-F-LeftPart">
-            <img src="/static/images/GPT.png" alt="" />
-            <span>
-              <h1>Article</h1>
-              <p></p>
-            </span>
-          </div>
-          <button class="D-C-Card-Front-Button">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <div class="D-C-Card-Back">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            ipsa voluptatibus quidem consequatur eveniet, dolor inventore
-            adipisci dolorem quibusdam veniam architecto provident doloribus
-            aut? Harum praesentium officia molestias natus corporis.
-          </p>
-        </div>
-      </div>
-      <div class="D-C-Card">
-        <div class="D-C-Card-Front">
-          <span>
-            <h1></h1>
-            <p></p>
-          </span>
-          <button class="D-C-Card-Front-Button" id="burger-button">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <div class="D-C-Card-Back"><p></p></div>
-      </div>
-      <div class="D-C-Card">
-        <div class="D-C-Card-Front">
-          <span>
-            <h1></h1>
-            <p></p>
-          </span>
-          <button class="D-C-Card-Front-Button" id="burger-button">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <div class="D-C-Card-Back"><p></p></div>
-      </div>
-      <div class="D-C-Card">
-        <div class="D-C-Card-Front">
-          <span>
-            <h1></h1>
-            <p></p>
-          </span>
-          <button class="D-C-Card-Front-Button" id="burger-button">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <div class="D-C-Card-Back"><p></p></div>
-      </div>
-      <div class="D-C-Card">
-        <div class="D-C-Card-Front">
-          <span>
-            <h1></h1>
-            <p></p>
-          </span>
-          <button class="D-C-Card-Front-Button" id="burger-button">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <div class="D-C-Card-Back"><p></p></div>
-      </div>
-      <div class="D-C-Card">
-        <div class="D-C-Card-Front">
-          <span>
-            <h1></h1>
-            <p></p>
-          </span>
-          <button class="D-C-Card-Front-Button" id="burger-button">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <div class="D-C-Card-Back"><p></p></div>
       </div>
     </aside>
   </div>
