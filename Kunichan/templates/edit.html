@@ -1,35 +1,50 @@
 {% extends 'base.html' %}
 <!--  -->
+{% block title %} ####Chan {% endblock %}
+<!--  -->
 {% block links %}<link
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/create.css') }}"
 />
 {% endblock %}
 <!--  -->
+<!-- {% if username %}
+  <a href="/profile">
+      <button class="logbutton">
+          {% if profile_image %}
+              <img src="data:image/png;base64,{{ profile_image|b64encode }}" alt="Avatar" class="avatar"
+              style="width: 2.5vw; /* Размер изображения */
+              height: 2.5vw;
+              border-radius: 50%; /* Круглая форма */
+              margin-right: 10px; /* Отступ от имени */
+              object-fit: cover; /* Сохранение пропорций */">
+          {% endif %}
+          {{ username }}
+      </button>
+  </a>
+{% else %}
+    <a href="/register"><button class="logbutton">Sign up</button></a>
+{% endif %} -->
+
 {% block body %}
 <section id="MainContainer">
   <div id="MC-Inner">
-    <h1>{% block title %} Edit "{{ post['title'] }}" post {% endblock %}</h1>
+    <h1>Edit "{{ post['title'] }}" post</h1>
     <form method="post">
-      <div>
-        <label for="title">Title</label>
-        <input
-          type="text"
-          name="title"
-          placeholder="Post title"
-          value="{{ request.form['title'] or post['title'] }}"
-        />
-      </div>
+      <label for="title">Title</label>
+      <input
+        type="text"
+        name="title"
+        placeholder="Post title"
+        value="{{ request.form['title'] or post['title'] }}"
+      />
 
-      <div>
-        <label for="content">Content</label>
-        <textarea name="content" placeholder="Post content" id="MC-I-Textarea">
+      <label for="content">Content</label>
+      <textarea name="content" placeholder="Post content" id="MC-I-Textarea">
 {{ request.form['content'] or post['content'] }}</textarea
-        >
-      </div>
-      <div>
-        <button type="submit">Submit</button>
-      </div>
+      >
+
+      <button type="submit">Submit</button>
     </form>
     <form action="{{ url_for('delete', id=post['id']) }}" method="POST">
       <input
@@ -42,34 +57,3 @@
   </div>
 </section>
 {% endblock %}
-
-<!--  -->
-
-<!-- 
-<form method="post">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" name="title" placeholder="Post title"
-               class="form-control"
-               value="{{ request.form['title'] or post['title'] }}">
-        </input>
-    </div>
-
-    <div class="form-group">
-        <label for="content">Content</label>
-        <textarea name="content" placeholder="Post content"
-                  class="form-control">{{ request.form['content'] or post['content'] }}</textarea>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</form>
-<hr>
-<hr>
-
-<form action="{{ url_for('delete', id=post['id']) }}" method="POST">
-    <input type="submit" value="Delete Post"
-            class="btn btn-danger btn-sm"
-            onclick="return confirm('Are you sure you want to delete this post?')">
-</form>
--->

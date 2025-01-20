@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="/static/images/icon.ico" />
     <link
       href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap"
       rel="stylesheet"
@@ -52,22 +53,19 @@
         <button class="logbutton">
           {% if profile_image %}
           <img
+            id="H-Img"
             src="data:image/png;base64,{{ profile_image|b64encode }}"
             alt="Avatar"
-            class="avatar"
-            style="
-              width: 2.5vw; /* Размер изображения */
-              height: 2.5vw;
-              border-radius: 50%; /* Круглая форма */
-              margin-right: 10px; /* Отступ от имени */
-              object-fit: cover; /* Сохранение пропорций */
-            "
           />
           {% endif %} {{ username }}
         </button>
       </a>
       {% else %}
-      <a href="/register"><button class="logbutton">Sign up</button></a>
+      <a href="/register"
+        ><button class="logbutton" style="padding-left: 0.7vw">
+          Sign up
+        </button></a
+      >
       {% endif %}
     </header>
 
@@ -111,14 +109,14 @@
           <p>New Post</p>
         </button>
         <button
-          id="editposts"
+          id="userpost"
           class="N-Button"
-          onclick="window.location.href='/editposts' "
+          onclick="window.location.href='/userpost' "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="#d3d3d3"
@@ -222,12 +220,7 @@
           <img
             src="data:image/png;base64,{{ profile_image|b64encode }}"
             alt="Avatar"
-            class="avatar"
-            style="
-              width: 2vw; /* Размер изображения */
-              height: 2vw;
-              border-radius: 50%;
-            "
+            id="N-P-Img"
           />
           {% endif %} {% else %}
           <svg

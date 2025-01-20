@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+<!--  -->
+{% block links %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/userpost.css') }}"
+/>
+{% endblock %}
+<!--  -->
+{% block title %} ####Chan {% endblock %}
+<!--  -->
+<!-- {% if username %}
+<a href="/profile">
+  <button class="logbutton">
+    {% if profile_image %}
+    <img
+      src="data:image/png;base64,{{ profile_image }}"
+      alt="Avatar"
+      class="avatar"
+    />
+    {% endif %} {{ username }}
+  </button>
+</a>
+{% else %}
+<a href="/register"><button class="logbutton">Sign up</button></a>
+{% endif %} -->
+<!--  -->
+{% block body %}
+<!--  -->
+<div id="Container">
+  <aside>
+    {% for post in posts %}
+    <!--  -->
+    <div class="C-A-Card">
+      <div class="C-A-C-Img">
+        {% if post['post_image'] %}
+        <img
+          src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+          alt="{{ post['title'] }}"
+        />
+        {% else %}
+        <img src="/static/images/NoImage.png" alt="" />
+        {% endif %}
+      </div>
+      <div class="C-A-C-Main">
+        <a href="{{ url_for('post', post_id=post['id']) }}">
+          <p>{{ post['title'] }}</p>
+        </a>
+        <p>{{ post['created_at'] }}</p>
+        <a href="{{ url_for('edit', id=post['id']) }}"><p>Edit</p></a>
+      </div>
+    </div>
+    <!--  -->
+    {% endfor %}
+  </aside>
+</div>
+{% endblock %}

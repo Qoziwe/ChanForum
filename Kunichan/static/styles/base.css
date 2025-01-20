@@ -183,6 +183,13 @@ main {
   width: 1.7vw;
   height: 1.7vw;
 }
+#N-P-Img {
+  width: 2vw;
+  height: 2vw;
+  border-radius: 5vw;
+  border: 0.15vw solid #484848;
+  object-fit: cover;
+}
 
 .navbar {
   width: 100vw;
@@ -242,7 +249,7 @@ main {
   color: #8282829c;
 }
 .logbutton {
-  width: 7vw;
+  /* width: 7vw; */
   height: 2.3vw;
   border: none;
   border-radius: 10vw;
@@ -250,11 +257,14 @@ main {
   color: #fff;
   background-color: #ff202000;
   display: flex;
-  justify-content: center;
+  gap: 0.7vw;
+  padding-right: 0.7vw;
+  /* justify-content: center; */
   align-items: center;
   border: 0.1vw solid #4f4f4f;
   font-weight: 700;
   font-size: 0.9vw;
+  box-sizing: border-box;
   transition: background-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
 }
 .logbutton:hover {
@@ -263,6 +273,10 @@ main {
   -webkit-box-shadow: 0px 0px 10vw 1vw #4f4f4f;
   -moz-box-shadow: 0px 0px 10vw 1vw #4f4f4f;
   box-shadow: 0px 0px 10vw 1vw #4f4f4f;
+}
+#H-Img {
+  width: 2.3vw;
+  border-radius: 10vw;
 }
 
 #mainInner {

@@ -16,13 +16,16 @@
     <h1>Create a New Post</h1>
     <form method="POST" enctype="multipart/form-data">
       <label for="title">Title:</label>
-      <input type="text" name="title" id="title"  />
+      <input type="text" name="title" id="title" />
 
       <label for="content">Content:</label>
-      <textarea name="content" id="MC-I-Textarea" ></textarea>
+      <textarea name="content" id="MC-I-Textarea"></textarea>
 
-      <label for="post_image">Upload Image:</label>
-      <input type="file" name="image" accept="image/*" />
+      <label for="MC-I-F-ImgUpload" id="MC-I-F-ImgUploadLabel"
+        >Upload Image:</label
+      >
+      <p id="MC-I-F-ImgName">The file is not selected</p>
+      <input type="file" name="image" accept="image/*" id="MC-I-F-ImgUpload" />
 
       <button type="submit">Create Post</button>
     </form>
@@ -31,7 +34,7 @@
 {% endblock %}
 <!--  -->
 {% block scripts %}
-<!-- <script src="{{ url_for('static', filename='scripts/create.js') }}"></script> -->
+<script src="{{ url_for('static', filename='scripts/create.js') }}"></script>
 {% endblock %}
 
 <!--  -->

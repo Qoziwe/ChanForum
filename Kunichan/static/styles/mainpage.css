@@ -96,9 +96,9 @@
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0);
-  /* -webkit-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
+  -webkit-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
   -moz-box-shadow: inset 0px 0px 10vw 0.1vw rgba(255, 32, 32, 1);
-  box-shadow: inset 0px 0px 1vw 0.1vw #000000; */
+  box-shadow: inset 0px 0px 1vw 0.1vw #000000;
 }
 #D-C-Carousel {
   position: relative;
@@ -204,17 +204,34 @@ aside {
   flex-direction: column;
   gap: 0.5vw;
 }
-.D-C-Card-Front span h1 {
+.D-C-Card-Front span a {
   font-size: 1.9vw;
   font-family: "Inter", sans-serif;
   margin: 0;
   color: white;
+  transition: all 150ms ease-in-out;
 }
 .D-C-Card-Front span p {
   font-size: 1.1vw;
   font-family: "Montserrat", sans-serif;
   margin: 0;
   color: #d0d0d0;
+}
+.D-C-Card-Front span a:hover {
+  text-decoration: underline;
+}
+.D-C-C-F-LP-AuthorDate {
+  display: flex;
+  gap: 2vw;
+}
+.D-C-C-F-LP-AuthorDate a p {
+  transition: all 150ms ease-in-out;
+}
+.D-C-C-F-LP-AuthorDate a:hover p {
+  color: white;
+}
+.D-C-C-F-LP-AuthorDate p {
+  font-size: 1vw;
 }
 .D-C-Card-Front-Button {
   width: 3.5vw;

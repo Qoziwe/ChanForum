@@ -30,13 +30,9 @@
       </div>
       <button class="D-C-C-Button right">&#8594;</button>
     </div>
-
     <hr />
-
     <aside>
-      <!--POST section-->
       {% for post in posts %}
-      <!--  -->
       <div class="D-C-Card">
         <div class="D-C-Card-Front">
           <div class="D-C-Card-F-LeftPart">
@@ -44,23 +40,30 @@
             <img
               src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
               alt="{{ post['title'] }}"
-              style="width: 20rem"
             />
+            {% else %}
+            <img src="/static/images/NoImage.png" alt="" />
             {% endif %}
             <span>
-              <h1>
-                <a href="{{ url_for('post', post_id=post['id']) }}">
-                  {{ post['title'] }}
+              <a href="{{ url_for('post', post_id=post['id']) }}">
+                {{ post['title'] }}
+              </a>
+              <div class="D-C-C-F-LP-AuthorDate">
+                <a href="{{ url_for('unknownuser', post_id=post['id']) }}">
+                  <p>@{{ post['author'] }}</p>
                 </a>
-              </h1>
-              <span class="badge badge-primary">
-                {{ post['created_at'] }}
-              </span>
+                <p>{{ post['created_at'] }}</p>
+              </div>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perspiciatis, accusamus fuga reiciendis, nam nulla eaque dolor
-                debitis nobis fugiat vitae quibusdam animi possimus ab quidem
-                minus, id blanditiis cum sunt.
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Eveniet tempora dolorum non. Eum, nostrum.
+                <!--                 
+
+
+  ВОТ ТУТ ДОЛЖНО БЫТЬ ОПИСАНИЕ ПОСТА
+
+
+                 -->
               </p>
             </span>
           </div>
@@ -80,7 +83,8 @@
         </div>
       </div>
       {% endfor %}
-      <div class="D-C-Card">
+
+      <!-- <div class="D-C-Card">
         <div class="D-C-Card-Front">
           <div class="D-C-Card-F-LeftPart">
             <img src="/static/images/GPT.png" alt="" />
@@ -108,10 +112,11 @@
             aut? Harum praesentium officia molestias natus corporis.
           </p>
         </div>
-      </div>
+      </div> -->
     </aside>
   </div>
 </section>
+
 <section id="Similar">
   <h1 id="S-Article">Similar topics</h1>
   <hr />
@@ -127,10 +132,7 @@
     <button>View</button>
   </div>
   <div class="S-Card">
-    <img
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRuojigeaTNXC83BJAsetOzk1_Sl4f8uRChw&s"
-      alt=""
-    />
+    <img src="" alt="" />
     <span>
       <h1>Topic 2</h1>
       <p>2.458.548 viewers</p>

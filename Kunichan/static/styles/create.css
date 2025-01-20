@@ -1,5 +1,7 @@
 body {
-  background: url(https://kartinki.pics/uploads/posts/2021-07/1626812073_5-kartinkin-com-p-tvoyo-imya-anime-peizazh-anime-krasivo-5.jpg);
+  background: linear-gradient(#00000085, #00000085),
+    url(/static/images/postseditbg.jpg);
+  /* backdrop-filter: brightness(60%); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0% 80%;
@@ -68,7 +70,7 @@ form input:focus {
 }
 #MC-I-Textarea {
   width: 80%;
-  height: 40vh;
+  height: 32vh;
   border-radius: 1vw;
   background-color: rgba(0, 0, 0, 0.508);
   padding: 1vw 0vw 0 1vw;
@@ -101,12 +103,45 @@ form input:focus {
 #MC-I-Textarea::-webkit-scrollbar-button {
   display: none; /* Убираем стрелки вверх и вниз */
 }
+#MC-I-F-ImgUpload {
+  display: none;
+}
+#MC-I-F-ImgUploadLabel {
+  width: 13vw;
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1vw;
+  background-color: rgba(0, 0, 0, 0.293);
+  border-radius: 1vw;
+  border: 0.1vw solid #4f4f4f;
+  transition: all ease-in-out 150ms;
+}
+#MC-I-F-ImgUploadLabel:hover {
+  background-color: #4f4f4f;
+  border-radius: 10vw;
+  background-color: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
+#MC-I-F-ImgName {
+  font-size: 1vw;
+  font-family: "monospace";
+  margin-bottom: 1vw;
+}
 
 #MC-I-Deleter {
   width: 13vw;
   height: 5vh;
+  display: flex;
+  align-content: center;
+  padding: 0;
   background-color: rgba(0, 0, 0, 0.293);
   border-radius: 1vw;
+  font-size: 1vw;
+  font-family: "Montserrat";
   border: 0.1vw solid #4f4f4f;
   transition: all ease-in-out 150ms;
 }
@@ -122,6 +157,8 @@ form input:focus {
 form button {
   width: 13vw;
   height: 5vh;
+  font-size: 1vw;
+  font-family: "Montserrat";
   background-color: rgba(0, 0, 0, 0.293);
   border-radius: 1vw;
   border: 0.1vw solid #4f4f4f;

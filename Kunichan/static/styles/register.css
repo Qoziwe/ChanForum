@@ -17,7 +17,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("../images/ФонРегистрации.png");
+  background: url("/static/images/registrationpagebg.png");
+  background-position: -100%;
   background-size: cover;
 }
 #R-Container {
