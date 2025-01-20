@@ -6,6 +6,24 @@
 />
 {% endblock %}
 <!--  -->
+{% if username %}
+  <a href="/profile">
+      <button class="logbutton">
+          {% if profile_image %}
+              <img src="data:image/png;base64,{{ profile_image|b64encode }}" alt="Avatar" class="avatar"
+              style="width: 2.5vw; /* Размер изображения */
+              height: 2.5vw;
+              border-radius: 50%; /* Круглая форма */
+              margin-right: 10px; /* Отступ от имени */
+              object-fit: cover; /* Сохранение пропорций */">
+          {% endif %}
+          {{ username }}
+      </button>
+  </a>
+{% else %}
+    <a href="/register"><button class="logbutton">Sign up</button></a>
+{% endif %}
+
 {% block body %}
 <section id="MainContainer">
   <div id="MC-Inner">

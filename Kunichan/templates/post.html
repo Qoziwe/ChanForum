@@ -20,6 +20,8 @@
       {% endif %}
 
 {% block body %}
+<h1>Post by @{{ post['author'] }}</h1>
+
 <h1>{{ post['title'] }}</h1>
 <p>{{ post['content'] }}</p>
 {% if post['post_image'] %}

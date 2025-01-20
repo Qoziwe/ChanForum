@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS posts (
     title TEXT NOT NULL,
     content TEXT NOT NULL,
     post_image BLOB DEFAULT NULL,
+    author TEXT NOT NULL,
     user_uniq_id INTEGER
 );
 
