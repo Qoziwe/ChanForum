@@ -52,7 +52,9 @@
                 <a href="{{ url_for('unknownuser', post_id=post['id']) }}">
                   <p>@{{ post['author'] }}</p>
                 </a>
-                <p>{{ post['created_at'] }}</p>
+                {% if post['last_modified'] %}
+                <p>{{ post['last_modified'] }}</p>
+                {% endif %}
               </div>
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -60,7 +62,7 @@
                 <!--                 
 
 
-  ВОТ ТУТ ДОЛЖНО БЫТЬ ОПИСАНИЕ ПОСТА
+  ВОТ ТУТ ДОЛЖНО БЫТЬ ОПИСАНИЕ ПОСТА, ПОТОМ ПОСМОТРИ  D-C-Card-Back, ТАМ ТОЖЕ УВИДИШЬ ТАСКУ
 
 
                  -->
@@ -79,6 +81,13 @@
             ipsa voluptatibus quidem consequatur eveniet, dolor inventore
             adipisci dolorem quibusdam veniam architecto provident doloribus
             aut? Harum praesentium officia molestias natus corporis.
+            <!-- 
+
+
+  ВОТ ТУТ ДОЛЖНО БЫТЬ ПЕРВЫЕ 150 СЛОВ ИЗ ГЛАВНОГО ТЕКСТА ПОСТА
+
+
+             -->
           </p>
         </div>
       </div>

@@ -22,7 +22,6 @@ body {
   backdrop-filter: blur(0.3vw);
   display: flex;
   flex-direction: column;
-  gap: 1vw;
   padding: 2vw;
   border-radius: 3vw;
   box-sizing: border-box;
@@ -31,16 +30,27 @@ body {
   font-size: 2vw;
   font-family: "Montserrat";
 }
+#MC-I-LastEditedDate {
+  font-size: 1vw;
+  font-family: "Montserrat";
+  color: #ffffffcb;
+  max-width: 70%;
+}
+#MC-I-F-LeftSide {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+#MC-I-F-RightSide {
+  position: absolute;
+  width: 18vw;
+  margin-top: 4vw;
+  right: 0;
+}
 form {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  /* align-items: center; */
-  flex-direction: column;
-  gap: 1vw;
-}
-form {
   display: flex;
   flex-direction: column;
   gap: 0.5vw;
@@ -51,7 +61,7 @@ form label {
   font-family: "Montserrat";
 }
 form input {
-  width: 80%;
+  width: 70%;
   height: 5vh;
   border-radius: 1vw;
   background-color: rgba(0, 0, 0, 0.508);
@@ -68,9 +78,44 @@ form input:focus {
   box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
   outline: none;
 }
+#MC-I-DescriptionTextarea {
+  width: 70%;
+  height: 8vh;
+  border-radius: 1vw;
+  background-color: rgba(0, 0, 0, 0.508);
+  padding: 1vw 0vw 0 1vw;
+  font-size: 1.2vw;
+  resize: none;
+  box-sizing: border-box;
+  transition: border-radius ease-in-out 150ms, box-shadow ease-in-out 150ms;
+  overflow: auto;
+}
+#MC-I-DescriptionTextarea:focus {
+  border: 0.1vw solid #414141;
+  border-radius: 2vw;
+  -webkit-box-shadow: 00px 0px 1.5vw 0.2vw #7a7a7a;
+  -moz-box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
+  box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
+  outline: none;
+}
+#MC-I-DescriptionTextarea::-webkit-scrollbar {
+  width: 0.75vw;
+}
+#MC-I-DescriptionTextarea::-webkit-scrollbar-track {
+  background-color: #5a5a5a80;
+  border-radius: 6px;
+  margin-right: 2vw;
+}
+#MC-I-DescriptionTextarea::-webkit-scrollbar-thumb {
+  background-color: #1f1f1f;
+  border-radius: 6px;
+}
+#MC-I-DescriptionTextarea::-webkit-scrollbar-button {
+  display: none;
+}
 #MC-I-Textarea {
-  width: 80%;
-  height: 32vh;
+  width: 70%;
+  height: 60%;
   border-radius: 1vw;
   background-color: rgba(0, 0, 0, 0.508);
   padding: 1vw 0vw 0 1vw;
@@ -92,23 +137,23 @@ form input:focus {
   width: 0.75vw; /* Ширина полосы прокрутки */
 }
 #MC-I-Textarea::-webkit-scrollbar-track {
-  background-color: rgba(55, 55, 55, 0.5); /* Полупрозрачный серый фон */
-  border-radius: 6px; /* Закругленные края */
+  background-color: #5a5a5a80;
+  border-radius: 6px;
   margin-right: 2vw;
 }
 #MC-I-Textarea::-webkit-scrollbar-thumb {
-  background-color: #101010; /* Черный ползунок */
-  border-radius: 6px; /* Закругленные края ползунка */
+  background-color: #1f1f1f;
+  border-radius: 6px;
 }
 #MC-I-Textarea::-webkit-scrollbar-button {
-  display: none; /* Убираем стрелки вверх и вниз */
+  display: none;
 }
 #MC-I-F-ImgUpload {
   display: none;
 }
 #MC-I-F-ImgUploadLabel {
   width: 13vw;
-  height: 5vh;
+  height: 3vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,6 +162,7 @@ form input:focus {
   border-radius: 1vw;
   border: 0.1vw solid #4f4f4f;
   transition: all ease-in-out 150ms;
+  /* margin-top: 0 auto; */
 }
 #MC-I-F-ImgUploadLabel:hover {
   background-color: #4f4f4f;
@@ -130,11 +176,18 @@ form input:focus {
   font-size: 1vw;
   font-family: "monospace";
   margin-bottom: 1vw;
+  margin-top: 0.5vw;
 }
 
+#MC-C-DeleteForm {
+  width: 18vw;
+  position: absolute;
+  height: 3vw;
+  right: 0;
+}
 #MC-I-Deleter {
   width: 13vw;
-  height: 5vh;
+  height: 3vw;
   display: flex;
   align-content: center;
   padding: 0;
@@ -156,13 +209,14 @@ form input:focus {
 
 form button {
   width: 13vw;
-  height: 5vh;
+  height: 3vw;
   font-size: 1vw;
   font-family: "Montserrat";
   background-color: rgba(0, 0, 0, 0.293);
   border-radius: 1vw;
   border: 0.1vw solid #4f4f4f;
   transition: all ease-in-out 150ms;
+  /* margin: 0 auto; */
 }
 form button:hover {
   background-color: #4f4f4f;

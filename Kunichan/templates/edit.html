@@ -29,24 +29,54 @@
 {% block body %}
 <section id="MainContainer">
   <div id="MC-Inner">
-    <h1>Edit "{{ post['title'] }}" post</h1>
-    <form method="post">
-      <label for="title">Title</label>
-      <input
-        type="text"
-        name="title"
-        placeholder="Post title"
-        value="{{ request.form['title'] or post['title'] }}"
-      />
+    <form method="post" enctype="multipart/form-data">
+      <div id="MC-I-F-LeftSide">
+        <h1>Edit "{{ post['title'] }}" post</h1>
+        <label for="title">Title</label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Post title"
+          value="{{ request.form['title'] or post['title'] }}"
+        />
+        <!-- 
 
-      <label for="content">Content</label>
-      <textarea name="content" placeholder="Post content" id="MC-I-Textarea">
+  ВОТ ТУТ СДЕЛАЙ ДОБАВЛЕНИЕ ОПИСАНИЯ, ЭТО CREATE |
+                                                 |
+                                                \/
+ -->
+        <label for="description">Description:</label>
+        <textarea name="description" id="MC-I-DescriptionTextarea"></textarea>
+        <!-- 
+
+
+
+       -->
+        <label for="content">Content</label>
+        <textarea name="content" placeholder="Post content" id="MC-I-Textarea">
 {{ request.form['content'] or post['content'] }}</textarea
-      >
+        >
+      </div>
 
-      <button type="submit">Submit</button>
+      <div id="MC-I-F-RightSide">
+        <label for="MC-I-F-ImgUpload" id="MC-I-F-ImgUploadLabel"
+          >Upload Image:</label
+        >
+        <p id="MC-I-F-ImgName">The file is not selected</p>
+        <input
+          type="file"
+          name="image"
+          accept="image/*"
+          id="MC-I-F-ImgUpload"
+        />
+        <button type="submit">Submit</button>
+      </div>
     </form>
-    <form action="{{ url_for('delete', id=post['id']) }}" method="POST">
+    <form
+      action="{{ url_for('delete', id=post['id']) }}"
+      method="POST"
+      id="MC-C-DeleteForm"
+    >
       <input
         id="MC-I-Deleter"
         type="submit"
@@ -56,4 +86,8 @@
     </form>
   </div>
 </section>
+{% endblock %}
+<!--  -->
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/create.js') }}"></script>
 {% endblock %}

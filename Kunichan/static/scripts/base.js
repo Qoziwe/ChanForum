@@ -40,16 +40,60 @@ function urlFor(data) {
 
 function toggleNavigation() {
   const navigation = document.getElementById("Navigation");
+  const PElements = document.querySelectorAll(".N-Button p");
+  const NButtonElemets = document.querySelectorAll(".N-Button");
+  const NH1Elements = document.querySelectorAll("#Navigation h1");
   navigation.classList.toggle("collapsed");
+
   if (navigation.classList.contains("collapsed")) {
     localStorage.setItem("NavigationBarStatus", "collapsed");
+    setTimeout(function () {
+      PElements.forEach((element) => {
+        element.style.display = "none";
+      });
+      NButtonElemets.forEach((element) => {
+        element.style.justifyContent = "center";
+        element.style.paddingLeft = "0vw";
+      });
+      NH1Elements.forEach((element) => {
+        element.style.display = "none";
+      });
+      document.getElementById("Toggle-btn").style.position = "static";
+    }, 300);
   } else {
     localStorage.setItem("NavigationBarStatus", "decollapsed");
+    PElements.forEach((element) => {
+      element.style.display = "block";
+    });
+    NButtonElemets.forEach((element) => {
+      element.style.justifyContent = "start";
+      element.style.paddingLeft = "0.8vw";
+    });
+    NH1Elements.forEach((element) => {
+      element.style.display = "block";
+    });
+    document.getElementById("Toggle-btn").style.position = "absolute";
   }
 }
 
 window.onload = function () {
   const navigation = document.getElementById("Navigation");
+  const PElements = document.querySelectorAll(".N-Button p");
+  const NButtonElemets = document.querySelectorAll(".N-Button");
+  const NH1Elements = document.querySelectorAll("#Navigation h1");
+  if (localStorage.getItem("NavigationBarStatus") == "collapsed") {
+    PElements.forEach((element) => {
+      element.style.display = "none";
+    });
+    NButtonElemets.forEach((element) => {
+      element.style.justifyContent = "center";
+      element.style.paddingLeft = "0vw";
+    });
+    NH1Elements.forEach((element) => {
+      element.style.display = "none";
+    });
+    document.getElementById("Toggle-btn").style.position = "static";
+  }
   navigation.classList.toggle(
     String(localStorage.getItem("NavigationBarStatus"))
   );

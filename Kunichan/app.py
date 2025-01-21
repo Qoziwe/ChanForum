@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from werkzeug.exceptions import abort
+from werkzeug.utils import secure_filename
+from datetime import datetime
 import base64
 import sqlite3
 import os
@@ -11,6 +13,7 @@ app.secret_key = 'yourmom'  # your mom
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_pathpost = os.path.join(BASE_DIR, 'db', 'databasepost.db')
 db_pathusers = os.path.join(BASE_DIR, 'db', 'databaseusers.db')
+db_pathuserfriends = os.path.join(BASE_DIR, 'db', 'databaseusers.db')
 Error = None
 
 
@@ -155,64 +158,66 @@ def profile():
     flash('User not logged in. Please login.')
     return redirect(url_for('login'))
 
+
+
+
+
+
 @app.route('/unknownuser/<int:post_id>')
 def unknownuser(post_id):
-    # Получаем user_uniq_id поста
+    # Получаем user_uniq_id автора поста
     conn1 = sqlite3.connect(db_pathpost)
     cursor1 = conn1.cursor()
     cursor1.execute("SELECT user_uniq_id FROM posts WHERE id = ?", (post_id,))
-    user_uniq_id = cursor1.fetchone()
+    post_author_id = cursor1.fetchone()
     conn1.close()
     
-    if not user_uniq_id:
+    if not post_author_id:
         abort(404)  # Пост не найден
 
-    user_uniq_id = user_uniq_id[0]  # Извлекаем user_uniq_id из результата запроса
+    post_author_id = post_author_id[0]  # Извлекаем user_uniq_id из результата
 
-    # Теперь получаем данные текущего пользователя
-    uniq_id = None
-    username = None
-    profile_image = None
-    conn = sqlite3.connect(db_pathusers)
-    cursor = conn.cursor()
-    cursor.execute("SELECT uniq_id, username, profile_image FROM users WHERE id = ?", (session['user_id'],))
-    user = cursor.fetchone()
-    conn.close()
-    
-    if user:
-        uniq_id = user[0]
-        username = user[1]
-        profile_image = user[2]
-
-    # Если user_uniq_id текущего пользователя совпадает с user_uniq_id поста,
-    # перенаправляем на профиль текущего пользователя
-    if uniq_id == user_uniq_id:
-        return redirect(url_for('profile'))
-
-    # Иначе показываем профиль другого пользователя
+    # Получаем информацию об авторе поста
     conn2 = sqlite3.connect(db_pathusers)
     cursor2 = conn2.cursor()
-    cursor2.execute("SELECT username, profile_image FROM users WHERE uniq_id = ?", (user_uniq_id,))
-    other_user = cursor2.fetchone()
+    cursor2.execute("SELECT username, profile_image FROM users WHERE uniq_id = ?", (post_author_id,))
+    author_data = cursor2.fetchone()
     conn2.close()
 
-    if other_user:
-        other_username = other_user[0]
-        other_profile_image = other_user[1]
-    else:
-        abort(404)  # Если пользователь не найден, показываем ошибку
+    if not author_data:
+        abort(404)  # Автор поста не найден
 
-    # Получаем посты пользователя
-    conn3 = sqlite3.connect(db_pathpost)
-    cursor3 = conn3.cursor()
-    cursor3.execute("SELECT * FROM posts WHERE user_uniq_id = ? ORDER BY id DESC", (user_uniq_id,))
-    posts = cursor3.fetchall()
-    conn3.close()
+    author_username, author_image = author_data
+
+    # Данные о текущем пользователе (если он вошел в систему)
+    username = None
+    profile_image = None
+    current_user_id = session.get('user_id')  # Получаем текущего пользователя из сессии
+
+    if current_user_id:
+        conn = sqlite3.connect(db_pathusers)
+        cursor = conn.cursor()
+        cursor.execute("SELECT username, profile_image, uniq_id FROM users WHERE id = ?", (current_user_id,))
+        logged_in_user = cursor.fetchone()
+        conn.close()
+        
+        if logged_in_user:
+            username, profile_image, logged_in_uniq_id = logged_in_user
+            
+            # Если текущий пользователь — автор поста, перенаправляем в профиль
+            if post_author_id == logged_in_uniq_id:
+                return redirect(url_for('profile'))
 
     return render_template('unknownuser.html', 
-                           username=other_username, 
-                           profile_image=other_profile_image,
-                           posts=posts)
+                           author_username=author_username,
+                           author_image=author_image,
+                           username=username,
+                           profile_image=profile_image)
+
+
+
+
+
 
 
 
@@ -401,15 +406,17 @@ def create():
     username = None
     uniq_id = None
     author = None
+    profile_image = None
     if 'user_id' in session:
         # Получаем имя пользователя и uniq_id из базы данных
         conn = sqlite3.connect(db_pathusers)
         cursor = conn.cursor()
-        cursor.execute("SELECT username, uniq_id FROM users WHERE id = ?", (session['user_id'],))
+        cursor.execute("SELECT username, uniq_id, profile_image FROM users WHERE id = ?", (session['user_id'],))
         user = cursor.fetchone()
         conn.close()
         if user:
             username = user[0]
+            profile_image = user[2]
             uniq_id = user[1]
     author = username
     user_uniq_id = uniq_id
@@ -440,15 +447,18 @@ def create():
             flash('Post created successfully!')
             return redirect(url_for('mainpage'))
 
-    return render_template('create.html', username=username)
+    return render_template('create.html', username=username, profile_image = profile_image)
 
 
 
 
 @app.route('/<int:id>/edit', methods=('GET', 'POST'))
 def edit(id):
-    # Get the post to be edited by its id
     post = get_post(id)
+    if not post:
+        flash('Post not found!')
+        return redirect(url_for('mainpage'))
+
     profile_image = None
     username = None
     uniq_id = None
@@ -457,48 +467,53 @@ def edit(id):
         flash('You must be logged in to edit a post!')
         return redirect(url_for('login'))
 
-    if 'user_id' in session:
-        conn = sqlite3.connect(db_pathusers)
-        cursor = conn.cursor()
-        cursor.execute("SELECT username, profile_image, uniq_id FROM users WHERE id = ?", (session['user_id'],))
-        user = cursor.fetchone()
-        conn.close()
-
-        if user:
-            username = user[0]
-            profile_image = user[1]  # Получаем аватар пользователя
-            uniq_id = user[2]       # Получаем uniq_id пользователя
-
-    
-    conn = sqlite3.connect(db_pathpost)
+    conn = sqlite3.connect(db_pathusers)
     cursor = conn.cursor()
-    cursor.execute('SELECT user_uniq_id FROM posts WHERE id = ?', (id, ))
+    cursor.execute("SELECT username, profile_image, uniq_id FROM users WHERE id = ?", (session['user_id'],))
     user = cursor.fetchone()
     conn.close()
 
     if user:
-        user_uniq_id = user[0]
+        username = user[0]
+        profile_image = user[1]
+        uniq_id = user[2]
 
-    if uniq_id != user_uniq_id:
-        flash('You do not have permission to edit this post!')
-        return redirect(url_for('mainpage'))
+    
 
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
+        post_image = request.files.get('image')
 
         if not title:
             flash('Title is required!')
         else:
             conn = sqlite3.connect(db_pathpost)
-            # Update the table 
-            conn.execute('UPDATE posts SET title = ?, content = ? WHERE id = ?', (title, content, id))
+            cursor = conn.cursor()
+            
+            # Если изображение было загружено, обновляем его
+            if post_image and post_image.filename:
+                image_blob = post_image.read()
+                cursor.execute('''
+                    UPDATE posts 
+                    SET title = ?, content = ?, post_image = ?, last_modified = ? 
+                    WHERE id = ?
+                ''', (title, content, image_blob, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), id))
+            else:
+                cursor.execute('''
+                    UPDATE posts 
+                    SET title = ?, content = ?, last_modified = ? 
+                    WHERE id = ?
+                ''', (title, content, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), id))
+
             conn.commit()
             conn.close()
+
+            flash('Post updated successfully!')
             return redirect(url_for('mainpage'))
 
     return render_template('edit.html', post=post, username=username, profile_image=profile_image)
-    
+
 
 
 @app.route('/<int:id>/delete', methods=('POST',))
