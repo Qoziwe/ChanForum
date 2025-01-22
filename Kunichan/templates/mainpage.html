@@ -7,7 +7,6 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/mainpage.css') }}"
 />
-<!--Do not touch and not usable-->
 {% endblock %}
 
 <!--  -->
@@ -22,11 +21,11 @@
     <div id="D-C-Carousel">
       <button class="D-C-C-Button left">&#8592;</button>
       <div id="D-C-C-Track">
-        <div class="D-C-C-T-Card"></div>
-        <div class="D-C-C-T-Card"></div>
-        <div class="D-C-C-T-Card"></div>
-        <div class="D-C-C-T-Card"></div>
-        <div class="D-C-C-T-Card"></div>
+        <div class="D-C-C-T-Card">1</div>
+        <div class="D-C-C-T-Card">2</div>
+        <div class="D-C-C-T-Card">3</div>
+        <div class="D-C-C-T-Card">4</div>
+        <div class="D-C-C-T-Card">5</div>
       </div>
       <button class="D-C-C-Button right">&#8594;</button>
     </div>
@@ -56,17 +55,7 @@
                 <p>{{ post['last_modified'] }}</p>
                 {% endif %}
               </div>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Eveniet tempora dolorum non. Eum, nostrum.
-                <!--                 
-
-
-  ВОТ ТУТ ДОЛЖНО БЫТЬ ОПИСАНИЕ ПОСТА, ПОТОМ ПОСМОТРИ  D-C-Card-Back, ТАМ ТОЖЕ УВИДИШЬ ТАСКУ
-
-
-                 -->
-              </p>
+              <p>{{post['description']}}</p>
             </span>
           </div>
           <button class="D-C-Card-Front-Button">
@@ -76,19 +65,7 @@
           </button>
         </div>
         <div class="D-C-Card-Back">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            ipsa voluptatibus quidem consequatur eveniet, dolor inventore
-            adipisci dolorem quibusdam veniam architecto provident doloribus
-            aut? Harum praesentium officia molestias natus corporis.
-            <!-- 
-
-
-  ВОТ ТУТ ДОЛЖНО БЫТЬ ПЕРВЫЕ 150 СЛОВ ИЗ ГЛАВНОГО ТЕКСТА ПОСТА
-
-
-             -->
-          </p>
+          <p>{{ post['content'] | truncate(800) }}</p>
         </div>
       </div>
       {% endfor %}
@@ -157,10 +134,7 @@
     <button>View</button>
   </div>
   <div class="S-Card">
-    <img
-      src="https://cdn.discordapp.com/attachments/1326856665579917365/1326961617166139444/3e8959bc-631e-4c7f-8f83-26f447ee8f90.png?ex=678154cf&is=6780034f&hm=45cc0bef352131220f66705aa1ef71413b6051a3b355ca172c37cd1fa5cfd391&"
-      alt=""
-    />
+    <img src="" alt="" />
     <span>
       <h1>Topic 4</h1>
       <p>2.458.548 viewers</p>

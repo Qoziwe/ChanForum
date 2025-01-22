@@ -1,5 +1,5 @@
 const snowContainer = document.querySelector(".snow-container");
-const snowflakeCount = 80; // Максимальное количество снежинок в DOM
+const snowflakeCount = 80;
 
 function createSnowflake() {
   if (snowContainer.children.length >= snowflakeCount) {
@@ -29,6 +29,11 @@ function createSnowflake() {
   snowContainer.appendChild(snowflake);
 }
 
+window.addEventListener("load", () => {
+  const preloader = document.getElementById("preloader");
+  preloader.classList.add("hidden");
+});
+
 setInterval(() => {
   if (document.hidden) return;
   createSnowflake();
@@ -41,7 +46,7 @@ function urlFor(data) {
 function toggleNavigation() {
   const navigation = document.getElementById("Navigation");
   const PElements = document.querySelectorAll(".N-Button p");
-  const NButtonElemets = document.querySelectorAll(".N-Button");
+  const NButtonSVGElemets = document.querySelectorAll(".N-H-Svg");
   const NH1Elements = document.querySelectorAll("#Navigation h1");
   navigation.classList.toggle("collapsed");
 
@@ -51,48 +56,48 @@ function toggleNavigation() {
       PElements.forEach((element) => {
         element.style.display = "none";
       });
-      NButtonElemets.forEach((element) => {
-        element.style.justifyContent = "center";
-        element.style.paddingLeft = "0vw";
+      NButtonSVGElemets.forEach((element) => {
+        element.style.margin = "0 auto";
       });
       NH1Elements.forEach((element) => {
         element.style.display = "none";
       });
       document.getElementById("Toggle-btn").style.position = "static";
+      document.getElementById("Toggle-btn").style.margin = "0 auto";
     }, 300);
   } else {
     localStorage.setItem("NavigationBarStatus", "decollapsed");
     PElements.forEach((element) => {
       element.style.display = "block";
     });
-    NButtonElemets.forEach((element) => {
-      element.style.justifyContent = "start";
-      element.style.paddingLeft = "0.8vw";
+    NButtonSVGElemets.forEach((element) => {
+      element.style.margin = "0";
     });
     NH1Elements.forEach((element) => {
       element.style.display = "block";
     });
     document.getElementById("Toggle-btn").style.position = "absolute";
+    document.getElementById("Toggle-btn").style.margin = "0 1.8vw 0 0";
   }
 }
 
 window.onload = function () {
   const navigation = document.getElementById("Navigation");
   const PElements = document.querySelectorAll(".N-Button p");
-  const NButtonElemets = document.querySelectorAll(".N-Button");
+  const NButtonSVGElemets = document.querySelectorAll(".N-H-Svg");
   const NH1Elements = document.querySelectorAll("#Navigation h1");
   if (localStorage.getItem("NavigationBarStatus") == "collapsed") {
     PElements.forEach((element) => {
       element.style.display = "none";
     });
-    NButtonElemets.forEach((element) => {
-      element.style.justifyContent = "center";
-      element.style.paddingLeft = "0vw";
+    NButtonSVGElemets.forEach((element) => {
+      element.style.margin = "0 auto";
     });
     NH1Elements.forEach((element) => {
       element.style.display = "none";
     });
     document.getElementById("Toggle-btn").style.position = "static";
+    document.getElementById("Toggle-btn").style.margin = "0 auto";
   }
   navigation.classList.toggle(
     String(localStorage.getItem("NavigationBarStatus"))

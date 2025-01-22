@@ -27,6 +27,9 @@ body {
   box-sizing: border-box;
 }
 #MC-Inner h1 {
+  /* overflow-x: scroll;
+  overflow-y: hidden; */
+  max-width: 70%;
   font-size: 2vw;
   font-family: "Montserrat";
 }
@@ -56,9 +59,10 @@ form {
   gap: 0.5vw;
 }
 form label {
-  font-size: 1.6vw;
+  font-size: 1vw;
   font-weight: 100;
   font-family: "Montserrat";
+  margin-top: 0.5vw;
 }
 form input {
   width: 70%;
@@ -66,7 +70,7 @@ form input {
   border-radius: 1vw;
   background-color: rgba(0, 0, 0, 0.508);
   font-size: 1.2vw;
-  padding-left: 1vw;
+  padding: 1vw;
   transition: border-radius ease-in-out 150ms, box-shadow ease-in-out 150ms;
 }
 form input:focus {
@@ -174,9 +178,8 @@ form input:focus {
 }
 #MC-I-F-ImgName {
   font-size: 1vw;
-  font-family: "monospace";
-  margin-bottom: 1vw;
-  margin-top: 0.5vw;
+  font-family: "Montserrat";
+  margin: 0.5vw 0 1vw 0.2vw;
 }
 
 #MC-C-DeleteForm {

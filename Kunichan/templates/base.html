@@ -24,6 +24,10 @@
   <body>
     <div class="snow-container"></div>
 
+    <div class="spinner-wrapper" id="preloader">
+      <div class="spinner"></div>
+    </div>
+
     <header class="navbar">
       <div class="navbar-logo">
         <h1><a href="/">####Chan</a></h1>
@@ -221,6 +225,7 @@
             src="data:image/png;base64,{{ profile_image|b64encode }}"
             alt="Avatar"
             id="N-P-Img"
+            class="N-H-Svg"
           />
           {% endif %} {% else %}
           <svg
