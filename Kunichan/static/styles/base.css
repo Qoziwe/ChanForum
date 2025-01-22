@@ -5,6 +5,12 @@
   font-style: normal;
 }
 @font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: "WorkSans";
   src: url("../fonts/WorkSans-VariableFont_wght.ttf") format("truetype");
   font-weight: normal;
@@ -80,7 +86,7 @@ main {
   box-sizing: border-box;
 }
 #Navigation.collapsed {
-  width: 5.5vw;
+  width: 5vw;
 }
 #Navigation h1 {
   display: block;
@@ -153,6 +159,14 @@ main {
 }
 .NavigationSelectedMenu {
   background-color: #202020;
+}
+#Navigation.collapsed .N-Button {
+  padding-left: 0;
+}
+#Navigation.collapsed .N-H-Svg {
+  /* width: 3.8vw; */
+  padding-left: 0;
+  /* margin: 0 auto; */
 }
 .N-Button:hover p {
   color: #fcfcfc;

@@ -1,9 +1,51 @@
 {% extends 'base.html' %}
-
+<!--  -->
+{% block links %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/profile.css') }}"
+/>
+{% endblock %}
+<!--  -->
 {% block title %} Profile {% endblock %}
-
+<!--  -->
 {% block body %}
-  <section id="ProfileBanner">
+<section id="Profile">
+  <div id="P-Container">
+    <div id="P-C-LeftSide">
+      <div id="P-C-LS-ProfileImage">
+        {% if profile_image %}
+        <img
+          src="data:image/jpeg;base64,{{ profile_image | b64encode }}"
+          alt="Profile Image"
+        />
+        {% else %}
+        <img
+          src="{{ url_for('static', filename='images/default-profile.png') }}"
+          alt="Default Profile Image"
+        />
+        {% endif %}
+      </div>
+      <div id="P-C-LS-ProfileInformation">
+        <h1>{{ username }}</h1>
+        <button class="P-C-LS-PI-Button">
+          <a href="/update_profile">Edit Profile</a>
+        </button>
+        <button class="P-C-LS-PI-Button"><a href="/logout">Logout</a></button>
+      </div>
+    </div>
+    <div id="P-C-RightSide"></div>
+  </div>
+</section>
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
+{% endblock %}
+
+<!-- 
+
+ -->
+
+<!-- <section id="ProfileBanner">
     {% if profile_image %}
       <img
         src="data:image/jpeg;base64,{{ profile_image | b64encode }}"
@@ -20,5 +62,4 @@
     <div class="nicknameh1"><h1>{{ username }}</h1></div>
     <h2><a href="/update_profile">Edit Profile</a></h2>
     <h2><a href="/logout">Logout</a></h2>
-  </section>
-{% endblock %}
+  </section> -->

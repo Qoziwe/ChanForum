@@ -22,28 +22,6 @@ def b64encode_filter(data):
     return base64.b64encode(data).decode('utf-8')
 
 
-#BUFER for situation, if something goes wrong
-# @app.route("/")
-# def mainpage():
-#     posts=[]
-#     with sqlite3.connect(db_pathusers) as db:
-#         conn = sqlite3.connect(db_pathpost)
-#         conn.row_factory = sqlite3.Row
-#         posts = conn.execute('SELECT * FROM posts ORDER BY id DESC').fetchall()  # Сортируем посты по id в порядке убывания
-#         conn.close()
-#         if 'user_id' in session:
-#             cursor = db.cursor()
-#             cursor.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],))
-#             user = cursor.fetchone()
-#             if user:
-#                 username = user[0]
-#             return render_template("mainpage.html", username=username, posts=posts)
-            
-#     return render_template("mainpage.html", username=None, posts=posts)
-
-
-
-
 @app.route("/")
 def mainpage():
     try:
@@ -130,18 +108,6 @@ def editposts():
     return render_template('userpost.html', posts=posts, username=username, profile_image=profile_image, uniq_id=uniq_id)
 
 
-# @app.route('/profile')
-# def profile():
-#     if 'user_id' in session:
-#         with sqlite3.connect(db_pathusers) as db:
-#             cursor = db.cursor()
-#             cursor.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],))
-#             user = cursor.fetchone()
-#             if user:
-#                 username = user[0]
-#                 return render_template("profile.html", username=username)
-#     return render_template("mainpage.html", username=None)
-
 @app.route('/profile')
 def profile():
     
@@ -157,11 +123,6 @@ def profile():
                 return render_template("profile.html", username=username, profile_image=profile_image)
     flash('User not logged in. Please login.')
     return redirect(url_for('login'))
-
-
-
-
-
 
 @app.route('/unknownuser/<int:post_id>')
 def unknownuser(post_id):
@@ -214,14 +175,6 @@ def unknownuser(post_id):
                            username=username,
                            profile_image=profile_image)
 
-
-
-
-
-
-
-
-#profile_update
 @app.route('/update_profile', methods=['GET', 'POST'])
 def update_profile():
     if 'user_id' not in session:
@@ -274,12 +227,8 @@ def update_profile():
 
     return render_template("update_profile.html", username=username, email=email)
 
-
-
 def encrypt_username(username):
     return hashlib.sha256(username.encode()).hexdigest()
-
-
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
