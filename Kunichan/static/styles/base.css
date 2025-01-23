@@ -31,8 +31,8 @@ html {
 }
 body {
   width: 100%;
-  /* min-height: 100vh; */
   background-color: #080808;
+  /* overflow: hidden; */
 }
 
 .snow-container {

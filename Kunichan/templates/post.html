@@ -1,26 +1,66 @@
 {% extends 'base.html' %}
 <!--  -->
-
+{% block links %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/post.css') }}"
+/>
+{% endblock %}
+<!--  -->
+{% block title %} ####Chan {% endblock %}
+<!--  -->
 {% if username %}
-        <a href="/profile">
-            <button class="logbutton">
-                {% if profile_image %}
-                    <img src="data:image/png;base64,{{ profile_image|b64encode }}" alt="Avatar" class="avatar"
-                    style="width: 2.5vw; /* Размер изображения */
-                    height: 2.5vw;
-                    border-radius: 50%; /* Круглая форма */
-                    margin-right: 10px; /* Отступ от имени */
-                    object-fit: cover; /* Сохранение пропорций */">
-                {% endif %}
-                {{ username }}
-            </button>
-        </a>
-      {% else %}
-          <a href="/register"><button class="logbutton">Sign up</button></a>
-      {% endif %}
-
+<a href="/profile">
+  <button class="logbutton">
+    {% if profile_image %}
+    <img
+      src="data:image/png;base64,{{ profile_image|b64encode }}"
+      alt="Avatar"
+      class="avatar"
+      style="
+        width: 2.5vw; /* Размер изображения */
+        height: 2.5vw;
+        border-radius: 50%; /* Круглая форма */
+        margin-right: 10px; /* Отступ от имени */
+        object-fit: cover; /* Сохранение пропорций */
+      "
+    />
+    {% endif %} {{ username }}
+  </button>
+</a>
+{% else %}
+<a href="/register"><button class="logbutton">Sign up</button></a>
+{% endif %}
+<!--  -->
 {% block body %}
-<h1>Post by @{{ post['author'] }}</h1>
+
+<div id="Post">
+  <div id="P-Container">
+    <!-- <aside> -->
+    <div id="P-C-PostContent"></div>
+    <!-- 
+
+
+
+
+
+
+СУКА ГАВНО А НЕ СЕКЦИЯ ПОШЛА ОНА НАХУЙ ТВАРЬ ЕБАННАЯ
+
+
+
+
+
+
+     -->
+    <div id="P-C-PostDiscussion"></div>
+    <!-- </aside> -->
+  </div>
+</div>
+
+{% endblock %}
+
+<!-- <h1>Post by @{{ post['author'] }}</h1>
 
 <h1>{{ post['title'] }}</h1>
 <p>{{ post['content'] }}</p>
@@ -30,6 +70,4 @@
   alt="{{ post['title'] }}"
   style="width: 40rem"
 />
-{% endif %}
-<!--  -->
-{% endblock %}
+{% endif %} -->
