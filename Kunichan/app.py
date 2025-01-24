@@ -179,17 +179,17 @@ def update_profile():
     
     conn = sqlite3.connect(db_pathusers)
     cursor = conn.cursor()
-    cursor.execute("SELECT username, email FROM users WHERE id = ?", (session['user_id'],))
+    cursor.execute("SELECT username, email, profile_image FROM users WHERE id = ?", (session['user_id'],))
     user = cursor.fetchone()
     conn.close()
 
-
+    
     author = None
     if not user:
         flash('User not found.')
         return redirect(url_for('profile'))
 
-    username, email = user
+    username, email, profile_image = user
 
     if request.method == 'POST':
         new_username = request.form.get('username', username)
@@ -221,7 +221,7 @@ def update_profile():
         flash('Profile updated successfully!')
         return redirect(url_for('profile'))
 
-    return render_template("update_profile.html", username=username, email=email)
+    return render_template("update_profile.html", username=username, email=email, profile_image=profile_image)
 
 def encrypt_username(username):
     return hashlib.sha256(username.encode()).hexdigest()
@@ -311,10 +311,37 @@ def get_post(post_id):
         post_data = dict(post)
         post_data['author'] = user['username'] if user else 'Unknown'
 
+        # Подключаемся к базе лайков
+        conn_likes = sqlite3.connect(db_pathpost)
+        conn_likes.row_factory = sqlite3.Row
+
+        # Получаем количество лайков
+        likes_count = conn_likes.execute(
+            '''
+            SELECT COUNT(*) AS total_likes FROM likes WHERE post_id = ?
+            ''', (post_id,)
+        ).fetchone()['total_likes']
+
+        # Проверяем, лайкнул ли текущий пользователь пост
+        user_liked = False
+        if 'user_id' in session:
+            user_liked = conn_likes.execute(
+                '''
+                SELECT 1 FROM likes WHERE post_id = ? AND user_id = ?
+                ''', (post_id, session['user_id'])
+            ).fetchone() is not None
+
+        conn_likes.close()
+
+        # Добавляем информацию о лайках в данные поста
+        post_data['likes_count'] = likes_count
+        post_data['user_liked'] = user_liked
+
         return post_data
 
     except sqlite3.Error as e:
         abort(500, description=f"Database error: {e}")
+
 
 @app.route('/<int:post_id>')
 def post(post_id):
@@ -332,7 +359,10 @@ def post(post_id):
             profile_image = user[1]  # Получаем аватар пользователя
     
     return render_template('post.html', post=post, username=username, profile_image=profile_image)
-    
+
+
+
+
 @app.route('/create', methods=('GET', 'POST'))
 def create():
     # Проверяем, авторизован ли пользователь
@@ -359,7 +389,7 @@ def create():
     user_uniq_id = uniq_id
     if request.method == 'POST':
         title = request.form['title']
-        content = request.form['content']
+        content = request.form['content'].replace("\r\n", "\n")  # Нормализуем переносы строк
         description = request.form['description']
         post_image = request.files['image']
 
@@ -417,7 +447,7 @@ def edit(id):
 
     if request.method == 'POST':
         title = request.form['title']
-        content = request.form['content']
+        content = request.form['content'].replace("\r\n", "\n")  # Нормализуем переносы строк
         post_image = request.files.get('image')
 
         if not title:

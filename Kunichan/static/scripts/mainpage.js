@@ -98,3 +98,24 @@ burgerButtons.forEach((button) => {
     }
   });
 });
+
+
+document.querySelectorAll('.like-button').forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+        fetch(this.getAttribute('data-url'), {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                this.innerHTML = data.liked ? '❤️ Unlike' : '🤍 Like';
+                document.querySelector(`#likes-${data.post_id}`).innerText = `${data.likes_count} likes`;
+            }
+        });
+    });
+});
+
+

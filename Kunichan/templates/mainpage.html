@@ -55,8 +55,10 @@
                 <p>{{ post['last_modified'] }}</p>
                 {% endif %}
               </div>
-              <p>{{post['description']}}</p>
+              <p style="white-space: pre-wrap;">{{post['description']}}</p>
             </span>
+            
+          
           </div>
           <button class="D-C-Card-Front-Button">
             <span></span>
@@ -64,10 +66,11 @@
             <span></span>
           </button>
         </div>
-        <div class="D-C-Card-Back">
+        <div class="D-C-Card-Back" style="white-space: pre-wrap;">
           <p>{{ post['content'] | truncate(800) }}</p>
         </div>
       </div>
+      
       {% endfor %}
 
       <!-- <div class="D-C-Card">
