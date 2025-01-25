@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, jsonify, render_template, request, session, redirect, url_for, flash
 from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -144,11 +144,12 @@ def unknownuser(post_id):
     if not author_data:
         abort(404)  # Автор поста не найден
 
-    author_username, author_image = author_data
+    author_username = author_data[0]
+    author_image = author_data[1]
 
     # Данные о текущем пользователе (если он вошел в систему)
-    username = None
-    profile_image = None
+    current_username = None
+    current_profile_image = None
     current_user_id = session.get('user_id')  # Получаем текущего пользователя из сессии
 
     if current_user_id:
@@ -159,7 +160,7 @@ def unknownuser(post_id):
         conn.close()
         
         if logged_in_user:
-            username, profile_image, logged_in_uniq_id = logged_in_user
+            current_username, current_profile_image, logged_in_uniq_id = logged_in_user
             
             # Если текущий пользователь — автор поста, перенаправляем в профиль
             if post_author_id == logged_in_uniq_id:
@@ -168,8 +169,8 @@ def unknownuser(post_id):
     return render_template('unknownuser.html', 
                            author_username=author_username,
                            author_image=author_image,
-                           username=username,
-                           profile_image=profile_image)
+                           username=current_username,
+                           profile_image=current_profile_image)
 
 @app.route('/update_profile', methods=['GET', 'POST'])
 def update_profile():
@@ -311,31 +312,6 @@ def get_post(post_id):
         post_data = dict(post)
         post_data['author'] = user['username'] if user else 'Unknown'
 
-        # Подключаемся к базе лайков
-        conn_likes = sqlite3.connect(db_pathpost)
-        conn_likes.row_factory = sqlite3.Row
-
-        # Получаем количество лайков
-        likes_count = conn_likes.execute(
-            '''
-            SELECT COUNT(*) AS total_likes FROM likes WHERE post_id = ?
-            ''', (post_id,)
-        ).fetchone()['total_likes']
-
-        # Проверяем, лайкнул ли текущий пользователь пост
-        user_liked = False
-        if 'user_id' in session:
-            user_liked = conn_likes.execute(
-                '''
-                SELECT 1 FROM likes WHERE post_id = ? AND user_id = ?
-                ''', (post_id, session['user_id'])
-            ).fetchone() is not None
-
-        conn_likes.close()
-
-        # Добавляем информацию о лайках в данные поста
-        post_data['likes_count'] = likes_count
-        post_data['user_liked'] = user_liked
 
         return post_data
 
@@ -348,17 +324,125 @@ def post(post_id):
     post = get_post(post_id)  # Получаем пост по ID
     username = None
     profile_image = None
+    comments = []
+
+    # Получаем комментарии к посту
+    with sqlite3.connect(db_pathpost) as conn:
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT author, comment_content FROM comments WHERE post_id = ?', (post_id,))
+        comments = [dict(row) for row in cursor.fetchall()]  # Преобразуем в список словарей
+
+    # Если пользователь авторизован, получаем его данные
     if 'user_id' in session:
         conn = sqlite3.connect(db_pathusers)
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute("SELECT username, profile_image FROM users WHERE id = ?", (session['user_id'],))
         user = cursor.fetchone()
         conn.close()
         if user:
-            username = user[0]
-            profile_image = user[1]  # Получаем аватар пользователя
-    
-    return render_template('post.html', post=post, username=username, profile_image=profile_image)
+            username = user['username']
+            profile_image = user['profile_image']  # Получаем аватар пользователя
+
+    return render_template('post.html', post=post, username=username, profile_image=profile_image, comments=comments)
+
+
+
+#likes 
+
+@app.route('/like/<int:post_id>', methods=['POST'])
+def like(post_id):
+    if 'user_id' not in session:  # Check if the user is logged in
+        return redirect(url_for('login'))  # Redirect to login if not logged in
+
+    user_id = session['user_id']
+
+    try:
+        with sqlite3.connect(db_pathpost) as db:
+            cursor = db.cursor()
+
+            # Check if the user has already liked the post
+            cursor.execute("SELECT * FROM post_likes WHERE user_id = ? AND post_id = ?", (user_id, post_id))
+            like = cursor.fetchone()
+
+            if like:
+                # If the user has already liked the post, remove the like
+                cursor.execute("DELETE FROM post_likes WHERE user_id = ? AND post_id = ?", (user_id, post_id))
+                cursor.execute("UPDATE posts SET like_count = like_count - 1 WHERE id = ?", (post_id,))
+                db.commit()
+            else:
+                # If the user hasn't liked the post, add the like
+                cursor.execute("INSERT INTO post_likes (user_id, post_id) VALUES (?, ?)", (user_id, post_id))
+                cursor.execute("UPDATE posts SET like_count = like_count + 1 WHERE id = ?", (post_id,))
+                db.commit()
+
+            return redirect(url_for('mainpage'))  # Redirect back to the main page
+
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        return "Error with the database."
+
+
+
+@app.route('/comment/<int:post_id>', methods=['POST'])
+def comment(post_id):
+    # Проверяем, авторизован ли пользователь
+    if 'user_id' not in session:
+        return redirect(url_for('login'))  # Перенаправление на страницу входа, если не авторизован
+
+    # Получаем информацию о текущем пользователе
+    try:
+        conn = sqlite3.connect(db_pathusers)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT username, uniq_id FROM users WHERE id = ?", (session['user_id'],))
+        user = cursor.fetchone()
+        conn.close()
+
+        if not user:
+            flash('User not found. Please log in again.')
+            return redirect(url_for('logout'))
+
+        author = user['username']
+        comment_uniq_id = user['uniq_id']
+
+    except sqlite3.Error as e:
+        print(f"Database error (users): {e}")
+        flash('Error retrieving user information.')
+        return redirect(url_for('post', post_id=post_id))
+
+    # Получаем содержимое комментария из формы
+    comment_content = request.form.get('comment_content', '').strip()
+    if not comment_content:
+        flash('Comment cannot be empty.')
+        return redirect(url_for('post', post_id=post_id))
+
+    # Сохраняем комментарий в базу данных
+    try:
+        conn = sqlite3.connect(db_pathpost)
+        cursor = conn.cursor()
+        cursor.execute(
+            '''
+            INSERT INTO comments (post_id, comment_content, author, comment_uniq_id)
+            VALUES (?, ?, ?, ?)
+            ''',
+            (post_id, comment_content, author, comment_uniq_id)
+        )
+        conn.commit()
+        conn.close()
+        flash('Comment created successfully!')
+    except sqlite3.Error as e:
+        print(f"Database error (comments): {e}")
+        flash('Error saving comment.')
+
+    return redirect(url_for('post', post_id=post_id))
+
+
+
+
+
+
 
 
 

@@ -7,6 +7,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/mainpage.css') }}"
 />
+
 {% endblock %}
 
 <!--  -->
@@ -69,6 +70,13 @@
         <div class="D-C-Card-Back" style="white-space: pre-wrap;">
           <p>{{ post['content'] | truncate(800) }}</p>
         </div>
+
+        <div class="D-C-Card-Actions">
+          <form action="/like/{{ post['id'] }}" method="POST">
+              <button><p style="color: red;">Likes {{ post['like_count'] }}</p></button>
+          </form>
+      </div>
+      
       </div>
       
       {% endfor %}
@@ -152,4 +160,5 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='scripts/mainpage.js') }}"></script>
+
 {% endblock %}

@@ -1,24 +1,31 @@
 {% extends 'base.html' %}
 
 {% block title %} Profile {% endblock %}
+{% if profile_image %}
+  <img
+    src="data:image/jpeg;base64,{{ profile_image | b64encode }}"
+    alt="Profile Image"
+    style="width: 150px; height: 150px; border-radius: 50%;"
+  />
+{% else %}
+  <img
+    src="{{ url_for('static', filename='images/default-profile.png') }}"
+    alt="Default Profile Image"
+    style="width: 150px; height: 150px; border-radius: 50%;"
+  />
+{% endif %}
 
-{% block body %}
-  <section id="ProfileBanner">
-    {% if profile_image %}
-      <img
-        src="data:image/jpeg;base64,{{ profile_image | b64encode }}"
-        alt="Profile Image"
-        style="width: 150px; height: 150px; border-radius: 50%;"
-      />
-    {% else %}
-      <img
-        src="{{ url_for('static', filename='images/default-profile.png') }}"
-        alt="Default Profile Image"
-        style="width: 150px; height: 150px; border-radius: 50%;"
-      />
-    {% endif %}
-    <div class="nicknameh1"><h1>{{ username }}</h1></div>
-    <h2><a href="/add_friend">Add friend</a></h2>
-    <h2><a href="/">Posts</a></h2> <!--His posts-->
-  </section>
-{% endblock %}
+  {% block body %}
+    <section id="ProfileBanner">
+      
+        <img
+          src="data:image/jpeg;base64,{{ author_image | b64encode }}"
+          alt="Profile Image"
+          style="width: 150px; height: 150px; border-radius: 50%;"/>
+
+      <div class="nicknameh1"><h1>{{ author_username }}</h1></div>
+      <h2><a href="/add_friend">Add friend</a></h2>
+      <h2><a href="/">Posts</a></h2> <!--His posts-->
+    </section>
+  {% endblock %}
+  

@@ -1,30 +1,40 @@
-
 CREATE TABLE comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     post_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
-    content TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (post_id) REFERENCES posts (id),
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    comment_content TEXT NOT NULL,
+    author TEXT NOT NULL,
+    comment_uniq_id TEXT NOT NULL
 );
 
 
 
-/*CREATE TABLE likes (
+
+/*
+CREATE TABLE comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    post_id INTEGER NOT NULL,
-    user_id INTEGER NOT NULL,
-    UNIQUE(post_id, user_id) -- предотвращает дублирование лайков
+    post_id INTEGER,
+    user_id INTEGER,
+    content TEXT,
+    author TEXT NOT NULL
+);
+
+CREATE TABLE post_likes (
+    user_id INTEGER,
+    post_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (post_id) REFERENCES posts(id),
+    PRIMARY KEY (user_id, post_id)
 );
 
 
 
- FCREATE TABLE IF NOT EXISTS posts (
+ CREATE TABLE IF NOT EXISTS posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
+    description TEXT NOT NULL,
     post_image BLOB DEFAULT NULL,
+    like_count INTEGER DEFAULT 0,
     author TEXT NOT NULL,
     user_uniq_id INTEGER
 );
