@@ -3,7 +3,7 @@ CREATE TABLE comments (
     post_id INTEGER NOT NULL,
     comment_content TEXT NOT NULL,
     author TEXT NOT NULL,
-    comment_uniq_id TEXT NOT NULL
+    user_id TEXT NOT NULL
 );
 
 

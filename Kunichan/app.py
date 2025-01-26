@@ -312,7 +312,6 @@ def get_post(post_id):
         post_data = dict(post)
         post_data['author'] = user['username'] if user else 'Unknown'
 
-
         return post_data
 
     except sqlite3.Error as e:
@@ -326,12 +325,29 @@ def post(post_id):
     profile_image = None
     comments = []
 
-    # Получаем комментарии к посту
-    with sqlite3.connect(db_pathpost) as conn:
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        cursor.execute('SELECT author, comment_content FROM comments WHERE post_id = ?', (post_id,))
-        comments = [dict(row) for row in cursor.fetchall()]  # Преобразуем в список словарей
+    with sqlite3.connect(db_pathpost) as conn_comments, sqlite3.connect(db_pathusers) as conn_users:
+        conn_comments.row_factory = sqlite3.Row
+        cursor_comments = conn_comments.cursor()
+        
+        # Получаем комментарии для поста
+        cursor_comments.execute('SELECT user_id, comment_content FROM comments WHERE post_id = ?', (post_id,))
+        raw_comments = cursor_comments.fetchall()
+
+        conn_users.row_factory = sqlite3.Row
+        cursor_users = conn_users.cursor()
+
+        for row in raw_comments:
+            user_id = row['user_id']
+            
+            # Получаем актуальное имя пользователя по user_id
+            cursor_users.execute('SELECT username FROM users WHERE uniq_id = ?', (user_id,))
+            user = cursor_users.fetchone()
+            author = user['username'] if user else 'Unknown'
+
+            comments.append({
+                'author': author,
+                'comment_content': row['comment_content']
+            })
 
     # Если пользователь авторизован, получаем его данные
     if 'user_id' in session:
@@ -346,6 +362,9 @@ def post(post_id):
             profile_image = user['profile_image']  # Получаем аватар пользователя
 
     return render_template('post.html', post=post, username=username, profile_image=profile_image, comments=comments)
+
+
+
 
 
 
@@ -405,7 +424,7 @@ def comment(post_id):
             return redirect(url_for('logout'))
 
         author = user['username']
-        comment_uniq_id = user['uniq_id']
+        user_id = user['uniq_id']
 
     except sqlite3.Error as e:
         print(f"Database error (users): {e}")
@@ -424,12 +443,12 @@ def comment(post_id):
         cursor = conn.cursor()
         cursor.execute(
             '''
-            INSERT INTO comments (post_id, comment_content, author, comment_uniq_id)
+            INSERT INTO comments (post_id, comment_content, author, user_id)
             VALUES (?, ?, ?, ?)
             ''',
-            (post_id, comment_content, author, comment_uniq_id)
+            (post_id, comment_content, author, user_id)
         )
-        conn.commit()
+        conn.commit() 
         conn.close()
         flash('Comment created successfully!')
     except sqlite3.Error as e:
