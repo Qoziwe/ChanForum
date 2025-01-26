@@ -16,6 +16,11 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-V.ttf");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -285,8 +290,9 @@ main {
   color: #fff;
   background-color: #ff202000;
   display: flex;
-  gap: 0.7vw;
-  padding-right: 0.7vw;
+  gap: 0.8vw;
+  /* padding-right: 0.7vw; */
+  padding: 0 1vw 0 1vw;
   align-items: center;
   border: 0.1vw solid #4f4f4f;
   font-weight: 700;

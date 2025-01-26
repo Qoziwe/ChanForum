@@ -23,7 +23,7 @@
         <textarea name="description" id="MC-I-DescriptionTextarea"></textarea>
 
         <label for="content">Content:</label>
-        <textarea name="content" id="MC-I-Textarea"></textarea>
+        <textarea name="content" id="MC-I-Textarea" style="white-space: pre-wrap;"></textarea>
       </div>
       <div id="MC-I-F-RightSide" style="margin: 0">
         <label for="MC-I-F-ImgUpload" id="MC-I-F-ImgUploadLabel"
@@ -56,4 +56,3 @@
 {% else %}
 <p>You need to <a href="{{ url_for('login') }}">log in</a> to create a post.</p>
 {% endif %}
-<!--  -->

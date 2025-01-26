@@ -70,30 +70,22 @@ function initializeCarousel() {
 // Инициализация карусели при загрузке
 initializeCarousel();
 
-// Находим все кнопки с классом D-C-Card-Front-Button
 const burgerButtons = document.querySelectorAll(".D-C-Card-Front-Button");
 
 burgerButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    // Тогглим класс "active" для текущей кнопки
     button.classList.toggle("active");
-
-    // Находим родительскую карточку
     const card = button.closest(".D-C-Card");
     if (card) {
       const back = card.querySelector(".D-C-Card-Back");
 
       if (back) {
-        // Если задняя часть видна, скрываем её
         if (back.style.display === "block") {
           back.style.display = "none";
         } else {
-          // Иначе делаем видимой
           back.style.display = "block";
         }
       }
-
-      // Тогглим класс для карточки (если нужно дополнительное поведение)
       card.classList.toggle("flipped");
     }
   });

@@ -31,7 +31,9 @@ function createSnowflake() {
 
 window.addEventListener("load", () => {
   const preloader = document.getElementById("preloader");
+  // setTimeout(function () {
   preloader.classList.add("hidden");
+  // }, 300);
 });
 
 setInterval(() => {
@@ -106,17 +108,19 @@ window.onload = function () {
 
 window.addEventListener("DOMContentLoaded", () => {
   // Получаем текущий путь из URL без начального "/"
-  const path = window.location.pathname.replace("/", "") || "0"; // Подставляем "0", если путь пустой
-
+  var path = window.location.pathname.replace("/", "") || "0"; // Подставляем "0", если путь пустой
+  path = path.substring(path.lastIndexOf("/") + 1);
   // Ищем элемент с ID, совпадающим с path
   const targetElement = document.getElementById(path);
-
+  if (path == "edit") {
+    document.getElementById("userpost").classList.add("NavigationSelectedMenu");
+  }
   // Проверяем, найден ли элемент
   if (targetElement) {
     // Если найден, добавляем класс
     targetElement.classList.add("NavigationSelectedMenu");
   } else {
     // Выводим сообщение, если элемент не найден
-    console.warn(`Элемент с id="${path}" не найден.`);
+    // console.warn(`Элемент с id="${path}" не найден.`);
   }
 });

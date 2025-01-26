@@ -24,12 +24,12 @@
 
 <p>либо по данной ссылке: <a href="https://docs.python.org/3/tutorial/venv.html">venv</a></p>
 
-### 2) Установка пакетов из requirments.txt
+### 2) Активация виртуального окружения
+
+        venv/Scripts/activate
+
+### 3) Установка пакетов из requirments.txt
 
         pip install -r requirements.txt
-
-### 3) Установка модуля flask
-
-        pip install flask
 
 ### 4) Запустите файл app.py и перейдите по созданной в терминале ссылке

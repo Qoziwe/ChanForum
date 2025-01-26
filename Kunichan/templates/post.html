@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
-<!--  -->
+
 {% block links %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='styles/post.css') }}"
-/>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/post.css') }}" />
 {% endblock %}
-<!--  -->
+
 {% block title %} ####Chan {% endblock %}
-<!--  -->
+
 {% if username %}
 <a href="/profile">
   <button class="logbutton">
@@ -17,13 +14,7 @@
       src="data:image/png;base64,{{ profile_image|b64encode }}"
       alt="Avatar"
       class="avatar"
-      style="
-        width: 2.5vw; /* Размер изображения */
-        height: 2.5vw;
-        border-radius: 50%; /* Круглая форма */
-        margin-right: 10px; /* Отступ от имени */
-        object-fit: cover; /* Сохранение пропорций */
-      "
+      style="width: 2.5vw; height: 2.5vw; border-radius: 50%; margin-right: 10px; object-fit: cover;"
     />
     {% endif %} {{ username }}
   </button>
@@ -31,43 +22,68 @@
 {% else %}
 <a href="/register"><button class="logbutton">Sign up</button></a>
 {% endif %}
-<!--  -->
-{% block body %}
 
+{% block body %}
 <div id="Post">
   <div id="P-Container">
-    <!-- <aside> -->
-    <div id="P-C-PostContent"></div>
-    <!-- 
+    <div id="P-C-PostContent">
+      <h1>Post by @{{ post['author'] }}</h1>
+      <h1>{{ post['title'] }}</h1>
+      <h2 style="white-space: pre-wrap;">{{ post['description'] }}</h2>
+      <p style="white-space: pre-wrap;">{{ post['content'] }}</p>
+      
+      {% if post['post_image'] %}
+      <img
+        src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+        alt="{{ post['title'] }}"
+        style="width: 40rem"
+      />
+      {% endif %}
+    
+      <!-- Comments Section -->
+      <div id="P-C-PostDiscussion">
+        <h3>Comments</h3>
+    
+        <!-- Comment Form -->
+        {% if username %}
+        <form action="/comment/{{ post['id'] }}" method="POST">
+          <textarea
+            name="comment_content"
+            placeholder="Write a comment..."
+            rows="4"
+            style="width: 100%; padding: 10px; font-size: 14px; border-radius: 5px; margin-bottom: 10px; color: black;"
+          ></textarea>
+          <button type="submit" style="padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Post Comment</button>
+        </form>
+        {% else %}
+          <p><a href="/login">Login</a> to leave a comment.</p>
+        {% endif %}
+    
+        <!-- Display Comments -->
+        <div id="comments-list">
+          {% if comments %}
+            {% for comment in comments %}
+              <div class="comment">
+                <a href="{{ url_for('unknownuser', post_id=post['id']) }}">
+                  <p><strong>@{{ comment['author'] }}</strong></p>
+
+                </a>
+                
+                <p style="white-space: pre-wrap;">{{ comment['comment_content'] }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>No comments yet. Be the first to comment!</p>
+          {% endif %}
+        </div>
+        
 
 
+      </div>
+    </div>
+    
 
-
-
-
-СУКА ГАВНО А НЕ СЕКЦИЯ ПОШЛА ОНА НАХУЙ ТВАРЬ ЕБАННАЯ
-
-
-
-
-
-
-     -->
-    <div id="P-C-PostDiscussion"></div>
-    <!-- </aside> -->
+    
   </div>
 </div>
-
 {% endblock %}
-
-<!-- <h1>Post by @{{ post['author'] }}</h1>
-
-<h1>{{ post['title'] }}</h1>
-<p>{{ post['content'] }}</p>
-{% if post['post_image'] %}
-<img
-  src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
-  alt="{{ post['title'] }}"
-  style="width: 40rem"
-/>
-{% endif %} -->

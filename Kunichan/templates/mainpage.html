@@ -7,6 +7,7 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/mainpage.css') }}"
 />
+
 {% endblock %}
 
 <!--  -->
@@ -55,98 +56,155 @@
                 <p>{{ post['last_modified'] }}</p>
                 {% endif %}
               </div>
-              <p>{{post['description']}}</p>
+              <p style="white-space: pre-wrap">{{ post['description'] }}</p>
             </span>
           </div>
-          <button class="D-C-Card-Front-Button">
+          <!-- <button class="D-C-Card-Front-Button">
             <span></span>
             <span></span>
             <span></span>
-          </button>
+          </button> -->
+          <div class="D-C-Card-Front-Button">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </div>
         </div>
         <div class="D-C-Card-Back">
           <p>{{ post['content'] | truncate(800) }}</p>
         </div>
+        <div class="D-C-Card-Actions">
+          <form action="/like/{{ post['id'] }}" method="POST">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#d3d3d3"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                ></path>
+              </svg>
+              <p>{{ post['like_count'] }}</p>
+            </button>
+          </form>
+          <form action="" method="">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#d3d3d3"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+              </svg>
+            </button>
+          </form>
+          <form action="0">
+            <button>
+              <a href="{{ url_for('post', post_id=post['id']) }}"> See more </a>
+            </button>
+          </form>
+        </div>
       </div>
-      {% endfor %}
 
-      <!-- <div class="D-C-Card">
-        <div class="D-C-Card-Front">
-          <div class="D-C-Card-F-LeftPart">
-            <img src="/static/images/GPT.png" alt="" />
-            <span>
-              <h1>Article</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perspiciatis, accusamus fuga reiciendis, nam nulla eaque dolor
-                debitis nobis fugiat vitae quibusdam animi possimus ab quidem
-                minus, id blanditiis cum sunt.
-              </p>
-            </span>
-          </div>
-          <button class="D-C-Card-Front-Button">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <div class="D-C-Card-Back">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            ipsa voluptatibus quidem consequatur eveniet, dolor inventore
-            adipisci dolorem quibusdam veniam architecto provident doloribus
-            aut? Harum praesentium officia molestias natus corporis.
-          </p>
-        </div>
-      </div> -->
+      {% endfor %}
     </aside>
   </div>
 </section>
 
-<section id="Similar">
-  <h1 id="S-Article">Similar topics</h1>
-  <hr />
-  <div class="S-Card">
-    <img
-      src="https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/43/56/4b/43564be6-97ea-1d60-56e0-a655c8fdfc57/cover.jpg/800x800cc.jpg"
-      alt=""
-    />
-    <span>
-      <h1>Topic 1</h1>
-      <p>2.458.548 viewers</p>
-    </span>
-    <button>View</button>
-  </div>
-  <div class="S-Card">
-    <img src="" alt="" />
-    <span>
-      <h1>Topic 2</h1>
-      <p>2.458.548 viewers</p>
-    </span>
-    <button>View</button>
-  </div>
-  <div class="S-Card">
-    <img src="{{ url_for('static', filename='images/farid.jpg') }}" alt="" />
-    <span>
-      <h1>Topic 3</h1>
-      <p>2.458.548 viewers</p>
-    </span>
-    <button>View</button>
-  </div>
-  <div class="S-Card">
-    <img src="" alt="" />
-    <span>
-      <h1>Topic 4</h1>
-      <p>2.458.548 viewers</p>
-    </span>
-    <button>View</button>
+<section id="Profile">
+  <div id="P-Container">
+    <div id="P-C-Avatar">
+      {% if profile_image %}
+      <img
+        id="P-C-A-Img"
+        src="data:image/png;base64,{{ profile_image|b64encode }}"
+        alt="Avatar"
+      />
+      {% endif %}
+    </div>
+    <div id="P-C-Nickname">{{ username | truncate(19) }}</div>
+    <div id="P-C-Mastermind">
+      <div id="P-C-M-Article">Mastermind</div>
+      <div id="P-C-M-Information">
+        <p>
+          +77476512434
+          <!-- НОМЕР ИЛИ ДРУГАЯ ИНФА -->
+        </p>
+        <p>
+          @qeleran
+          <!-- ТУТ ДОЛЖНА БЫТЬ ССЫЛКА НА ТЕ САМЫЕ ИНТЕГРАЦИИ -->
+        </p>
+      </div>
+    </div>
+    <div id="P-C-Friends">
+      <h1>Friends</h1>
+      <a href="#"
+        ><img
+          src="https://avatars.mds.yandex.net/i?id=2a71ceff0a53675d3759bf7a5adbbad6_l-5869446-images-thumbs&n=13"
+          alt=""
+        />
+        <p>Stewadsfsdfdsfdsfrt</p> </a
+      ><a href="#"
+        ><img
+          src="https://avatars.mds.yandex.net/i?id=69da8d148b2d1ecbcb323ff945723828_l-10696063-images-thumbs&n=13"
+          alt=""
+        />
+        <p>Faridus</p>
+      </a>
+      <a href="#"
+        ><img
+          src="https://avatars.mds.yandex.net/i?id=c372b7aa6334c9241b9a8d5f13e03476_l-4576423-images-thumbs&n=13"
+          alt=""
+        />
+        <p>GovnoStewart</p>
+      </a>
+      <a href="#"
+        ><img
+          src="https://avatars.mds.yandex.net/i?id=2a71ceff0a53675d3759bf7a5adbbad6_l-5869446-images-thumbs&n=13"
+          alt=""
+        />
+        <p>StewartSuchara</p>
+      </a>
+    </div>
   </div>
 </section>
 
 {% endblock %}
 
-<!--  -->
+<!-- {% if username %}
+    <a href="/profile">
+      <button class="logbutton" style="padding-left: 0">
+        {% if profile_image %}
+        <img
+          id="H-Img"
+          src="data:image/png;base64,{{ profile_image|b64encode }}"
+          alt="Avatar"
+        />
+        {% endif %} {{ username }}
+      </button>
+    </a>
+    {% else %}
+    <a href="/register"><button class="logbutton">Sign up</button></a>
+    {% endif %} -->
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='scripts/mainpage.js') }}"></script>
+
 {% endblock %}
