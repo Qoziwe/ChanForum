@@ -364,3 +364,12 @@ aside {
   max-width: 100%;
   overflow: hidden;
 }
+
+
+.like-icon {
+  stroke: gray; /* Цвет по умолчанию */
+}
+
+.like-liked {
+  stroke: red; /* Цвет для лайкнутого состояния */
+}

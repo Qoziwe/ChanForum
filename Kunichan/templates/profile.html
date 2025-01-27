@@ -35,7 +35,24 @@
         <button class="P-C-LS-PI-Button"><a href="/logout">Logout</a></button>
       </div>
     </div>
-    <div id="P-C-RightSide"></div>
+    <div id="P-C-RightSide">
+      <div id="LikedPostsSection">
+        <h2>Liked Posts</h2>
+        <div id="LikedPostsContainer">
+          {% if liked_posts %}
+            {% for post in liked_posts %}
+              <div class="LikedPost">
+                <h3>{{ post['title'] }}</h3>
+                <p>{{ post['content'] }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>You haven't liked any posts yet.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
   </div>
 </section>
 {% endblock %} {% block scripts %}

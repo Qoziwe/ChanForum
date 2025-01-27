@@ -13,7 +13,7 @@ app.secret_key = 'yourmom'  # your mom
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_pathpost = os.path.join(BASE_DIR, 'db', 'databasepost.db')
 db_pathusers = os.path.join(BASE_DIR, 'db', 'databaseusers.db')
-db_pathuserfriends = os.path.join(BASE_DIR, 'db', 'databaseusers.db')
+db_pathuserfriends = os.path.join(BASE_DIR, 'db', 'databasefriends.db')
 Error = None
 
 
@@ -24,54 +24,70 @@ def b64encode_filter(data):
 @app.route("/")
 def mainpage():
     try:
-        # Подключаемся к базе постов и получаем список постов
-        conn_posts = sqlite3.connect(db_pathpost)
-        conn_posts.row_factory = sqlite3.Row
-        posts = conn_posts.execute('SELECT * FROM posts ORDER BY id DESC').fetchall()
-        conn_posts.close()
-
-        # Преобразуем данные постов в список словарей
-        post_list = [dict(post) for post in posts]
-
-        # Получаем уникальные идентификаторы пользователей из постов
-        user_ids = {post['user_uniq_id'] for post in post_list}
-
-        # Подключаемся к базе пользователей, чтобы получить имена авторов
-        conn_users = sqlite3.connect(db_pathusers)
-        conn_users.row_factory = sqlite3.Row
-        users = conn_users.execute(
-            f"SELECT uniq_id, username FROM users WHERE uniq_id IN ({','.join(['?'] * len(user_ids))})",
-            tuple(user_ids)
-        ).fetchall()
-        conn_users.close()
-
-        # Создаём словарь {uniq_id: username} для быстрого поиска
-        user_dict = {user['uniq_id']: user['username'] for user in users}
-
-        # Добавляем имена авторов к каждому посту
-        for post in post_list:
-            post['author'] = user_dict.get(post['user_uniq_id'], 'Unknown')
-
-        # Проверяем, авторизован ли пользователь
+        # Проверяем авторизацию пользователя
         username = None
         profile_image = None
+        user_id = None
+        user_liked_posts = []
+
         if 'user_id' in session:
-            conn_users = sqlite3.connect(db_pathusers)
-            conn_users.row_factory = sqlite3.Row
-            user = conn_users.execute(
-                "SELECT username, profile_image FROM users WHERE id = ?",
-                (session['user_id'],)
-            ).fetchone()
-            conn_users.close()
+            user_id = session['user_id']
+            with sqlite3.connect(db_pathusers) as conn_users:
+                conn_users.row_factory = sqlite3.Row
+                user = conn_users.execute(
+                    "SELECT username, profile_image FROM users WHERE id = ?",
+                    (user_id,)
+                ).fetchone()
 
-            if user:
-                username = user['username']
-                profile_image = user['profile_image']
+                if user:
+                    username = user['username']
+                    profile_image = user['profile_image']
 
-        return render_template("mainpage.html", username=username, profile_image=profile_image, posts=post_list)
+        # Загружаем посты
+        with sqlite3.connect(db_pathpost) as conn_posts:
+            conn_posts.row_factory = sqlite3.Row
+            posts = conn_posts.execute("SELECT * FROM posts ORDER BY id DESC").fetchall()
+
+            # Загружаем лайки текущего пользователя
+            if user_id:
+                liked_posts = conn_posts.execute(
+                    "SELECT post_id FROM post_likes WHERE user_id = ?",
+                    (user_id,)
+                ).fetchall()
+                user_liked_posts = [row['post_id'] for row in liked_posts]
+
+        # Преобразуем посты в список словарей
+        post_list = [dict(post) for post in posts]
+
+        # Получаем уникальные идентификаторы пользователей
+        user_ids = {post['user_uniq_id'] for post in post_list}
+
+        # Добавляем авторов к постам
+        if user_ids:
+            with sqlite3.connect(db_pathusers) as conn_users:
+                conn_users.row_factory = sqlite3.Row
+                users = conn_users.execute(
+                    f"SELECT uniq_id, username FROM users WHERE uniq_id IN ({','.join(['?'] * len(user_ids))})",
+                    tuple(user_ids)
+                ).fetchall()
+
+            # Создаем словарь {uniq_id: username}
+            user_dict = {user['uniq_id']: user['username'] for user in users}
+
+            for post in post_list:
+                post['author'] = user_dict.get(post['user_uniq_id'], 'Unknown')
+
+        return render_template(
+            "mainpage.html",
+            username=username,
+            profile_image=profile_image,
+            posts=post_list,
+            user_liked_posts=user_liked_posts,
+        )
 
     except sqlite3.Error as e:
         abort(500, description=f"Database error: {e}")
+
 
 @app.route('/userpost')
 def editposts():
@@ -106,19 +122,54 @@ def editposts():
 
 @app.route('/profile')
 def profile():
-    
-    
-    if 'user_id' in session:
+    if 'user_id' not in session:
+        flash('User not logged in. Please login.')
+        return redirect(url_for('login'))
+
+    username = None
+    profile_image = None
+    liked_posts = []
+
+    try:
+        # Fetch user details
         with sqlite3.connect(db_pathusers) as db:
             cursor = db.cursor()
             cursor.execute("SELECT username, profile_image FROM users WHERE id = ?", (session['user_id'],))
             user = cursor.fetchone()
             if user:
                 username = user[0]
-                profile_image = user[1] if user[1] else None  # Изображение профиля
-                return render_template("profile.html", username=username, profile_image=profile_image)
-    flash('User not logged in. Please login.')
-    return redirect(url_for('login'))
+                profile_image = user[1] if user[1] else None
+
+        # Fetch liked post IDs
+        with sqlite3.connect(db_pathpost) as db:
+            cursor = db.cursor()
+            cursor.execute("SELECT post_id FROM post_likes WHERE user_id = ?", (session['user_id'],))
+            liked_post_ids = cursor.fetchall()
+            liked_post_ids = [row[0] for row in liked_post_ids]
+
+            # Fetch liked posts
+            if liked_post_ids:
+                placeholders = ', '.join(['?'] * len(liked_post_ids))
+                query = f"SELECT id, title, content FROM posts WHERE id IN ({placeholders}) ORDER BY id DESC"
+                cursor.execute(query, liked_post_ids)
+                liked_posts_data = cursor.fetchall()
+
+                # Convert to list of dictionaries
+                liked_posts = [
+                    {"id": row[0], "title": row[1], "content": row[2]}
+                    for row in liked_posts_data
+                ]
+
+    except sqlite3.Error as e:
+        print(f"Database error: {e}")
+        flash('Error with the database.')
+        return redirect(url_for('login'))
+
+    return render_template("profile.html", username=username, profile_image=profile_image, liked_posts=liked_posts)
+
+
+
+
 
 @app.route('/unknownuser/<int:post_id>')
 def unknownuser(post_id):
@@ -376,13 +427,13 @@ def like(post_id):
         return redirect(url_for('login'))  # Redirect to login if not logged in
 
     user_id = session['user_id']
-
-    try:
+    liked = None
+    if 'user_id' in session:
         with sqlite3.connect(db_pathpost) as db:
             cursor = db.cursor()
 
             # Check if the user has already liked the post
-            cursor.execute("SELECT * FROM post_likes WHERE user_id = ? AND post_id = ?", (user_id, post_id))
+            cursor.execute("SELECT * FROM post_likes WHERE user_id = ? AND post_id = ? ", (user_id, post_id,))
             like = cursor.fetchone()
 
             if like:
@@ -390,17 +441,18 @@ def like(post_id):
                 cursor.execute("DELETE FROM post_likes WHERE user_id = ? AND post_id = ?", (user_id, post_id))
                 cursor.execute("UPDATE posts SET like_count = like_count - 1 WHERE id = ?", (post_id,))
                 db.commit()
+                liked = True
             else:
                 # If the user hasn't liked the post, add the like
                 cursor.execute("INSERT INTO post_likes (user_id, post_id) VALUES (?, ?)", (user_id, post_id))
                 cursor.execute("UPDATE posts SET like_count = like_count + 1 WHERE id = ?", (post_id,))
                 db.commit()
+                liked = False
 
-            return redirect(url_for('mainpage'))  # Redirect back to the main page
+            return redirect(url_for('mainpage', liked=liked, user_id=user_id))  # Redirect back to the main page
 
-    except sqlite3.Error as e:
-        print(f"Database error: {e}")
-        return "Error with the database."
+    
+
 
 
 
@@ -589,9 +641,16 @@ def delete(id):
     
     post = get_post(id)
     conn = sqlite3.connect(db_pathpost)
-    conn.execute('DELETE FROM posts WHERE id = ?', (id,))
+    cursor = conn.cursor()
+    
+    # Удаляем лайки, комментарии и пост
+    cursor.execute('DELETE FROM post_likes WHERE post_id = ?', (id,))
+    cursor.execute('DELETE FROM comments WHERE post_id = ?', (id,))
+    cursor.execute('DELETE FROM posts WHERE id = ?', (id,))
+    
     conn.commit()
     conn.close()
+    
     flash('"{}" was successfully deleted!'.format(post['title']))
     return redirect(url_for('mainpage'))
 
