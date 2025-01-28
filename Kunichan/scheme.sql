@@ -1,11 +1,6 @@
-CREATE TABLE post_likes (
-    user_id INTEGER,
-    post_id INTEGER,
-    valuelike INTEGER,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (post_id) REFERENCES posts(id),
-    PRIMARY KEY (user_id, post_id)
-);
+ALTER TABLE users ADD COLUMN friend_id INTEGER;
+
+
 
 
 /*
@@ -20,10 +15,12 @@ CREATE TABLE comments (
 CREATE TABLE post_likes (
     user_id INTEGER,
     post_id INTEGER,
+    valuelike INTEGER,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (post_id) REFERENCES posts(id),
     PRIMARY KEY (user_id, post_id)
 );
+
 
 
 
@@ -54,13 +51,7 @@ CREATE TABLE IF NOT EXISTS posts (
 ALTER TABLE posts ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 FOR USERS
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    email TEXT NOT NULL,
-    password INTEGER NOT NULL,
-    uniq_id INT NOT NULL
-);
+
 
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

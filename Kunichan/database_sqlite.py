@@ -3,7 +3,7 @@ import sqlite3
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(BASE_DIR, 'db', 'databasepost.db')
+db_path = os.path.join(BASE_DIR, 'db', 'databaseusers.db')
 # open a connection between python script and database.db to create it 
 connection = sqlite3.connect(db_path)
 

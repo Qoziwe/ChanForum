@@ -19,29 +19,52 @@ Error = None
 
 @app.template_filter('b64encode')
 def b64encode_filter(data):
+    if data is None:
+        return ''
     return base64.b64encode(data).decode('utf-8')
 
 @app.route("/")
 def mainpage():
     try:
-        # Проверяем авторизацию пользователя
+        # Инициализация переменных
         username = None
         profile_image = None
         user_id = None
         user_liked_posts = []
+        friends = []
 
         if 'user_id' in session:
             user_id = session['user_id']
             with sqlite3.connect(db_pathusers) as conn_users:
                 conn_users.row_factory = sqlite3.Row
                 user = conn_users.execute(
-                    "SELECT username, profile_image FROM users WHERE id = ?",
+                    "SELECT username, profile_image, friend_id FROM users WHERE id = ?",
                     (user_id,)
                 ).fetchone()
 
                 if user:
                     username = user['username']
                     profile_image = user['profile_image']
+                    # Получаем friend_id текущего пользователя
+                    friend_ids = user['friend_id']
+                    if friend_ids:
+                        # Если есть друзья, извлекаем их uniq_id
+                        friend_ids_list = friend_ids.split(',')
+                        with sqlite3.connect(db_pathusers) as conn_users_friends:
+                            conn_users_friends.row_factory = sqlite3.Row
+                            friends_data = conn_users_friends.execute(
+                                f"SELECT uniq_id, username, profile_image FROM users WHERE uniq_id IN ({','.join(['?'] * len(friend_ids_list))})",
+                                tuple(friend_ids_list)
+                            ).fetchall()
+                            # Сохраняем данные о друзьях в список
+                            friends = [
+                                {
+                                    'uniq_id': friend['uniq_id'],
+                                    'username': friend['username'],
+                                    'profile_image': friend['profile_image']
+                                }
+                                for friend in friends_data
+                            ]
 
         # Загружаем посты
         with sqlite3.connect(db_pathpost) as conn_posts:
@@ -59,7 +82,7 @@ def mainpage():
         # Преобразуем посты в список словарей
         post_list = [dict(post) for post in posts]
 
-        # Получаем уникальные идентификаторы пользователей
+        # Получаем уникальные идентификаторы пользователей из постов
         user_ids = {post['user_uniq_id'] for post in post_list}
 
         # Добавляем авторов к постам
@@ -71,7 +94,7 @@ def mainpage():
                     tuple(user_ids)
                 ).fetchall()
 
-            # Создаем словарь {uniq_id: username}
+            # Создаем словарь для сопоставления uniq_id с именами пользователей
             user_dict = {user['uniq_id']: user['username'] for user in users}
 
             for post in post_list:
@@ -83,10 +106,16 @@ def mainpage():
             profile_image=profile_image,
             posts=post_list,
             user_liked_posts=user_liked_posts,
+            friends=friends
         )
 
     except sqlite3.Error as e:
         abort(500, description=f"Database error: {e}")
+
+
+
+
+
 
 
 @app.route('/userpost')
@@ -168,60 +197,94 @@ def profile():
     return render_template("profile.html", username=username, profile_image=profile_image, liked_posts=liked_posts)
 
 
-
-
-
-@app.route('/unknownuser/<int:post_id>')
+@app.route('/unknownuser/<int:post_id>', methods=['GET', 'POST'])
 def unknownuser(post_id):
-    # Получаем user_uniq_id автора поста
-    conn1 = sqlite3.connect(db_pathpost)
-    cursor1 = conn1.cursor()
-    cursor1.execute("SELECT user_uniq_id FROM posts WHERE id = ?", (post_id,))
-    post_author_id = cursor1.fetchone()
-    conn1.close()
-    
-    if not post_author_id:
-        abort(404)  # Пост не найден
-
-    post_author_id = post_author_id[0]  # Извлекаем user_uniq_id из результата
-
-    # Получаем информацию об авторе поста
-    conn2 = sqlite3.connect(db_pathusers)
-    cursor2 = conn2.cursor()
-    cursor2.execute("SELECT username, profile_image FROM users WHERE uniq_id = ?", (post_author_id,))
-    author_data = cursor2.fetchone()
-    conn2.close()
-
-    if not author_data:
-        abort(404)  # Автор поста не найден
-
-    author_username = author_data[0]
-    author_image = author_data[1]
-
-    # Данные о текущем пользователе (если он вошел в систему)
-    current_username = None
-    current_profile_image = None
-    current_user_id = session.get('user_id')  # Получаем текущего пользователя из сессии
-
-    if current_user_id:
-        conn = sqlite3.connect(db_pathusers)
-        cursor = conn.cursor()
-        cursor.execute("SELECT username, profile_image, uniq_id FROM users WHERE id = ?", (current_user_id,))
-        logged_in_user = cursor.fetchone()
-        conn.close()
+    try:
+        # Получаем user_uniq_id автора поста
+        with sqlite3.connect(db_pathpost) as conn_posts:
+            cursor_posts = conn_posts.cursor()
+            cursor_posts.execute("SELECT user_uniq_id FROM posts WHERE id = ?", (post_id,))
+            post_author_id = cursor_posts.fetchone()
         
-        if logged_in_user:
-            current_username, current_profile_image, logged_in_uniq_id = logged_in_user
-            
-            # Если текущий пользователь — автор поста, перенаправляем в профиль
-            if post_author_id == logged_in_uniq_id:
-                return redirect(url_for('profile'))
+        if not post_author_id:
+            abort(404)  # Пост не найден
 
-    return render_template('unknownuser.html', 
-                           author_username=author_username,
-                           author_image=author_image,
-                           username=current_username,
-                           profile_image=current_profile_image)
+        post_author_id = post_author_id[0]  # Извлекаем user_uniq_id
+
+        # Проверяем текущего пользователя (если он вошел в систему)
+        current_username = None
+        current_profile_image = None
+        current_user_id = session.get('user_id')  # Получаем ID текущего пользователя из сессии
+        uniq_id = None
+        is_friend = False  # По умолчанию автор поста не является другом
+
+        if current_user_id:
+            with sqlite3.connect(db_pathusers) as conn_users:
+                cursor_users = conn_users.cursor()
+                cursor_users.execute(
+                    "SELECT username, profile_image, uniq_id, friend_id FROM users WHERE id = ?", 
+                    (current_user_id,)
+                )
+                logged_in_user = cursor_users.fetchone()
+
+                if logged_in_user:
+                    current_username, current_profile_image, logged_in_uniq_id, friend_ids = logged_in_user
+                    uniq_id = logged_in_user[2]
+
+                    # Если текущий пользователь — автор поста, перенаправляем в профиль
+                    if post_author_id == logged_in_uniq_id:
+                        return redirect(url_for('profile'))
+
+                    # Проверяем, является ли автор поста другом текущего пользователя
+                    is_friend = post_author_id in friend_ids.split(',') if friend_ids else False
+
+                    # Если метод POST, пытаемся добавить автора поста в друзья
+                    if request.method == 'POST' and not is_friend:
+                        try:
+                            # Обновляем поле friend_id для текущего пользователя
+                            friend_ids = friend_ids.split(',') if friend_ids else []
+                            friend_ids.append(post_author_id)  # Добавляем uniq_id как строку
+                            updated_friend_ids = ','.join(friend_ids)
+
+                            cursor_users.execute(
+                                "UPDATE users SET friend_id = ? WHERE id = ?",
+                                (updated_friend_ids, current_user_id)
+                            )
+                            conn_users.commit()
+                            flash('User has been added to your friends.')
+                            is_friend = True  # Теперь пользователь друг
+                        except sqlite3.Error as e:
+                            flash(f"Database error: {e}")
+
+        # Получаем информацию об авторе поста
+        with sqlite3.connect(db_pathusers) as conn_users:
+            cursor_users = conn_users.cursor()
+            cursor_users.execute(
+                "SELECT username, profile_image FROM users WHERE uniq_id = ?", 
+                (post_author_id,)
+            )
+            author_data = cursor_users.fetchone()
+        
+        if not author_data:
+            abort(404)  # Автор поста не найден
+
+        author_username, author_image = author_data
+
+        return render_template(
+            'unknownuser.html',
+            author_username=author_username,
+            author_image=author_image,
+            username=current_username,
+            profile_image=current_profile_image,
+            is_friend=is_friend
+        )
+
+    except sqlite3.Error as e:
+        abort(500, description=f"Database error: {e}")
+
+
+
+
 
 @app.route('/update_profile', methods=['GET', 'POST'])
 def update_profile():

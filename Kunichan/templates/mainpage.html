@@ -156,34 +156,23 @@
     </div>
     <div id="P-C-Friends">
       <h1>Friends</h1>
-      <a href="#"
-        ><img
-          src="https://avatars.mds.yandex.net/i?id=2a71ceff0a53675d3759bf7a5adbbad6_l-5869446-images-thumbs&n=13"
-          alt=""
-        />
-        <p>Stewadsfsdfdsfdsfrt</p> </a
-      ><a href="#"
-        ><img
-          src="https://avatars.mds.yandex.net/i?id=69da8d148b2d1ecbcb323ff945723828_l-10696063-images-thumbs&n=13"
-          alt=""
-        />
-        <p>Faridus</p>
-      </a>
-      <a href="#"
-        ><img
-          src="https://avatars.mds.yandex.net/i?id=c372b7aa6334c9241b9a8d5f13e03476_l-4576423-images-thumbs&n=13"
-          alt=""
-        />
-        <p>GovnoStewart</p>
-      </a>
-      <a href="#"
-        ><img
-          src="https://avatars.mds.yandex.net/i?id=2a71ceff0a53675d3759bf7a5adbbad6_l-5869446-images-thumbs&n=13"
-          alt=""
-        />
-        <p>StewartSuchara</p>
-      </a>
-    </div>
+      {% if friends %}
+          {% for friend in friends %}
+          <!--HERE IS PROFILE OF UNKNOWN USER WHICH I WILL ADD LATER-->
+              <a href="/unknownuserprofile">
+                <img src="{{ friend['profile_image'] }}" alt="{{ friend['username'] }}'s profile picture" />
+                  <p>{{ friend['username'] }}</p>
+              </a>
+                  
+              
+          {% endfor %}
+      {% else %}
+          <p>You have no friends yet. Add some friends to see them here!</p>
+      {% endif %}
+  </div>
+  
+  
+  
   </div>
 </section>
 
