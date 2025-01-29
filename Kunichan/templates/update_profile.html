@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} Update Profile {% endblock %}
+{% if username %}
+    <a href="/profile">
+      <button class="logbutton">
+        {% if profile_image %}
+        <img
+          id="H-Img"
+          src="data:image/png;base64,{{ profile_image|b64encode }}"
+          alt="Avatar"
+        />
+        {% endif %} {{ username }}
+      </button>
+    </a>
+      
+
+    {% block body %}
+      <section id="ProfileUpdate">
+        <h1>Update Profile</h1>
+        <form method="POST" enctype="multipart/form-data">
+          <label for="username">New Username:</label>
+          <input type="text" id="username" name="username" value="{{ username }}" required />
+
+          <label for="email">New Email:</label>
+          <input type="email" id="email" name="email" value="{{ email }}" required />
+
+          <label for="password">New Password (leave blank to keep current):</label>
+          <input type="password" id="password" name="password" />
+
+          <label for="profile_image">Upload New Profile Image:</label>
+          <input type="file" id="profile_image" name="profile_image" accept="image/*" />
+
+          <button type="submit">Save Changes</button>
+        </form>
+        <a href="/profile">Cancel</a>
+      </section>
+    {% endblock %}
+{% else %}
+    <a href="/register"
+      ><button class="logbutton" style="padding-left: 0.7vw">
+        Sign up
+      </button>
+    </a>
+{% endif %}

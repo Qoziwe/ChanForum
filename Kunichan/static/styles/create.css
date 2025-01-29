@@ -1,0 +1,231 @@
+body {
+  background: linear-gradient(#00000085, #00000085),
+    url(/static/images/postseditbg.jpg);
+  /* backdrop-filter: brightness(60%); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0% 80%;
+}
+#MainContainer {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#MC-Inner {
+  width: 82%;
+  height: 80vh;
+  background-color: #111111a4;
+  backdrop-filter: blur(0.3vw);
+  display: flex;
+  flex-direction: column;
+  padding: 2vw;
+  border-radius: 3vw;
+  box-sizing: border-box;
+}
+#MC-Inner h1 {
+  /* overflow-x: scroll;
+  overflow-y: hidden; */
+  max-width: 70%;
+  font-size: 2vw;
+  font-family: "Montserrat";
+}
+#MC-I-LastEditedDate {
+  font-size: 1vw;
+  font-family: "Montserrat";
+  color: #ffffffcb;
+  max-width: 70%;
+}
+#MC-I-F-LeftSide {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+#MC-I-F-RightSide {
+  position: absolute;
+  width: 18vw;
+  margin-top: 4vw;
+  right: 0;
+}
+form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+form label {
+  font-size: 1vw;
+  font-weight: 100;
+  font-family: "Montserrat";
+  margin-top: 0.5vw;
+}
+form input {
+  width: 70%;
+  height: 5vh;
+  border-radius: 1vw;
+  background-color: rgba(0, 0, 0, 0.508);
+  font-size: 1vw;
+  padding: 1vw;
+  transition: border-radius ease-in-out 150ms, box-shadow ease-in-out 150ms;
+}
+form input:focus {
+  /* background-color: #484848; */
+  border: 0.1vw solid #2c2c2c;
+  border-radius: 3vw;
+  -webkit-box-shadow: 00px 0px 1.5vw 0.2vw #7a7a7a;
+  -moz-box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
+  box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
+  outline: none;
+}
+#MC-I-DescriptionTextarea {
+  width: 70%;
+  height: 8vh;
+  border-radius: 1vw;
+  background-color: rgba(0, 0, 0, 0.508);
+  padding: 1vw 0vw 0 1vw;
+  font-size: 1vw;
+  resize: none;
+  box-sizing: border-box;
+  transition: border-radius ease-in-out 150ms, box-shadow ease-in-out 150ms;
+  overflow: auto;
+}
+#MC-I-DescriptionTextarea:focus {
+  border: 0.1vw solid #414141;
+  border-radius: 2vw;
+  -webkit-box-shadow: 00px 0px 1.5vw 0.2vw #7a7a7a;
+  -moz-box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
+  box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
+  outline: none;
+}
+#MC-I-DescriptionTextarea::-webkit-scrollbar {
+  width: 0.75vw;
+}
+#MC-I-DescriptionTextarea::-webkit-scrollbar-track {
+  background-color: #5a5a5a80;
+  border-radius: 6px;
+  margin-right: 2vw;
+}
+#MC-I-DescriptionTextarea::-webkit-scrollbar-thumb {
+  background-color: #1f1f1f;
+  border-radius: 6px;
+}
+#MC-I-DescriptionTextarea::-webkit-scrollbar-button {
+  display: none;
+}
+#MC-I-Textarea {
+  width: 70%;
+  height: 60%;
+  border-radius: 1vw;
+  background-color: rgba(0, 0, 0, 0.508);
+  padding: 1vw 0vw 0 1vw;
+  font-size: 1vw;
+  resize: none;
+  box-sizing: border-box;
+  transition: border-radius ease-in-out 150ms, box-shadow ease-in-out 150ms;
+  overflow: auto;
+}
+#MC-I-Textarea:focus {
+  border: 0.1vw solid #414141;
+  border-radius: 2vw;
+  -webkit-box-shadow: 00px 0px 1.5vw 0.2vw #7a7a7a;
+  -moz-box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
+  box-shadow: 0px 0px 1.5vw 0.2vw #7a7a7a;
+  outline: none;
+}
+#MC-I-Textarea::-webkit-scrollbar {
+  width: 0.75vw; /* Ширина полосы прокрутки */
+}
+#MC-I-Textarea::-webkit-scrollbar-track {
+  background-color: #5a5a5a80;
+  border-radius: 6px;
+  margin-right: 2vw;
+}
+#MC-I-Textarea::-webkit-scrollbar-thumb {
+  background-color: #1f1f1f;
+  border-radius: 6px;
+}
+#MC-I-Textarea::-webkit-scrollbar-button {
+  display: none;
+}
+#MC-I-F-ImgUpload {
+  display: none;
+}
+#MC-I-F-ImgUploadLabel {
+  width: 13vw;
+  height: 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1vw;
+  background-color: rgba(0, 0, 0, 0.293);
+  border-radius: 1vw;
+  border: 0.1vw solid #4f4f4f;
+  transition: all ease-in-out 150ms;
+  /* margin-top: 0 auto; */
+}
+#MC-I-F-ImgUploadLabel:hover {
+  background-color: #4f4f4f;
+  border-radius: 10vw;
+  background-color: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
+#MC-I-F-ImgName {
+  font-size: 1vw;
+  font-family: "Montserrat";
+  margin: 0.5vw 0 1.5vw 0.2vw;
+}
+
+#MC-C-DeleteForm {
+  width: 18vw;
+  position: absolute;
+  height: 3vw;
+  right: 0;
+}
+#MC-I-Deleter {
+  width: 13vw;
+  height: 3vw;
+  display: flex;
+  align-content: center;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.293);
+  border-radius: 1vw;
+  font-size: 1vw;
+  font-family: "Montserrat";
+  border: 0.1vw solid #4f4f4f;
+  transition: all ease-in-out 150ms;
+}
+#MC-I-Deleter:hover {
+  background-color: #4f4f4f;
+  border-radius: 10vw;
+  background-color: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
+
+form button {
+  width: 13vw;
+  height: 3vw;
+  font-size: 1vw;
+  font-family: "Montserrat";
+  background-color: rgba(0, 0, 0, 0.293);
+  border-radius: 1vw;
+  border: 0.1vw solid #4f4f4f;
+  transition: all ease-in-out 150ms;
+  /* margin: 0 auto; */
+}
+form button:hover {
+  background-color: #4f4f4f;
+  border-radius: 10vw;
+  background-color: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}

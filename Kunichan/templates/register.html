@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+<!--  -->
+
+{% block title %} Register {% endblock %}
+
+<!--  -->
+
+{% block links %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/register.css') }}"
+/>
+{% endblock %}
+
+<!--  -->
+
+{% block body %}
+<!--  -->
+{% block navigation %}{% endblock %}
+<!--  -->
+<section id="Register">
+  <div id="R-Container">
+    <h1>Register here</h1>
+    <form action="/register" method="POST">
+      <input type="text" name="username" placeholder="Username" maxlength="25" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Sign up</button>
+    </form>
+    <div id="R-C-LoginButton">
+      <p>Have already an account? &nbsp <a id="R-C-LB-A">Login</a></p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+<!--  -->
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/register.js') }}"></script>
+{% endblock %}
