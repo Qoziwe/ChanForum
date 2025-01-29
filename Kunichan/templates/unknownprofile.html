@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <section class="unknown-profile">
+        <div class="profile-card">
+            {% if unknowninfo %}
+                <img
+                src="data:image/jpeg;base64,{{ unknowninfo['profile_image'] | b64encode }}"
+                alt="Profile Image"
+                style="width: 150px; height: 150px; border-radius: 50%;"/>
+
+                <div class="nickname"><h1>{{ unknowninfo['username'] }}</h1></div>
+
+                {% if is_friend %}
+                    <h2>You are already friends.</h2>
+                {% else %}
+                    <form action="{{ url_for('add_friend', uniq_id=unknowninfo['uniq_id']) }}" method="post">
+                        <button type="submit" style="color: black;">Add friend</button>
+                    </form>
+                {% endif %}
+
+                <h2><a href="/">Posts</a></h2>
+            {% else %}
+                <p>User not found</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

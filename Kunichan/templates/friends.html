@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <section class="list0ffriends">
+        <ul>
+            {% for user in users_list %}
+            <div class="userbox">
+                {% if user['profile_image'] %}
+                    <img
+                        src="data:image/png;base64,{{ user['profile_image']|b64encode }}"
+                        alt="{{ user['username'] }}'s profile picture" style="width: 15rem; height: 15rem;"
+                    />
+                {% else %}
+                <img
+                    src='/static/images/NoImage.png'
+                    alt="Default Profile Image" style="width: 10rem; height: 15rem;"
+                />
+                {% endif %}
+                <a href="{{ url_for('unknownprofile', uniq_id=user['uniq_id']) }}">
+                    <p>@{{ user['username'] }}</p>
+                </a>
+                
+            </div>
+            {% endfor %}
+        </ul>
+    </section>
+
+{% endblock %}

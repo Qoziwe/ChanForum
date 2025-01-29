@@ -9,7 +9,6 @@
 <!--  -->
 {% block title %} Profile {% endblock %}
 <!--  -->
-
 {% block body %}
 <section id="Profile">
   <div id="P-Container">
@@ -29,38 +28,100 @@
       </div>
       <div id="P-C-LS-ProfileInformation">
         <h1>{{ username }}</h1>
-        <button class="P-C-LS-PI-Button">
-          <a href="/update_profile">Edit Profile</a>
-        </button>
-        <button class="P-C-LS-PI-Button"><a href="/logout">Logout</a></button>
+        <a href="/update_profile">
+          <button class="P-C-LS-PI-Button">Edit Profile</button>
+        </a>
+        <a href="/logout"> <button class="P-C-LS-PI-Button">Logout</button></a>
       </div>
     </div>
-    <div id="P-C-RightSide"></div>
+    <div id="P-C-RightSide">
+      <div id="P-C-RS-LikedPosts">
+        <h1>Liked Posts</h1>
+        {% if liked_posts %}
+        <!--  -->
+        {% for post in liked_posts %}
+        <div class="P-C-RS-LP-Post">
+          <div class="P-C-RS-LP-P-Content">
+            {% if post['post_image'] %}
+            <img
+              src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+              alt="{{ post['title'] }}"
+            />
+            {% else %}
+            <img src="/static/images/NoImage.png" alt="" />
+            {% endif %}
+            <span>
+              <a href="{{ url_for('post', post_id=post['id']) }}">
+                {{ post['title'] }}
+              </a>
+              <p>{{ post['description'] | truncate(800) }}</p>
+              <div class="P-C-RS-LP-P-C-Buttons">
+                <form
+                  action="/like/{{ post['id'] }}"
+                  method="POST"
+                  id="like-form-{{ post['id'] }}"
+                >
+                  <button type="submit">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="white"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                      ></path>
+                    </svg>
+                    <p class="like-count">{{ post['like_count'] }}</p>
+                  </button>
+                </form>
+                <form action="" method="">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#d3d3d3"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="18" cy="5" r="3"></circle>
+                      <circle cx="6" cy="12" r="3"></circle>
+                      <circle cx="18" cy="19" r="3"></circle>
+                      <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                      <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                    </svg>
+                  </button>
+                </form>
+                <form action="0">
+                  <button style="width: 5vw">
+                    <a href="{{ url_for('post', post_id=post['id']) }}">
+                      See more
+                    </a>
+                  </button>
+                </form>
+              </div>
+            </span>
+          </div>
+        </div>
+        {% endfor %}
+        <!--  -->
+        {% else %}
+        <p>You haven't liked any posts yet.</p>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </section>
-{% endblock %} {% block scripts %}
+{% endblock %}
+<!--  -->
+{% block scripts %}
 <script src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
 {% endblock %}
-
-<!-- 
-
- -->
-
-<!-- <section id="ProfileBanner">
-    {% if profile_image %}
-      <img
-        src="data:image/jpeg;base64,{{ profile_image | b64encode }}"
-        alt="Profile Image"
-        style="width: 150px; height: 150px; border-radius: 50%;"
-      />
-    {% else %}
-      <img
-        src="{{ url_for('static', filename='images/default-profile.png') }}"
-        alt="Default Profile Image"
-        style="width: 150px; height: 150px; border-radius: 50%;"
-      />
-    {% endif %}
-    <div class="nicknameh1"><h1>{{ username }}</h1></div>
-    <h2><a href="/update_profile">Edit Profile</a></h2>
-    <h2><a href="/logout">Logout</a></h2>
-  </section> -->

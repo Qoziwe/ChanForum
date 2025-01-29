@@ -33,7 +33,7 @@
     <hr />
     <aside>
       {% for post in posts %}
-      <div class="D-C-Card">
+      <div class="D-C-Card" id="D-C-Card-{{ post['id'] }}">
         <div class="D-C-Card-Front">
           <div class="D-C-Card-F-LeftPart">
             {% if post['post_image'] %}
@@ -59,11 +59,6 @@
               <p style="white-space: pre-wrap">{{ post['description'] }}</p>
             </span>
           </div>
-          <!-- <button class="D-C-Card-Front-Button">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button> -->
           <div class="D-C-Card-Front-Button">
             <span class="burger-line"></span>
             <span class="burger-line"></span>
@@ -74,15 +69,37 @@
           <p>{{ post['content'] | truncate(800) }}</p>
         </div>
         <div class="D-C-Card-Actions">
-          <form action="/like/{{ post['id'] }}" method="POST">
-            <button>
+          <form
+            action="/like/{{ post['id'] }}"
+            method="POST"
+            class="like-form"
+            id="like-form-{{ post['id'] }}"
+          >
+            <button type="submit" class="like-button">
+              {% if post['id'] not in user_liked_posts %}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#d3d3d3"
+                stroke="#D3D3D3"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="like-icon"
+              >
+                <path
+                  d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                ></path>
+              </svg>
+              {% else %}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="white"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -91,9 +108,11 @@
                   d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
                 ></path>
               </svg>
-              <p>{{ post['like_count'] }}</p>
+              {% endif %}
+              <p class="like-count">{{ post['like_count'] }}</p>
             </button>
           </form>
+
           <form action="" method="">
             <button>
               <svg
@@ -115,6 +134,7 @@
               </svg>
             </button>
           </form>
+
           <form action="0">
             <button>
               <a href="{{ url_for('post', post_id=post['id']) }}"> See more </a>
@@ -139,7 +159,7 @@
       />
       {% endif %}
     </div>
-    <div id="P-C-Nickname">{{ username | truncate(19) }}</div>
+    <div id="P-C-Nickname">{{ username }}</div>
     <div id="P-C-Mastermind">
       <div id="P-C-M-Article">Mastermind</div>
       <div id="P-C-M-Information">
@@ -155,55 +175,31 @@
     </div>
     <div id="P-C-Friends">
       <h1>Friends</h1>
-      <a href="#"
-        ><img
-          src="https://avatars.mds.yandex.net/i?id=2a71ceff0a53675d3759bf7a5adbbad6_l-5869446-images-thumbs&n=13"
-          alt=""
+      {% if friends %} {% for friend in friends %}
+      <!--HERE IS PROFILE OF UNKNOWN USER WHICH I WILL ADD LATER-->
+      <a href="/unknownuserprofile">
+        {% if friend['profile_image'] %}
+        <img
+          src="data:image/png;base64,{{ friend['profile_image']|b64encode }}"
+          alt="{{ friend['username'] }}'s profile picture"
         />
-        <p>Stewadsfsdfdsfdsfrt</p> </a
-      ><a href="#"
-        ><img
-          src="https://avatars.mds.yandex.net/i?id=69da8d148b2d1ecbcb323ff945723828_l-10696063-images-thumbs&n=13"
-          alt=""
-        />
-        <p>Faridus</p>
+        {% else %}
+        <img src="/static/images/NoImage.png" alt="Default Profile Image" />
+        {% endif %}
+        <p>{{ friend['username'] }}</p>
       </a>
-      <a href="#"
-        ><img
-          src="https://avatars.mds.yandex.net/i?id=c372b7aa6334c9241b9a8d5f13e03476_l-4576423-images-thumbs&n=13"
-          alt=""
-        />
-        <p>GovnoStewart</p>
-      </a>
-      <a href="#"
-        ><img
-          src="https://avatars.mds.yandex.net/i?id=2a71ceff0a53675d3759bf7a5adbbad6_l-5869446-images-thumbs&n=13"
-          alt=""
-        />
-        <p>StewartSuchara</p>
-      </a>
+
+      {% endfor %} {% else %}
+      <p style="opacity: 0.8; font-size: 0.8vw">
+        You have no friends yet. Add some friends to see them here!
+      </p>
+      {% endif %}
     </div>
   </div>
 </section>
 
 {% endblock %}
-
-<!-- {% if username %}
-    <a href="/profile">
-      <button class="logbutton" style="padding-left: 0">
-        {% if profile_image %}
-        <img
-          id="H-Img"
-          src="data:image/png;base64,{{ profile_image|b64encode }}"
-          alt="Avatar"
-        />
-        {% endif %} {{ username }}
-      </button>
-    </a>
-    {% else %}
-    <a href="/register"><button class="logbutton">Sign up</button></a>
-    {% endif %} -->
-
+<!--  -->
 {% block scripts %}
 <script src="{{ url_for('static', filename='scripts/mainpage.js') }}"></script>
 
