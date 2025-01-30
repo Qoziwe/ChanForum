@@ -150,12 +150,27 @@
 
 <section id="Profile">
   <div id="P-Container">
+    <!-- <iframe
+      style="border-radius: 12px"
+      src="https://open.spotify.com/embed/track/2K2NeVnP853rkR5ese8ZLP?utm_source=generator"
+      width="100%"
+      height="352"
+      frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+    ></iframe> -->
     <div id="P-C-Avatar">
       {% if profile_image %}
       <img
         id="P-C-A-Img"
         src="data:image/png;base64,{{ profile_image|b64encode }}"
         alt="Avatar"
+      />
+      {% else %}
+      <img
+        src="/static/images/DefaultProfileImage.jpg"
+        alt="Default Profile Image"
       />
       {% endif %}
     </div>
@@ -184,7 +199,10 @@
           alt="{{ friend['username'] }}'s profile picture"
         />
         {% else %}
-        <img src="/static/images/NoImage.png" alt="Default Profile Image" />
+        <img
+          src="/static/images/DefaultProfileImage.jpg"
+          alt="Default Profile Image"
+        />
         {% endif %}
         <p>{{ friend['username'] }}</p>
       </a>
