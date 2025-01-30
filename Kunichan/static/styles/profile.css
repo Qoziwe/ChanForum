@@ -8,23 +8,28 @@
 }
 #P-Container {
   width: 100%;
-  height: 45vw;
+  height: 80vh;
   background-color: #111111;
   display: grid;
   grid-template-columns: 0.7fr 2fr;
   border-radius: 3vw;
-  padding: 1vw;
+  padding: 2vh;
   box-sizing: border-box;
 }
 #P-C-LeftSide {
   width: 100%;
   border-radius: 2vw 0 0 2vw;
   border: 0.1vw solid #4f4f4f;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  padding-top: 1vw;
+  box-sizing: border-box;
 }
 #P-C-RightSide {
   width: 100%;
-  height: 43vw;
-  max-height: 45vw;
+  height: 76vh;
+  max-height: 80vh;
   border-radius: 0 2vw 2vw 0;
   border: 0.1vw solid #4f4f4f;
   border-left: 0;
@@ -33,7 +38,6 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-top: 1vw;
   box-sizing: border-box;
 }
 #P-C-LS-ProfileImage img {
@@ -47,20 +51,21 @@
   flex-direction: column;
   align-items: center;
   gap: 1vw;
-  padding-top: 2vw;
+  /* padding-top: 1vw; */
   box-sizing: border-box;
 }
 #P-C-LS-ProfileInformation h1 {
-  font-size: 2vw;
+  font-size: 1.8 vw;
   font-family: "Montserrat";
 }
 .P-C-LS-PI-Button {
-  width: 10vw;
-  height: 2.8vw;
+  width: 8vw;
+  height: 2.5vw;
   background-color: #1f1f1f00;
   border: 0.1vw solid #4f4f4f;
   border-radius: 1vw;
   font-family: "Montserrat";
+  font-size: 0.8vw;
   transition: all 150ms ease-in-out;
 }
 .P-C-LS-PI-Button:hover {
@@ -75,8 +80,8 @@
   font-size: 0.8vw;
 }
 #P-C-RS-LikedPosts {
-  width: 35vw;
-  height: 42.9vw;
+  width: 30vw;
+  height: 75.8vh;
   padding: 0.8vw;
   box-sizing: border-box;
   display: flex;
@@ -115,12 +120,12 @@
   gap: 0.5vw;
 }
 .P-C-RS-LP-P-Content span a {
-  font-size: 1.3vw;
+  font-size: 1vw;
   font-family: "Inter", sans-serif;
-  width: 27vw;
+  width: 22vw;
 }
 .P-C-RS-LP-P-Content span p {
-  font-size: 1vw;
+  font-size: 0.8vw;
   font-family: "Montserrat";
   opacity: 0.8;
   max-width: 27vw;

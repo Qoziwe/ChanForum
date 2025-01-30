@@ -1,16 +1,3 @@
-@font-face {
-  font-family: "Jersey15"; /* Name for your font */
-  src: url("../fonts/Jersey15-Regular.ttf") format("truetype"); /* Path to the font */
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "WorkSans"; /* Name for your font */
-  src: url("../fonts/WorkSans-VariableFont_wght.ttf") format("truetype"); /* Path to the font */
-  font-weight: normal;
-  font-style: normal;
-}
-
 #Register {
   width: 100vw;
   height: 90vh;

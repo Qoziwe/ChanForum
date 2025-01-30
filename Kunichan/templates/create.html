@@ -19,11 +19,21 @@
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" required />
 
-        <label for="description" >Description: </label>
-        <textarea name="description" id="MC-I-DescriptionTextarea" maxlength="200" required></textarea>
+        <label for="description">Description: </label>
+        <textarea
+          name="description"
+          id="MC-I-DescriptionTextarea"
+          maxlength="200"
+          required
+        ></textarea>
 
         <label for="content">Content:</label>
-        <textarea name="content" id="MC-I-Textarea" style="white-space: pre-wrap;" required></textarea>
+        <textarea
+          name="content"
+          id="MC-I-Textarea"
+          style="white-space: pre-wrap"
+          required
+        ></textarea>
       </div>
       <div id="MC-I-F-RightSide" style="margin: 0">
         <label for="MC-I-F-ImgUpload" id="MC-I-F-ImgUploadLabel"
@@ -51,7 +61,6 @@
 {% block scripts %}
 <script src="{{ url_for('static', filename='scripts/create.js') }}"></script>
 {% endblock %}
-
 <!--  -->
 {% else %}
 <p>You need to <a href="{{ url_for('login') }}">log in</a> to create a post.</p>

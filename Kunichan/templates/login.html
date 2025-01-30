@@ -1,20 +1,14 @@
 {% extends 'base.html' %}
-
 <!--  -->
-
 {% block title %} Login {% endblock %}
-
 <!--  -->
-
 {% block links %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='styles/register.css') }}"
 />
 {% endblock %}
-
 <!--  -->
-
 {% block body %}
 <!--  -->
 {% block navigation %}{% endblock %}
@@ -33,9 +27,7 @@
   </div>
 </section>
 {% endblock %}
-
 <!--  -->
-
 {% block scripts %}
 <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
 {% endblock %}

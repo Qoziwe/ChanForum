@@ -21,13 +21,16 @@
           placeholder="Post title"
           value="{{ request.form['title'] or post['title'] }}"
         />
-        
+
         <label for="description">Description:</label>
-        <textarea name="description" id="MC-I-DescriptionTextarea">{{ request.form['description'] or post['description'] }}</textarea>
-        
+        <textarea name="description" id="MC-I-DescriptionTextarea">
+{{ request.form['description'] or post['description'] }}</textarea
+        >
+
         <label for="content">Content</label>
         <textarea name="content" placeholder="Post content" id="MC-I-Textarea">
-        {{ request.form['content'] or post['content'] }}</textarea>
+        {{ request.form['content'] or post['content'] }}</textarea
+        >
       </div>
 
       <div id="MC-I-F-RightSide">

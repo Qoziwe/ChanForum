@@ -32,12 +32,6 @@
       <div class="navbar-logo">
         <h1><a href="/">####Chan</a></h1>
       </div>
-      <!--Temporary thing-->
-
-      <!-- {% for message in get_flashed_messages() %}
-      <div class="alert alert-danger">{{ message }}</div>
-      {% endfor %} -->
-      <!--Temporary thing ends-->
 
       <div class="search-container">
         <input
@@ -60,6 +54,13 @@
             id="H-Img"
             src="data:image/png;base64,{{ profile_image|b64encode }}"
             alt="Avatar"
+          />
+          {% else %}
+          <img
+            src="/static/images/DefaultProfileImage.jpg"
+            alt="Avatar"
+            id="N-P-Img"
+            class="N-H-Svg"
           />
           {% endif %} {{ username | truncate(19) }}
         </button>
@@ -174,7 +175,7 @@
           </svg>
           <p>Discussions</p>
         </button>
-        <button id="N-Friends" class="N-Button">
+        <button id="friends" class="N-Button" onclick="urlFor('friends')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -192,7 +193,7 @@
             <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
           </svg>
-          <a href="/friends"><p>Friends</p></a>
+          <p>Friends</p>
         </button>
         <button id="N-Bookmarks" class="N-Button">
           <svg
@@ -216,14 +217,25 @@
         <hr />
         <h1>Other</h1>
         <button id="profile" class="N-Button" onclick="urlFor('profile')">
-          {% if username %} {% if profile_image %}
+          {% if username %}
+          <!--  -->
+          {% if profile_image %}
           <img
             src="data:image/png;base64,{{ profile_image|b64encode }}"
             alt="Avatar"
             id="N-P-Img"
             class="N-H-Svg"
           />
-          {% endif %} {% else %}
+          {% else %}
+          <img
+            src="/static/images/DefaultProfileImage.jpg"
+            alt="Avatar"
+            id="N-P-Img"
+            class="N-H-Svg"
+          />
+          {% endif %}
+          <!--  -->
+          {% else %}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

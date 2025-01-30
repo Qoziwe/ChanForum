@@ -14,7 +14,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
 #MC-Inner {
   width: 82%;
   height: 80vh;
@@ -181,7 +180,6 @@ form input:focus {
   font-family: "Montserrat";
   margin: 0.5vw 0 1.5vw 0.2vw;
 }
-
 #MC-C-DeleteForm {
   width: 18vw;
   position: absolute;
@@ -209,7 +207,6 @@ form input:focus {
   -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
   box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
 }
-
 form button {
   width: 13vw;
   height: 3vw;

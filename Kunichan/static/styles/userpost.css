@@ -5,7 +5,6 @@
   justify-content: center;
   padding: 2vw 0 0 0;
   box-sizing: border-box;
-  /* background-color: blueviolet; */
 }
 aside {
   display: flex;
@@ -27,13 +26,11 @@ aside {
   display: flex;
   align-items: center;
   gap: 1vw;
-  /* width: 80vw; */
   background-color: #1a1a1a;
   border-radius: 3vw;
   padding: 1vw;
   box-sizing: border-box;
 }
-
 .C-A-Card img {
   width: 7vw;
   height: 7vw;

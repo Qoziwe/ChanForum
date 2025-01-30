@@ -1,0 +1,101 @@
+#ProfileUpdate {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#PU-Container {
+  width: 90%;
+  height: 80vh;
+  position: relative;
+  background-color: #111111;
+  border: 0.1vw solid #d3d3d3;
+  border-radius: 3vw;
+  padding: 1.3vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vw;
+}
+#PU-Container h1 {
+  font-size: 2vw;
+  font-family: "Montserrat";
+  margin-bottom: 0.2vw;
+  margin-left: 1vw;
+}
+#PU-C-Form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+#PU-C-Form label {
+  font-size: 1vw;
+  font-family: "Montserrat";
+  color: #f0f8ffe3;
+}
+.PU-C-F-InputDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+.PU-C-F-InputDiv input {
+  width: 50vw;
+  height: 3vw;
+  background-color: #1f1f1f;
+  border-radius: 1vw;
+  padding: 0 0.5vw 0 0.5vw;
+  font-size: 0.8vw;
+  transition: all ease-in-out 150ms;
+  border: 0.1vw solid #2c2c2c;
+}
+.PU-C-F-InputDiv input:focus {
+  border-radius: 10vw;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  outline: none;
+}
+#PU-C-F-ID-Label {
+  width: 10vw;
+  height: 2.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.5vw;
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 1vw;
+  border: 0.1vw solid #4f4f4f;
+  transition: all ease-in-out 150ms;
+}
+#PU-C-F-ID-Label:hover {
+  background-color: #4f4f4f;
+  border-radius: 10vw;
+  background-color: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
+#PU-C-F-ID-ImageName {
+  font-size: 1vw;
+  font-family: "Montserrat";
+  /* margin: 0.5vw 0 1.5vw 0.2vw; */
+}
+#PU-Container button {
+  width: 20vw;
+  height: 3vw;
+  background-color: #33333300;
+  border: 0.1vw solid #4f4f4f;
+  border-radius: 1vw;
+  transition: all ease-in-out 150ms;
+  font-size: 0.8vw;
+  font-family: "Montserrat";
+}
+#PU-Container Button:hover {
+  border-radius: 10vw;
+  background-color: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
