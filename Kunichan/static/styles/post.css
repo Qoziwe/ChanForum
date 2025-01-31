@@ -17,18 +17,23 @@
   padding: 1vw;
   box-sizing: border-box;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0);
 }
 #P-C-PostContent {
   width: 100%;
-  border-radius: 3vw;
   z-index: 1;
   display: flex;
+  gap: 1vw;
   justify-content: center;
-  align-items: center;
+  flex-direction: column;
+}
+#P-C-PC-Main {
+  display: flex;
   gap: 1vw;
 }
-#P-C-PC-ImageContainer {
-  width: 50%;
+#P-C-PC-M-ImageContainer {
+  width: 100%;
   height: 50vh;
   position: relative;
   display: flex;
@@ -38,23 +43,22 @@
   box-sizing: border-box;
   border-radius: 10vw;
 }
-#P-C-PC-Background {
+#P-C-PC-M-IC-Background {
   position: absolute;
   width: 100%;
   height: 100%;
   filter: brightness(15%);
   border-radius: 2vw;
 }
-#P-C-PC-IC-Image {
-  width: 100%;
+#P-C-PC-M-IC-Image {
   height: 100%;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
   border-radius: 3vw;
 }
-#P-C-PC-Content {
-  width: 50%;
+#P-C-PC-M-Content {
+  width: 100%;
   height: 50vh;
   display: flex;
   flex-direction: column;
@@ -63,34 +67,124 @@
   scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0);
   gap: 1vw;
 }
-#P-C-PC-Content h1 {
+#P-C-PC-M-Content h1 {
   font-size: 2vw;
   font-family: "Montserrat";
   color: aliceblue;
   text-align: center;
 }
-#P-C-PC-Content h2 {
+#P-C-PC-M-Content h2 {
   font-size: 1.2vw;
   font-family: "Montserrat";
   color: #d0d0d0;
 }
-#P-C-PC-Content p {
+#P-C-PC-M-Content p {
   font-size: 1vw;
   font-family: "Montserrat";
   color: #d0d0d0;
   white-space: pre-wrap;
 }
-#P-C-PC-Content a p {
+#P-C-PC-M-Content a p {
   transition: all 150ms ease-in-out;
 }
-#P-C-PC-Content a p:hover {
+#P-C-PC-M-Content a p:hover {
   color: #f0f8ff;
   text-decoration: underline;
 }
-#P-C-PC-Content hr {
+#P-C-PC-M-Content hr {
   width: 80%;
   margin: 0 auto;
   min-height: 0.01vw;
   background-color: #d3d3d3;
   border: none;
+}
+#P-C-PostDiscussion {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+#P-C-PostDiscussion hr {
+  width: 80%;
+  height: 0.01vw;
+  background-color: #d3d3d3;
+  margin: 0 auto;
+  border-radius: 10vw;
+  margin-top: 1vw;
+}
+#P-C-PostDiscussion h1 {
+  font-size: 1.5vw;
+  font-family: "Montserrat";
+  color: aliceblue;
+}
+#P-C-PostDiscussion form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+#P-C-PostDiscussion form input {
+  width: 60%;
+  height: 3vw;
+  background-color: #111111;
+  border: 0.1vw solid #4f4f4f;
+  padding: 1vw;
+  box-sizing: border-box;
+  border-radius: 1vw;
+  font-size: 1vw;
+  resize: none;
+  transition: all 150ms ease-in-out;
+  outline: none;
+}
+#P-C-PostDiscussion form input:focus {
+  border-radius: 10vw;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
+#P-C-PostDiscussion form button {
+  width: 8vw;
+  height: 3vw;
+  background-color: #11111100;
+  border: 0.1vw solid #4f4f4f;
+  border-radius: 1vw;
+  transition: all 150ms ease-in-out;
+  font-size: 0.8vw;
+  font-family: "Montserrat";
+}
+#P-C-PostDiscussion form button:hover {
+  border-radius: 10vw;
+  background: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
+#P-C-PD-Comments {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1vw;
+  margin-left: 1vw;
+}
+#P-C-PD-C-Comment {
+  width: 50%;
+  padding: 1vw;
+  padding-bottom: 0;
+  border-radius: 1vw;
+  background-color: #1a1a1a;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #080808;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #080808;
+  box-shadow: 0px 0px 1vw 0.1vw #080808;
+}
+#P-C-PD-C-Comment a {
+  font-size: 1vw;
+  font-family: "Montserrat";
+}
+#P-C-PD-C-Comment a:hover {
+  text-decoration: underline;
+}
+#P-C-PD-C-Comment p {
+  overflow-wrap: anywhere;
+  font-size: 0.9vw;
+  font-family: "Inter";
 }

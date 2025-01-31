@@ -36,85 +36,77 @@
 <div id="Post">
   <div id="P-Container">
     <div id="P-C-PostContent">
-      <div id="P-C-PC-ImageContainer">
-        {% if post['post_image'] %}
-        <img
-          src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
-          id="P-C-PC-Background"
-        />
-        <img
-          id="P-C-PC-IC-Image"
-          src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
-          alt="{{ post['title'] }}"
-        />
-        {% else %}
-        <img src="/static/images/NoImage.png" id="P-C-PC-Background" />
-        <img
-          id="P-C-PC-IC-Image"
-          src="/static/images/NoImage.png"
-          alt="{{ post['title'] }}"
-        />
-        {% endif %}
+      <div id="P-C-PC-Main">
+        <div id="P-C-PC-M-ImageContainer">
+          {% if post['post_image'] %}
+          <img
+            src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+            id="P-C-PC-M-IC-Background"
+          />
+          <img
+            id="P-C-PC-M-IC-Image"
+            src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+            alt="{{ post['title'] }}"
+          />
+          {% else %}
+          <img src="/static/images/NoImage.png" id="P-C-PC-M-IC-Background" />
+          <img
+            id="P-C-PC-M-IC-Image"
+            src="/static/images/NoImage.png"
+            alt="{{ post['title'] }}"
+          />
+          {% endif %}
+        </div>
+        <div id="P-C-PC-M-Content">
+          <h1>{{ post['title'] }}</h1>
+          <a href="{{ url_for('unknownuser', post_id=post['id']) }}">
+            <p>@{{ post['author'] }}</p>
+          </a>
+          <hr />
+          <h2>{{ post['description'] }}</h2>
+          <p style="margin-left: 1vw">{{ post['content'] }}</p>
+        </div>
       </div>
-      <div id="P-C-PC-Content">
-        <h1>{{ post['title'] }}</h1>
-        <a href="{{ url_for('unknownuser', post_id=post['id']) }}">
-          <p>@{{ post['author'] }}</p>
-        </a>
+      <div id="P-C-PostDiscussion">
         <hr />
-        <h2>{{ post['description'] }}</h2>
-        <p style="margin-left: 1vw">{{ post['content'] }}</p>
-      </div>
-      <!-- <div id="P-C-PostDiscussion">
-        <h3>Comments</h3>
+        <h1>Comments</h1>
         {% if username %}
         <form action="/comment/{{ post['id'] }}" method="POST">
-          <textarea
+          <input
             name="comment_content"
             placeholder="Write a comment..."
             rows="4"
-            style="
-              width: 100%;
-              padding: 10px;
-              font-size: 14px;
-              border-radius: 5px;
-              margin-bottom: 10px;
-              color: black;
-            "
-          ></textarea>
-          <button
-            type="submit"
-            style="
-              padding: 10px 15px;
-              background-color: #007bff;
-              color: white;
-              border: none;
-              border-radius: 5px;
-            "
-          >
-            Post Comment
-          </button>
+          ></input>
+          <button type="submit">Post Comment</button>
         </form>
         {% else %}
         <p><a href="/login">Login</a> to leave a comment.</p>
         {% endif %}
-        <div id="comments-list">
-          {% if comments %} {% for comment in comments %}
-          <div class="comment">
+        <div id="P-C-PD-Comments">
+          {% if comments %}
+          <!--  -->
+          {% for comment in comments %}
+          <div id="P-C-PD-C-Comment">
             <a href="{{ url_for('unknownuser', post_id=post['id']) }}">
-              <p><strong>@{{ comment['author'] }}</strong></p>
+              @{{ comment['author'] }}
             </a>
-
             <p style="white-space: pre-wrap">
               {{ comment['comment_content'] }}
             </p>
           </div>
-          {% endfor %} {% else %}
-          <p>No comments yet. Be the first to comment!</p>
+          {% endfor %}
+          <!--  -->
+          {% else %}
+          <p style="font-size: 1vw;">No comments yet. Be the first to comment!</p>
           {% endif %}
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>
+{% endblock %}
+<!--  -->
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/post.js') }}"></script>
+
 {% endblock %}

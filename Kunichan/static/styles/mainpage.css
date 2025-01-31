@@ -1,7 +1,6 @@
 #mainInner {
   justify-content: space-between;
 }
-
 #Discussions {
   width: 70%;
   height: 90vh;
@@ -32,7 +31,6 @@
   overflow: hidden;
   min-height: 18vw;
   background: #111111;
-  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
   display: flex;
   align-items: center;
   border-radius: 2vw;
@@ -42,12 +40,10 @@
   display: flex;
   transition: transform 0.5s ease-in-out;
   gap: 2vw;
-  /* border-radius: 3vw; */
 }
 .D-C-C-T-Card {
   background: #272727;
   border-radius: 0.7vw;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,16 +173,16 @@ aside {
   transition: all 0.3s ease;
 }
 .burger-line:nth-child(1) {
-  top: 0; /* Первая линия сверху */
+  top: 0;
   transform-origin: center;
 }
 .burger-line:nth-child(2) {
-  top: 50%; /* Средняя линия по центру */
+  top: 50%;
   transform: translateY(-50%);
   transform-origin: center;
 }
 .burger-line:nth-child(3) {
-  bottom: 0; /* Нижняя линия снизу */
+  bottom: 0;
   transform-origin: center;
 }
 .D-C-Card-Front-Button.active .burger-line:nth-child(1) {
@@ -217,7 +213,6 @@ aside {
   width: 100%;
   margin-top: 0.5vw;
   gap: 0.7vw;
-  /* padding: 0 0.7vw 0 0.7vw; */
   box-sizing: border-box;
 }
 .D-C-Card-Actions form {

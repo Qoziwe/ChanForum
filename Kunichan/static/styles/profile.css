@@ -51,11 +51,10 @@
   flex-direction: column;
   align-items: center;
   gap: 1vw;
-  /* padding-top: 1vw; */
   box-sizing: border-box;
 }
 #P-C-LS-ProfileInformation h1 {
-  font-size: 1.8 vw;
+  font-size: 1.2vw;
   font-family: "Montserrat";
 }
 .P-C-LS-PI-Button {

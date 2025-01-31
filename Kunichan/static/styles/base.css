@@ -37,25 +37,26 @@ html {
 body {
   width: 100%;
   background-color: #080808;
-  /* overflow: hidden; */
 }
 
 .snow-container {
+  width: 100%;
+  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
   z-index: 1000;
   overflow: hidden;
 }
 .snowflake {
+  width: 10px; /* Example width */
+  height: 10px; /* Example height */
+  background-color: #ffffff;
+  opacity: 0.5;
   position: absolute;
   top: -10px;
   border-radius: 50%;
-  background-color: #ffffff;
-  opacity: 0.5;
   filter: blur(1px);
   animation: fall linear infinite;
 }
@@ -71,20 +72,21 @@ body {
 }
 
 .spinner-wrapper {
+  width: 100%;
+  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   background-color: #111111;
   z-index: 1000;
 }
 .spinner {
   width: 3.5vw;
   height: 3.5vw;
+  background: none;
   border: 0.2vw solid rgba(255, 255, 255, 0.3);
   border-top: 0.2vw solid #fff;
   border-radius: 50%;
@@ -107,31 +109,33 @@ main {
 }
 
 #Navigation {
-  width: 17vw; /* Adjusted for toggle */
+  width: 17vw;
   height: 90vh;
   background-color: #111111;
+  position: relative;
+  box-sizing: border-box;
   display: flex;
   justify-content: start;
-  align-items: center;
   flex-direction: column;
-  transition: width 0.3s ease-in-out;
-  gap: 0.5vw;
-  padding-top: 1vw;
-  box-sizing: border-box;
+  align-items: center;
   grid-column: 1;
   grid-row: 1;
-  box-sizing: border-box;
+  gap: 0.5vw;
+  padding-top: 1vw;
+  transition: width 0.3s ease-in-out;
 }
 #Navigation.collapsed {
   width: 5vw;
 }
 #Navigation h1 {
-  display: block;
   width: 80%;
   margin: 1vw 0 0.2vw 0;
+  display: block;
   font-size: 0.9vw;
   font-family: "Comfortaa", serif;
+  font-weight: normal;
   color: #d3d3d3;
+  text-align: left;
   transition: opacity 0.3s ease-in-out;
 }
 #Navigation hr {
@@ -144,11 +148,11 @@ main {
 .N-Button p {
   font-size: 0.9vw;
   font-family: "Comfortaa", serif;
+  font-weight: 400;
+  color: #d3d3d3;
+  text-align: start;
   overflow: hidden;
   white-space: nowrap;
-  font-weight: 400;
-  text-align: start;
-  color: #d3d3d3;
 }
 .N-Button {
   width: 80%;
@@ -162,12 +166,11 @@ main {
   transition: ease-in-out 100ms;
 }
 .toggle-btn {
-  position: absolute;
-  align-self: flex-end;
-  margin-right: 1.6vw;
   width: 2.5vw;
   height: 2.5vw;
   background-color: #202020;
+  position: absolute;
+  right: 1.6vw;
   border: none;
   border-radius: 50%;
   display: flex;
@@ -178,9 +181,9 @@ main {
 }
 #Navigation .toggle-btn:hover {
   background-color: #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
   -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
   -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
-  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
 }
 #Navigation .toggle-btn svg {
   width: 1.5vw;
@@ -198,9 +201,7 @@ main {
   padding-left: 0;
 }
 #Navigation.collapsed .N-H-Svg {
-  /* width: 3.8vw; */
   padding-left: 0;
-  /* margin: 0 auto; */
 }
 .N-Button:hover p {
   color: #fcfcfc;
@@ -220,8 +221,9 @@ main {
 #N-P-Img {
   width: 2vw;
   height: 2vw;
-  border-radius: 5vw;
+  background: none;
   border: 0.15vw solid #484848;
+  border-radius: 5vw;
   object-fit: cover;
 }
 
@@ -229,13 +231,14 @@ main {
   width: 100%;
   height: 10vh;
   background-color: #111111;
-  z-index: 1000;
+  position: relative;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-bottom: 0.1vw solid #646464;
   color: white;
   font-family: "Montserrat", sans-serif;
+  z-index: 1000;
 }
 .navbar-logo h1 {
   font-size: 4vw;
@@ -243,38 +246,37 @@ main {
 }
 .search-container {
   width: auto;
-  align-items: center;
   display: flex;
+  align-items: center;
 }
 #search-bar {
   width: 30vw;
   height: 2.5vw;
-  padding-left: 1vw;
   background-color: #4f4f4f9c;
   font-family: "WorkSans", sans-serif;
   font-size: 1.2vw;
   color: #fff;
   border: none;
-  box-sizing: border-box;
   border-radius: 10vw 0 0 10vw;
+  padding-left: 1vw;
+  box-sizing: border-box;
   transition: background-color ease-in-out 150ms, box-shadow ease-in-out 150ms;
 }
 #search-bar:focus {
   background-color: #484848;
   border: 0.1vw solid #4f4f4f;
+  box-shadow: 0px 0px 5vw 0.1vw #4f4f4f;
   -webkit-box-shadow: 0px 0px 15vw 0.1vw #4f4f4f;
   -moz-box-shadow: 0px 0px 5vw 0.1vw #4f4f4f;
-  box-shadow: 0px 0px 5vw 0.1vw #4f4f4f;
   outline: none;
 }
 .search-icon {
   width: 2.5vw;
   height: 2.5vw;
-  margin: auto;
+  background-color: #4f4f4f9c;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #4f4f4f9c;
   border-radius: 0 10vw 10vw 0;
   font-size: 1vw;
   pointer-events: none;
@@ -284,18 +286,16 @@ main {
 }
 .logbutton {
   height: 2.3vw;
-  border: none;
+  background-color: #ff202000;
+  border: 0.1vw solid #4f4f4f;
   border-radius: 10vw;
   font-family: "WorkSans", sans-serif;
+  font-weight: 700;
   color: #fff;
-  background-color: #ff202000;
   display: flex;
   gap: 0.8vw;
-  /* padding-right: 0.7vw; */
   padding: 0 1vw 0 1vw;
   align-items: center;
-  border: 0.1vw solid #4f4f4f;
-  font-weight: 700;
   font-size: 0.9vw;
   box-sizing: border-box;
   transition: background-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
@@ -303,9 +303,9 @@ main {
 .logbutton:hover {
   background-color: #4f4f4f;
   border-radius: 1.5rem;
+  box-shadow: 0px 0px 10vw 1vw #4f4f4f;
   -webkit-box-shadow: 0px 0px 10vw 1vw #4f4f4f;
   -moz-box-shadow: 0px 0px 10vw 1vw #4f4f4f;
-  box-shadow: 0px 0px 10vw 1vw #4f4f4f;
 }
 #H-Img {
   width: 2.2vw;
@@ -326,6 +326,7 @@ height
 background
 background-size
 background-repeat
+object-fit
 opacity
 position
 left - right - top - bottom
@@ -336,9 +337,7 @@ flex-direction
 align-items
 grid-template-columns
 grid-template-rows
-grid-column
-grid-row
-grid-gap
+grid column-row-gap
 gap
 margin
 padding
@@ -354,10 +353,14 @@ font-weight
 letter-spacing
 word-spacing
 line-height
+word-wrap
+white-space
 text-decoration
 color
 transition
 transform
+outline
 user-select 
+pointer-events
 z-index
 */

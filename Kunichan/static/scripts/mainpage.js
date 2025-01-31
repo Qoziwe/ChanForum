@@ -67,7 +67,6 @@ function initializeCarousel() {
   });
 }
 
-// Инициализация карусели при загрузке
 initializeCarousel();
 
 const burgerButtons = document.querySelectorAll(".D-C-Card-Front-Button");
@@ -91,29 +90,22 @@ burgerButtons.forEach((button) => {
   });
 });
 
-//likes
-// Добавляем обработчик на форму лайка
-document.addEventListener('DOMContentLoaded', function() {
-  // Находим все кнопки лайков на странице
-  const likeForms = document.querySelectorAll('.like-form');
-  
-  likeForms.forEach(form => {
-    form.addEventListener('submit', function(event) {
-      const postId = form.getAttribute('id').split('-')[2]; // Получаем ID поста из ID формы
+document.addEventListener("DOMContentLoaded", function () {
+  const likeForms = document.querySelectorAll(".like-form");
 
-      // Сохраняем ID поста в localStorage
-      localStorage.setItem('lastLikedPostId', postId);
+  likeForms.forEach((form) => {
+    form.addEventListener("submit", function (event) {
+      const postId = form.getAttribute("id").split("-")[2];
 
+      localStorage.setItem("lastLikedPostId", postId);
     });
   });
-
-  // Проверяем, есть ли сохраненный ID поста и прокручиваем до него
-  const lastLikedPostId = localStorage.getItem('lastLikedPostId');
+  const lastLikedPostId = localStorage.getItem("lastLikedPostId");
   if (lastLikedPostId) {
     const postElement = document.getElementById(`D-C-Card-${lastLikedPostId}`);
     if (postElement) {
-      postElement.scrollIntoView({ behavior: 'smooth' });
-      localStorage.setItem('lastLikedPostId', 0); 
+      postElement.scrollIntoView({ behavior: "smooth" });
+      localStorage.setItem("lastLikedPostId", 0);
     }
   }
 });

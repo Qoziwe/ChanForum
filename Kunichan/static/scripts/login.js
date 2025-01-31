@@ -1,15 +1,14 @@
-// const errorMessage = "{{ error | safe }}";
-// if (errorMessage) {
-//   alert(
-//     "Ошибка: пользователь с таким email не существует! Пожалуйста, зарегистрируйтесь в систему."
-//   );
-// }
+const errorMessage = "{{ error | safe }}";
+if (errorMessage) {
+  alert(
+    "Ошибка: пользователь с таким email не существует! Пожалуйста, зарегистрируйтесь в систему."
+  );
+}
 
 window.onload = function () {
   var counter = 90;
   var readmeclearer = setInterval(() => {
     counter -= 0.5;
-    // console.log(counter);
     document.getElementById(
       "R-Container"
     ).style.transform = `rotateY(${counter.toString()}deg`;
@@ -24,7 +23,6 @@ LoginButton.onclick = function () {
   var counter = 0;
   var readmeclearer = setInterval(() => {
     counter += 0.5;
-    // console.log(counter);
     document.getElementById(
       "R-Container"
     ).style.transform = `rotateY(${counter.toString()}deg`;

@@ -3,7 +3,7 @@ const snowflakeCount = 80;
 
 function createSnowflake() {
   if (snowContainer.children.length >= snowflakeCount) {
-    return 0; // Если снежинок уже больше, чем нужно, не создаем новые
+    return 0;
   }
 
   const snowflake = document.createElement("div");
@@ -31,9 +31,7 @@ function createSnowflake() {
 
 window.addEventListener("load", () => {
   const preloader = document.getElementById("preloader");
-  // setTimeout(function () {
   preloader.classList.add("hidden");
-  // }, 300);
 });
 
 setInterval(() => {
@@ -107,20 +105,16 @@ window.onload = function () {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-  // Получаем текущий путь из URL без начального "/"
-  var path = window.location.pathname.replace("/", "") || "0"; // Подставляем "0", если путь пустой
+  var path = window.location.pathname.replace("/", "") || "0";
   path = path.substring(path.lastIndexOf("/") + 1);
-  // Ищем элемент с ID, совпадающим с path
   const targetElement = document.getElementById(path);
   if (path == "edit") {
     document.getElementById("userpost").classList.add("NavigationSelectedMenu");
   }
-  // Проверяем, найден ли элемент
   if (targetElement) {
-    // Если найден, добавляем класс
     targetElement.classList.add("NavigationSelectedMenu");
   } else {
-    // Выводим сообщение, если элемент не найден
-    // console.warn(`Элемент с id="${path}" не найден.`);
+    // Display a message if the element is not found
+    // console.warn(`Element with id="${path}" not found.`);
   }
 });
