@@ -32,7 +32,6 @@
       <div class="navbar-logo">
         <h1><a href="/">####Chan</a></h1>
       </div>
-
       <div class="search-container">
         <input
           type="text"
@@ -41,11 +40,23 @@
           autocomplete="off"
         />
         <div class="search-icon">
-          <i class="fas fa-search"></i>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#8282829c"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
         </div>
         <div class="search-results" id="results-container"></div>
       </div>
-
       {% if username %}
       <a href="/profile">
         <button class="logbutton" style="padding-left: 0">
@@ -62,9 +73,12 @@
             id="N-P-Img"
             class="N-H-Svg"
           />
-          {% endif %} {{ username | truncate(19) }}
+          {% endif %}
+          <!--  -->
+          {{ username | truncate(19) }}
         </button>
       </a>
+
       {% else %}
       <a href="/register"><button class="logbutton">Sign up</button></a>
       {% endif %}

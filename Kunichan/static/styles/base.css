@@ -1,3 +1,4 @@
+/*#region FONTS  */
 @font-face {
   font-family: "Jersey15";
   src: url("../fonts/Jersey15-Regular.ttf") format("truetype");
@@ -20,7 +21,9 @@
   font-family: "Inter";
   src: url("../fonts/Inter-Regular.otf");
 }
+/*#endregion */
 
+/*#region GLOBAL */
 * {
   margin: 0;
   padding: 0;
@@ -30,7 +33,6 @@
   color: aliceblue;
   border: 0;
 }
-
 html {
   scroll-behavior: smooth;
 }
@@ -38,7 +40,9 @@ body {
   width: 100%;
   background-color: #080808;
 }
+/*#endregion*/
 
+/*#region SNOW */
 .snow-container {
   width: 100%;
   height: 100%;
@@ -50,8 +54,8 @@ body {
   overflow: hidden;
 }
 .snowflake {
-  width: 10px; /* Example width */
-  height: 10px; /* Example height */
+  width: 0.8vw; /* Example width */
+  height: 0.8vw; /* Example height */
   background-color: #ffffff;
   opacity: 0.5;
   position: absolute;
@@ -70,7 +74,9 @@ body {
     opacity: 0;
   }
 }
+/*#endregion*/
 
+/*#region PRELOADER */
 .spinner-wrapper {
   width: 100%;
   height: 100%;
@@ -81,7 +87,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #111111;
-  z-index: 1000;
+  z-index: 10000;
 }
 .spinner {
   width: 3.5vw;
@@ -103,11 +109,13 @@ body {
 .hidden {
   display: none;
 }
+/*#endregion*/
 
 main {
   display: flex;
 }
 
+/*#region NAVIGATION */
 #Navigation {
   width: 17vw;
   height: 90vh;
@@ -137,6 +145,8 @@ main {
   color: #d3d3d3;
   text-align: left;
   transition: opacity 0.3s ease-in-out;
+  overflow: hidden;
+  white-space: nowrap;
 }
 #Navigation hr {
   width: 80%;
@@ -144,6 +154,7 @@ main {
   background-color: #d3d3d3;
   margin: 0.5vw;
   border: none;
+  border-radius: 10vw;
 }
 .N-Button p {
   font-size: 0.9vw;
@@ -164,6 +175,7 @@ main {
   border-radius: 0.7vw;
   padding-left: 0.8vw;
   transition: ease-in-out 100ms;
+  overflow: hidden;
 }
 .toggle-btn {
   width: 2.5vw;
@@ -177,7 +189,7 @@ main {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: all 150ms ease-in-out;
+  transition: all 300ms ease-in-out;
 }
 #Navigation .toggle-btn:hover {
   background-color: #4f4f4f;
@@ -207,6 +219,8 @@ main {
   color: #fcfcfc;
 }
 .N-Button svg {
+  overflow: hidden;
+  white-space: nowrap;
   transition: ease-in-out 100ms;
 }
 .N-Button:hover svg {
@@ -226,7 +240,9 @@ main {
   border-radius: 5vw;
   object-fit: cover;
 }
+/*#endregion*/
 
+/*#region HEADER */
 .navbar {
   width: 100%;
   height: 10vh;
@@ -281,8 +297,10 @@ main {
   font-size: 1vw;
   pointer-events: none;
 }
-.search-icon i {
+.search-icon svg {
   color: #8282829c;
+  width: 1.2vw;
+  height: 1.2vw;
 }
 .logbutton {
   height: 2.3vw;
@@ -313,11 +331,110 @@ main {
   object-fit: cover;
   border-radius: 10vw;
 }
+/*#endregion*/
 
 #mainInner {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 700px) {
+  /*#region NAVIGATION */
+  #Navigation {
+    width: 70vw;
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+    padding-top: 4vh;
+    margin-top: 8vh;
+    gap: 2vw;
+  }
+  #Navigation.collapsed {
+    width: 0vw;
+  }
+  .toggle-btn {
+    width: 10vw;
+    height: 10vw;
+    font-size: 6vw;
+    top: 1vw;
+    left: 1vw;
+    z-index: 5;
+  }
+  #Navigation .toggle-btn:hover {
+    background-color: #202020;
+    box-shadow: 0px 0px 1vw 0.1vw #4f4f4f00;
+    -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f00;
+    -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f00;
+  }
+  #Navigation .toggle-btn svg {
+    width: 6vw;
+    height: 6vw;
+  }
+  .N-Button p {
+    font-size: 4vw;
+  }
+  .N-Button {
+    height: 10vw;
+    gap: 2vw;
+    padding-left: 4vw;
+    border-radius: 2.5vw;
+  }
+  .N-H-Svg {
+    width: 6vw;
+    height: 6vw;
+    min-width: 6vw;
+    min-height: 6vw;
+  }
+  #N-P-Img {
+    width: 8vw;
+    height: 8vw;
+    border: 0.5vw solid #484848;
+  }
+  #Navigation h1 {
+    font-size: 5vw;
+    margin: 2vw 0 1vw 0;
+  }
+  #Navigation hr {
+    height: 0.1vw;
+    margin: 2vw 0;
+  }
+  /*#endregion*/
+
+  /*#region HEADER */
+  .navbar {
+    height: 8vh;
+  }
+  .navbar-logo h1 {
+    font-size: 10vw;
+  }
+  #search-bar {
+    display: none;
+  }
+  .search-icon {
+    width: 8vw;
+    height: 8vw;
+    border-radius: 3vw;
+    background-color: #08080800;
+  }
+  .search-icon svg {
+    width: 5vw;
+    height: 5vw;
+  }
+  .logbutton {
+    width: 7vw;
+    height: 7vw;
+    font-size: 3vw;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  #H-Img {
+    width: 6.9vw;
+    height: 6.9vw;
+    object-fit: cover;
+    border-radius: 10vw;
+  }
+  /*#endregion*/
 }
 
 /* Расположение стилей должно идти в строгом порядке

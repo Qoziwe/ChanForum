@@ -1,6 +1,8 @@
 #mainInner {
   justify-content: space-between;
 }
+
+/*#region DISCUSSIONS */
 #Discussions {
   width: 70%;
   height: 90vh;
@@ -250,7 +252,9 @@ aside {
   color: #d3d3d3;
   font-size: 1vw;
 }
+/*#endregion */
 
+/*#region PROGILE */
 #Profile {
   width: 22%;
   height: 90vh;
@@ -360,4 +364,16 @@ aside {
   font-family: "Montserrat";
   max-width: 100%;
   overflow: hidden;
+}
+/*#endregion */
+
+@media (max-width: 700px) {
+  #Discussions {
+    height: 92vh;
+    width: 100%;
+  }
+  #Profile {
+    height: 92vh;
+    display: none;
+  }
 }
