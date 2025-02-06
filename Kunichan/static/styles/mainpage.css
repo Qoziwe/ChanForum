@@ -1,0 +1,421 @@
+#mainInner {
+  justify-content: space-between;
+}
+
+/*#region DISCUSSIONS */
+#Discussions {
+  width: 70%;
+  height: 90vh;
+  padding: 2vw 0 0 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+#D-Container {
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  border-radius: 3vw 3vw 0 0;
+  padding: 2vw 1.5vw 2vw 1.5vw;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0);
+  -webkit-box-shadow: inset 0px 0px 1vw 0.1vw #000000;
+  -moz-box-shadow: inset 0px 0px 1vw 0.1vw #000000;
+  box-shadow: inset 0px 0px 1vw 0.1vw #000000;
+}
+#D-C-Carousel {
+  position: relative;
+  width: 56vw;
+  overflow: hidden;
+  min-height: 18vw;
+  background: #111111;
+  display: flex;
+  align-items: center;
+  border-radius: 2vw;
+  box-sizing: border-box;
+}
+#D-C-C-Track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  gap: 2vw;
+}
+.D-C-C-T-Card {
+  background: #272727;
+  border-radius: 0.7vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1vw;
+  width: 15vw;
+  height: 18vw;
+  text-align: center;
+}
+.D-C-C-Button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #17171700;
+  border: 0.1vw solid #4f4f4f;
+  color: #fff;
+  border-radius: 50%;
+  width: 3vw;
+  height: 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1vw;
+  z-index: 10;
+  transition: all ease-in-out 150ms;
+}
+.D-C-C-Button.left {
+  left: 1vw;
+}
+.D-C-C-Button.right {
+  right: 1vw;
+}
+.D-C-C-Button:hover {
+  background: #4f4f4f;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
+#D-Container hr {
+  width: 45vw;
+  margin: 1.5vw 0 2vw 0;
+}
+aside {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8vw;
+  width: 100%;
+}
+.D-C-Card {
+  width: 100%;
+  padding: 1vw;
+  background-color: #1a1a1a;
+  border-radius: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+.D-C-Card-Front {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+}
+.D-C-Card-F-LeftPart {
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  flex: 1;
+}
+.D-C-Card-Front img {
+  width: 8vw;
+  height: 8vw;
+  border-radius: 2vw;
+  object-fit: cover;
+}
+.D-C-Card-Front span {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-radius: 100000vw;
+  /* Why do u watch here, what, u have never seen the 100000vw border raduis?  */
+  gap: 0.5vw;
+}
+.D-C-Card-Front span a {
+  font-size: 1.9vw;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  color: white;
+  transition: all 150ms ease-in-out;
+}
+.D-C-Card-Front span p {
+  font-size: 1.1vw;
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  color: #d0d0d0;
+}
+.D-C-Card-Front span a:hover {
+  text-decoration: underline;
+}
+.D-C-C-F-LP-AuthorDate {
+  display: flex;
+  gap: 2vw;
+}
+.D-C-C-F-LP-AuthorDate a p {
+  transition: all 150ms ease-in-out;
+}
+.D-C-C-F-LP-AuthorDate a:hover p {
+  color: white;
+}
+.D-C-C-F-LP-AuthorDate p {
+  font-size: 1vw;
+}
+.D-C-Card-Front-Button {
+  width: 2vw;
+  height: 1.5vw;
+  position: relative;
+  cursor: pointer;
+}
+.burger-line {
+  width: 100%;
+  height: 0.2vw;
+  background-color: #d3d3d3;
+  position: absolute;
+  left: 0;
+  transition: all 0.3s ease;
+}
+.burger-line:nth-child(1) {
+  top: 0;
+  transform-origin: center;
+}
+.burger-line:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: center;
+}
+.burger-line:nth-child(3) {
+  bottom: 0;
+  transform-origin: center;
+}
+.D-C-Card-Front-Button.active .burger-line:nth-child(1) {
+  transform: translateY(0.65vw) rotate(45deg);
+}
+.D-C-Card-Front-Button.active .burger-line:nth-child(2) {
+  opacity: 0;
+  transform: scale(0);
+}
+.D-C-Card-Front-Button.active .burger-line:nth-child(3) {
+  transform: translateY(-0.65vw) rotate(-45deg);
+}
+.D-C-Card-Back {
+  width: 100%;
+  display: none;
+}
+.D-C-Card-Back p {
+  padding: 0.5vw 1vw 0 1vw;
+  width: 100%;
+  font-size: 1.1vw;
+  font-family: "Montserrat";
+  color: #d0d0d0;
+  white-space: pre-wrap;
+  box-sizing: border-box;
+}
+.D-C-Card-Actions {
+  display: flex;
+  width: 100%;
+  margin-top: 0.5vw;
+  gap: 0.7vw;
+  box-sizing: border-box;
+}
+.D-C-Card-Actions form {
+  height: 2.5vw;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.D-C-Card-Actions form svg {
+  width: 1.5vw;
+  height: 1.5vw;
+}
+.D-C-Card-Actions form button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 0 0.5vw 0 0.5vw;
+  align-items: center;
+  gap: 0.5vw;
+  border: 0.1vw solid #4f4f4f;
+  border-radius: 10vw;
+  background-color: #90000000;
+  transition: all 150ms ease-in-out;
+}
+.D-C-Card-Actions form button:hover {
+  background-color: #4f4f4f;
+  border-radius: 10vw;
+  -webkit-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  -moz-box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+  box-shadow: 0px 0px 1vw 0.1vw #4f4f4f;
+}
+.D-C-Card-Actions form button a,
+.D-C-Card-Actions form button p {
+  color: #d3d3d3;
+  font-size: 1vw;
+}
+/*#endregion */
+
+/*#region PROGILE */
+#Profile {
+  width: 22%;
+  height: 90vh;
+  background-color: #111111;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(170, 170, 170, 0.5) rgba(41, 41, 41, 0);
+  box-sizing: border-box;
+}
+#P-Container {
+  height: 100%;
+  padding: 1.5vw 1vw 0 1vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+#P-C-Avatar {
+  width: 100%;
+  height: 12vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#P-C-Avatar img {
+  width: 12vw;
+  height: 12vw;
+  object-fit: cover;
+  border-radius: 2vw;
+}
+#P-C-Nickname {
+  width: 100%;
+  font-size: 1.8vw;
+  font-family: "Montserrat";
+  text-align: center;
+  white-space: nowrap;
+}
+#P-C-Mastermind {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#P-C-M-Article {
+  width: 10vw;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  background-color: #080808;
+  padding: 0.5vw 0 0.5vw 0;
+  border-radius: 10vw;
+  font-size: 1vw;
+  font-family: "Inter";
+}
+#P-C-M-Information {
+  width: 100%;
+  height: 5vw;
+  background-color: #1a1a1a;
+  margin-top: 1.5vw;
+  padding-left: 1vw;
+  border-radius: 1vw;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+#P-C-M-Information p {
+  font-size: 1vw;
+  font-family: "Inter";
+}
+#P-C-Friends {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5vw;
+}
+#P-C-Friends h1 {
+  font-size: 1.2vw;
+  font-family: "Montserrat";
+  color: aliceblue;
+  font-weight: 100;
+  margin-bottom: 0.5vw;
+}
+#P-C-Friends a {
+  width: 100%;
+  background-color: #272727;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0.3vw;
+  border-radius: 10vw;
+  box-sizing: border-box;
+  gap: 0.5vw;
+}
+#P-C-Friends img {
+  width: 2.5vw;
+  height: 2.5vw;
+  object-fit: cover;
+  border-radius: 10vw;
+}
+#P-C-Friends p {
+  font-size: 1vw;
+  font-family: "Montserrat";
+  max-width: 100%;
+  overflow: hidden;
+}
+/*#endregion */
+
+@media (max-width: 700px) {
+  #Discussions {
+    height: 92vh;
+    width: 100%;
+  }
+  #D-C-Carousel{
+    display: none;
+  }
+  .D-C-Card{
+    /* height: 20vh; */
+    padding: 2vw;
+    box-sizing: border-box;
+    /* gap: 2vw; */
+  }
+  .D-C-Card-Front{
+    gap: 0;
+    flex-direction: column;
+  }
+  .D-C-Card-Front span{
+    width: 100%;
+    height: 1.5vw;
+  }
+  .burger-line{
+    width: 80vw;
+  }
+  .D-C-Card-Front-Button{
+    width: 13vw;
+    height: 9.75vw;
+  }
+  .D-C-Card-Front span a{
+    font-size: 6.5vw ;
+  }
+  .D-C-Card-Front span p{
+    font-size: 4vw;
+  }
+  .D-C-C-F-LP-AuthorDate a p{
+    font-size: 5vw;
+  }
+  .D-C-Card-Front img{
+    width: 80vw;
+    height: 80vw;
+  }
+.D-C-Card-F-LeftPart{
+  display: flex;
+  flex-direction: column;
+  gap: 3vw;
+}
+  #Profile {
+    height: 92vh;
+    display: none;
+  } 
+}
