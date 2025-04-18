@@ -791,4 +791,4 @@ def delete(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=1488)
+    app.run(debug=False, port=1488)
