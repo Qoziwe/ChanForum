@@ -3,7 +3,7 @@
 {% block title %} Profile {% endblock %}
 {% if profile_image %}
   <img
-    src="data:image/jpeg;base64,{{ profile_image | b64encode }}"
+    src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
     alt="Profile Image"
     style="width: 150px; height: 150px; border-radius: 50%;"
   />
@@ -18,7 +18,7 @@
 {% block body %}
   <section id="ProfileBanner">
       <img
-          src="data:image/jpeg;base64,{{ author_image | b64encode }}"
+          src="{% if author_image %}{{ url_for('static', filename=author_image) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
           alt="Profile Image"
           style="width: 150px; height: 150px; border-radius: 50%;"/>
 

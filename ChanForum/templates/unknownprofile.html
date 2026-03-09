@@ -5,7 +5,7 @@
         <div class="profile-card">
             {% if unknowninfo %}
                 <img
-                src="data:image/jpeg;base64,{{ unknowninfo['profile_image'] | b64encode }}"
+                src="{% if unknowninfo['profile_image'] %}{{ url_for('static', filename=unknowninfo['profile_image']) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
                 alt="Profile Image"
                 style="width: 150px; height: 150px; border-radius: 50%;"/>
 

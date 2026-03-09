@@ -38,7 +38,7 @@
           <div class="D-C-Card-F-LeftPart">
             {% if post['post_image'] %}
             <img
-              src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+              src="{% if post['post_image'] %}{{ url_for('static', filename=post['post_image']) }}{% else %}{{ url_for('static', filename='images/NoImage.png') }}{% endif %}"
               alt="{{ post['title'] }}"
             />
             {% else %}
@@ -164,7 +164,7 @@
       {% if profile_image %}
       <img
         id="P-C-A-Img"
-        src="data:image/png;base64,{{ profile_image|b64encode }}"
+        src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
         alt="Avatar"
       />
       {% else %}
@@ -199,7 +199,7 @@
       <a href="/unknownuserprofile">
         {% if friend['profile_image'] %}
         <img
-          src="data:image/png;base64,{{ friend['profile_image']|b64encode }}"
+          src="{% if friend['profile_image'] %}{{ url_for('static', filename=friend['profile_image']) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
           alt="{{ friend['username'] }}'s profile picture"
         />
         {% else %}

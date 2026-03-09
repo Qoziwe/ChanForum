@@ -63,7 +63,7 @@
           {% if profile_image %}
           <img
             id="H-Img"
-            src="data:image/png;base64,{{ profile_image|b64encode }}"
+            src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
             alt="Avatar"
           />
           {% else %}
@@ -235,7 +235,7 @@
           <!--  -->
           {% if profile_image %}
           <img
-            src="data:image/png;base64,{{ profile_image|b64encode }}"
+            src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
             alt="Avatar"
             id="N-P-Img"
             class="N-H-Svg"

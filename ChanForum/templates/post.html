@@ -14,7 +14,7 @@
   <button class="logbutton">
     {% if profile_image %}
     <img
-      src="data:image/png;base64,{{ profile_image|b64encode }}"
+      src="{% if profile_image %}{{ url_for('static', filename=profile_image) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
       alt="Avatar"
       class="avatar"
       style="
@@ -40,12 +40,12 @@
         <div id="P-C-PC-M-ImageContainer">
           {% if post['post_image'] %}
           <img
-            src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+            src="{% if post['post_image'] %}{{ url_for('static', filename=post['post_image']) }}{% else %}{{ url_for('static', filename='images/NoImage.png') }}{% endif %}"
             id="P-C-PC-M-IC-Background"
           />
           <img
             id="P-C-PC-M-IC-Image"
-            src="data:image/jpeg;base64,{{ post['post_image'] | b64encode }}"
+            src="{% if post['post_image'] %}{{ url_for('static', filename=post['post_image']) }}{% else %}{{ url_for('static', filename='images/NoImage.png') }}{% endif %}"
             alt="{{ post['title'] }}"
           />
           {% else %}

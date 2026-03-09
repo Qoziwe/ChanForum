@@ -1,0 +1,15 @@
+Refactor: Major security and database architecture improvements
+
+This commit resolves several critical architectural red flags to make the project production-ready and GitHub-pinned appropriate:
+
+1. Security (Passwords): 
+   - Migrated from plaintext password storage to secure hashing using `werkzeug.security` (`generate_password_hash` and `check_password_hash`).
+
+2. Filesystem & Performance (Images):
+   - Stopped storing image binaries as SQLite BLOBs, which impacts database size and query performance.
+   - User avatars and post images are now saved to the local filesystem (`static/uploads/avatars` and `static/uploads/posts`).
+   - Replaced all Base64 template rendering filters with efficient static URLs.
+
+3. Database Normalization (Friends):
+   - Eliminated the 1NF violation of storing friends as a comma-separated string in the `users` table.
+   - Introduced a proper `user_friends` junction table to map many-to-many relationships cleanly.

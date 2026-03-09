@@ -1,27 +1,24 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from werkzeug.exceptions import abort
-# from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-import base64
 import sqlite3
 import os
 import hashlib
+import uuid
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'yourmom'  # your mom
+app.secret_key = os.environ.get('SECRET_KEY', 'yourmom')  # your mom
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'static', 'uploads')
 db_pathpost = os.path.join(BASE_DIR, 'db', 'databasepost.db')
 db_pathusers = os.path.join(BASE_DIR, 'db', 'databaseusers.db')
-db_pathuserfriends = os.path.join(BASE_DIR, 'db', 'databasefriends.db')
 Error = None
-
-
-@app.template_filter('b64encode')
-def b64encode_filter(data):
-    if data is None:
-        return ''
-    return base64.b64encode(data).decode('utf-8')
 
 @app.route("/")
 def mainpage():
@@ -38,33 +35,34 @@ def mainpage():
             with sqlite3.connect(db_pathusers) as conn_users:
                 conn_users.row_factory = sqlite3.Row
                 user = conn_users.execute(
-                    "SELECT username, profile_image, friend_id FROM users WHERE id = ?",
+                    "SELECT username, profile_image, uniq_id FROM users WHERE id = ?",
                     (user_id,)
                 ).fetchone()
 
                 if user:
                     username = user['username']
                     profile_image = user['profile_image']
-                    # Получаем friend_id текущего пользователя
-                    friend_ids = user['friend_id']
-                    if friend_ids:
-                        # Если есть друзья, извлекаем их uniq_id
-                        friend_ids_list = friend_ids.split(',')
-                        with sqlite3.connect(db_pathusers) as conn_users_friends:
-                            conn_users_friends.row_factory = sqlite3.Row
-                            friends_data = conn_users_friends.execute(
-                                f"SELECT uniq_id, username, profile_image FROM users WHERE uniq_id IN ({','.join(['?'] * len(friend_ids_list))})",
-                                tuple(friend_ids_list)
-                            ).fetchall()
-                            # Сохраняем данные о друзьях в список
-                            friends = [
-                                {
-                                    'uniq_id': friend['uniq_id'],
-                                    'username': friend['username'],
-                                    'profile_image': friend['profile_image']
-                                }
-                                for friend in friends_data
-                            ]
+                    logged_in_uniq_id = user['uniq_id']
+                    
+                    # Получаем друзей через связующую таблицу
+                    friends_data = conn_users.execute(
+                        """SELECT u.uniq_id, u.username, u.profile_image 
+                           FROM users u 
+                           JOIN user_friends uf ON u.uniq_id = uf.friend_id 
+                           WHERE uf.user_id = ?""",
+                        (logged_in_uniq_id,)
+                    ).fetchall()
+                    
+                    if friends_data:
+                        # Сохраняем данные о друзьях в список
+                        friends = [
+                            {
+                                'uniq_id': friend['uniq_id'],
+                                'username': friend['username'],
+                                'profile_image': friend['profile_image']
+                            }
+                            for friend in friends_data
+                        ]
 
         # Загружаем посты
         with sqlite3.connect(db_pathpost) as conn_posts:
@@ -165,15 +163,15 @@ def unknownprofile(uniq_id):
     # Получаем информацию о текущем пользователе
     with sqlite3.connect(db_pathusers) as conn_users:
         cursor = conn_users.cursor()
-        cursor.execute('SELECT username, profile_image, friend_id FROM users WHERE id = ?', (user_id,))
+        cursor.execute('SELECT username, profile_image, uniq_id FROM users WHERE id = ?', (user_id,))
         user = cursor.fetchone()
 
         if user:
-            username, profile_image, friend_ids = user
-            friend_ids = friend_ids.split(',') if friend_ids else []
+            username, profile_image, current_uniq_id = user
 
             # Проверяем, является ли просматриваемый пользователь другом
-            is_friend = uniq_id in friend_ids
+            cursor.execute('SELECT 1 FROM user_friends WHERE user_id = ? AND friend_id = ?', (current_uniq_id, uniq_id))
+            is_friend = cursor.fetchone() is not None
 
     # Получаем информацию о неизвестном пользователе
     with sqlite3.connect(db_pathusers) as conn_users:
@@ -277,21 +275,30 @@ def unknown_profile(uniq_id):
     conn = sqlite3.connect(db_pathusers)
     cursor = conn.cursor()
 
-    cursor.execute('SELECT username, profile_image, friend_id FROM users WHERE uniq_id = ?', (uniq_id,))
+    cursor.execute('SELECT username, profile_image FROM users WHERE uniq_id = ?', (uniq_id,))
     user_info = cursor.fetchone()
 
-    conn.close()
-
+    is_friend = False
     if user_info:
-        username, profile_image, friend_id = user_info
-        friend_ids = friend_id.split(',') if friend_id else []
-        is_friend = str(session.get('user_id')) in friend_ids
+        username, profile_image = user_info
+        
+        if 'user_id' in session:
+            cursor.execute('SELECT uniq_id FROM users WHERE id = ?', (session['user_id'],))
+            current_user = cursor.fetchone()
+            if current_user:
+                current_uniq_id = current_user[0]
+                cursor.execute('SELECT 1 FROM user_friends WHERE user_id = ? AND friend_id = ?', (current_uniq_id, uniq_id))
+                is_friend = cursor.fetchone() is not None
+
+        conn.close()
 
         return render_template('profile.html', unknowninfo={
             'username': username,
             'profile_image': profile_image,
             'uniq_id': uniq_id
         }, is_friend=is_friend)
+
+    conn.close()
 
     return "User not found", 404
 
@@ -320,33 +327,30 @@ def unknownuser(post_id):
             with sqlite3.connect(db_pathusers) as conn_users:
                 cursor_users = conn_users.cursor()
                 cursor_users.execute(
-                    "SELECT username, profile_image, uniq_id, friend_id FROM users WHERE id = ?", 
+                    "SELECT username, profile_image, uniq_id FROM users WHERE id = ?", 
                     (current_user_id,)
                 )
                 logged_in_user = cursor_users.fetchone()
 
                 if logged_in_user:
-                    current_username, current_profile_image, logged_in_uniq_id, friend_ids = logged_in_user
-                    uniq_id = logged_in_user[2]
+                    current_username, current_profile_image, logged_in_uniq_id = logged_in_user
+                    uniq_id = logged_in_uniq_id
 
                     # Если текущий пользователь — автор поста, перенаправляем в профиль
                     if post_author_id == logged_in_uniq_id:
                         return redirect(url_for('profile'))
 
                     # Проверяем, является ли автор поста другом текущего пользователя
-                    is_friend = post_author_id in friend_ids.split(',') if friend_ids else False
+                    cursor_users.execute('SELECT 1 FROM user_friends WHERE user_id = ? AND friend_id = ?', (logged_in_uniq_id, post_author_id))
+                    is_friend = cursor_users.fetchone() is not None
 
                     # Если метод POST, пытаемся добавить автора поста в друзья
                     if request.method == 'POST' and not is_friend:
                         try:
                             # Обновляем поле friend_id для текущего пользователя
-                            friend_ids = friend_ids.split(',') if friend_ids else []
-                            friend_ids.append(post_author_id)  # Добавляем uniq_id как строку
-                            updated_friend_ids = ','.join(friend_ids)
-
                             cursor_users.execute(
-                                "UPDATE users SET friend_id = ? WHERE id = ?",
-                                (updated_friend_ids, current_user_id)
+                                "INSERT INTO user_friends (user_id, friend_id) VALUES (?, ?)",
+                                (logged_in_uniq_id, post_author_id)
                             )
                             conn_users.commit()
                             flash('User has been added to your friends.')
@@ -412,12 +416,17 @@ def update_profile():
 
         if new_password:
             update_query += ", password = ?"
-            params.append(new_password)
+            params.append(generate_password_hash(new_password))
 
-        if profile_image:
-            profile_image_data = profile_image.read()
+        if profile_image and profile_image.filename:
+            filename = secure_filename(profile_image.filename)
+            unique_filename = f"{uuid.uuid4().hex}_{filename}"
+            save_path = os.path.join(app.config['UPLOAD_FOLDER'], 'avatars', unique_filename)
+            profile_image.save(save_path)
+            db_path_str = f"uploads/avatars/{unique_filename}"
+            
             update_query += ", profile_image = ?"
-            params.append(profile_image_data)
+            params.append(db_path_str)
 
         update_query += " WHERE id = ?"
         params.append(session['user_id'])
@@ -443,23 +452,23 @@ def register():
         password = request.form['password']
         
         uniq_id = encrypt_username(username)
+        hashed_password = generate_password_hash(password)
         try:
             with sqlite3.connect(db_pathusers) as db:
                 cursor = db.cursor()
                 cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
                 existing_user = cursor.fetchone()
                 if existing_user:
-                    return render_template('register.html', error=Error)
-                cursor = db.cursor()
+                    return render_template('register.html', error="User already exists")
                 query = """ INSERT INTO users (username, email, password, uniq_id) VALUES (?, ?, ?, ?) """
-                cursor.execute(query, (username, email, password, uniq_id))
+                cursor.execute(query, (username, email, hashed_password, uniq_id))
                 db.commit()
                 session['user_id'] = cursor.lastrowid
 
             return redirect(url_for('mainpage'))
 
         except sqlite3.IntegrityError:
-            return "Ошибка: пользователь с таким email уже существует!"
+            return "Ошибка: пользователь с таким email или именем уже существует!"
 
     return render_template("register.html")
 
@@ -472,17 +481,17 @@ def login():
         try:
             with sqlite3.connect(db_pathusers) as db:
                 cursor = db.cursor()
-                cursor.execute("SELECT id, username FROM users WHERE email = ? AND password = ?", (email, password))
+                cursor.execute("SELECT id, username, password FROM users WHERE email = ?", (email,))
                 user = cursor.fetchone()
-                if user:
+                if user and check_password_hash(user[2], password):
                     session['user_id'] = user[0]
                     username = user[1]
                     return redirect(url_for('mainpage', username=username))
                 else:
-                   return render_template("login.html", error=Error) 
+                   return render_template("login.html", error="Invalid credentials") 
 
-        except sqlite3.IntegrityError:
-            return "Ошибка: пользователь с таким email уже существует!"
+        except sqlite3.Error:
+            return "Ошибка при подключении к базе данных"
     
     return render_template("login.html")
 
@@ -689,14 +698,19 @@ def create():
         elif not content:
             flash('Content is required!')
         else:
-            # Преобразуем изображение в бинарные данные
-            image_blob = post_image.read()
+            db_path_str = None
+            if post_image and post_image.filename:
+                filename = secure_filename(post_image.filename)
+                unique_filename = f"{uuid.uuid4().hex}_{filename}"
+                save_path = os.path.join(app.config['UPLOAD_FOLDER'], 'posts', unique_filename)
+                post_image.save(save_path)
+                db_path_str = f"uploads/posts/{unique_filename}"
 
             # Сохраняем пост в базу данных
             conn = sqlite3.connect(db_pathpost)
             conn.execute(
                 'INSERT INTO posts (title, content, description, user_uniq_id, post_image, author) VALUES (?, ?, ?, ?, ?, ?)',
-                (title, content, description, user_uniq_id, image_blob, author)
+                (title, content, description, user_uniq_id, db_path_str, author)
             )
 
             conn.commit()
@@ -748,12 +762,17 @@ def edit(id):
             
             # Если изображение было загружено, обновляем его
             if post_image and post_image.filename:
-                image_blob = post_image.read()
+                filename = secure_filename(post_image.filename)
+                unique_filename = f"{uuid.uuid4().hex}_{filename}"
+                save_path = os.path.join(app.config['UPLOAD_FOLDER'], 'posts', unique_filename)
+                post_image.save(save_path)
+                db_path_str = f"uploads/posts/{unique_filename}"
+
                 cursor.execute('''
                     UPDATE posts 
                     SET title = ?, content = ?, post_image = ?, last_modified = ? 
                     WHERE id = ?
-                ''', (title, content, image_blob, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), id))
+                ''', (title, content, db_path_str, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), id))
             else:
                 cursor.execute('''
                     UPDATE posts 
@@ -791,4 +810,4 @@ def delete(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=False, port=1488)
+    app.run(debug=os.environ.get('FLASK_DEBUG', '0') == '1', port=int(os.environ.get('PORT', 1488)))

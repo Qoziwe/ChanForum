@@ -7,7 +7,7 @@
     <div class="userbox">
       {% if user['profile_image'] %}
       <img
-        src="data:image/png;base64,{{ user['profile_image']|b64encode }}"
+        src="{% if user['profile_image'] %}{{ url_for('static', filename=user['profile_image']) }}{% else %}{{ url_for('static', filename='images/DefaultProfileImage.jpg') }}{% endif %}"
         alt="{{ user['username'] }}'s profile picture"
         style="width: 10vw; height: 10vw"
       />
