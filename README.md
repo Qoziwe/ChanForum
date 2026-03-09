@@ -108,8 +108,8 @@ Start the Flask development server:
 python app.py
 ```
 
-The application will start running on port `1488`. You can access it in your web browser at:
-`http://127.0.0.1:1488`
+The application will start running on port `5000`. You can access it in your web browser at:
+`http://127.0.0.1:5000`
 
 ## Database Architecture
 
