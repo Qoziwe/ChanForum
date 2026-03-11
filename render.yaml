@@ -11,3 +11,4 @@ services:
         value: "3.11.11"
       - key: SECRET_KEY
         sync: false
+    plan: free
