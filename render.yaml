@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: chanforum
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn wsgi:app"
+    envVars:
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: PYTHON_VERSION
+        value: "3.11.11"
+      - key: SECRET_KEY
+        sync: false

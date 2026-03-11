@@ -25,6 +25,10 @@ __pycache__/
 *.db
 *.sqlite3
 
+# Render files
+!build.sh
+!render.yaml
+
 # Distribution / packaging
 dist/
 build/
