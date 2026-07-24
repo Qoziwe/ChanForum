@@ -15,6 +15,7 @@
                     <h2>You are already friends.</h2>
                 {% else %}
                     <form action="{{ url_for('add_friend', uniq_id=unknowninfo['uniq_id']) }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button type="submit" style="color: black;">Add friend</button>
                     </form>
                 {% endif %}

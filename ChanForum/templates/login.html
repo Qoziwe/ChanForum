@@ -17,6 +17,7 @@
   <div id="R-Container">
     <h1>Welcome</h1>
     <form action="/login" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input type="text" name="email" placeholder="Email" required />
       <input type="password" name="password" placeholder="Password" required />
       <button type="submit">Login</button>
@@ -29,5 +30,10 @@
 {% endblock %}
 <!--  -->
 {% block scripts %}
+{% if error %}
+<script>
+  window.loginError = {{ error | tojson }};
+</script>
+{% endif %}
 <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
 {% endblock %}

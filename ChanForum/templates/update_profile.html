@@ -29,6 +29,7 @@
   <div id="PU-Container">
     <h1>Update Profile</h1>
     <form id="PU-C-Form" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="PU-C-F-InputDiv">
         <label for="username">New Username:</label>
         <input

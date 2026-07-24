@@ -12,6 +12,7 @@
 <section id="MainContainer">
   <div id="MC-Inner">
     <form method="post" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div id="MC-I-F-LeftSide">
         <h1>Edit "{{ post['title'] }}" post</h1>
         <label for="title">Title</label>
@@ -52,6 +53,7 @@
       method="POST"
       id="MC-C-DeleteForm"
     >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input
         id="MC-I-Deleter"
         type="submit"

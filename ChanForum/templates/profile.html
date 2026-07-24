@@ -31,7 +31,10 @@
         <a href="/update_profile">
           <button class="P-C-LS-PI-Button">Edit Profile</button>
         </a>
-        <a href="/logout"> <button class="P-C-LS-PI-Button">Logout</button></a>
+        <form action="/logout" method="POST" style="display: inline;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="P-C-LS-PI-Button">Logout</button>
+        </form>
       </div>
     </div>
     <div id="P-C-RightSide">
@@ -61,6 +64,7 @@
                   method="POST"
                   id="like-form-{{ post['id'] }}"
                 >
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                   <button type="submit">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

@@ -75,6 +75,7 @@
             class="like-form"
             id="like-form-{{ post['id'] }}"
           >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit" class="like-button">
               {% if post['id'] not in user_liked_posts %}
               <svg
@@ -178,14 +179,7 @@
     <div id="P-C-Mastermind">
       <div id="P-C-M-Article">Mastermind</div>
       <div id="P-C-M-Information">
-        <p>
-          +77476512434
-          <!-- НОМЕР ИЛИ ДРУГАЯ ИНФА -->
-        </p>
-        <p>
-          @qeleran
-          <!-- ТУТ ДОЛЖНА БЫТЬ ССЫЛКА НА ТЕ САМЫЕ ИНТЕГРАЦИИ -->
-        </p>
+        <!-- Contact information loaded dynamically -->
       </div>
     </div>
     <div id="P-C-Friends">

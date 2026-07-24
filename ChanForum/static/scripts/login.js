@@ -1,7 +1,6 @@
-const errorMessage = "{{ error | safe }}";
-if (errorMessage) {
+if (window.loginError) {
   alert(
-    "Ошибка: пользователь с таким email не существует! Пожалуйста, зарегистрируйтесь в систему."
+    "Ошибка: " + window.loginError
   );
 }
 

@@ -72,6 +72,7 @@
         <h1>Comments</h1>
         {% if username %}
         <form action="/comment/{{ post['id'] }}" method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <input
             name="comment_content"
             placeholder="Write a comment..."
